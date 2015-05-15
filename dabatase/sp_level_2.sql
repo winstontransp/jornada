@@ -34,12 +34,12 @@ BEGIN
 	DECLARE v_inicioJornada DATETIME DEFAULT NULL;
 	DECLARE v_terminoJornada DATETIME DEFAULT NULL;
 	DECLARE v_tempoJornada VARCHAR(10) DEFAULT NULL;
-	DECLARE v_inicioDirecao DATETIME DEFAULT NULL;
-	DECLARE v_terminoDirecao DATETIME DEFAULT NULL;
-	DECLARE v_tempoDirecao TIME DEFAULT 0;
-	DECLARE v_inicioDescanso DATETIME DEFAULT NULL;
-	DECLARE v_terminoDescanso DATETIME DEFAULT NULL;
-	DECLARE v_tempoDescanso TIME DEFAULT 0;
+--  DECLARE v_inicioDirecao DATETIME DEFAULT NULL;
+--  DECLARE v_terminoDirecao DATETIME DEFAULT NULL;
+--  DECLARE v_tempoDirecao TIME DEFAULT 0;
+-- 	DECLARE v_inicioDescanso DATETIME DEFAULT NULL;
+-- 	DECLARE v_terminoDescanso DATETIME DEFAULT NULL;
+-- 	DECLARE v_tempoDescanso TIME DEFAULT 0;
 	DECLARE v_inicioRefeicao1 DATETIME DEFAULT NULL;
 	DECLARE v_terminoRefeicao1 DATETIME DEFAULT NULL;
 	DECLARE v_tempoRefeicao1 TIME DEFAULT NULL;
@@ -58,9 +58,11 @@ BEGIN
 	DECLARE v_inicioDescarregamento DATETIME DEFAULT NULL;
 	DECLARE v_terminoDescarregamento DATETIME DEFAULT NULL;
 	DECLARE v_tempoDescarregamento TIME DEFAULT NULL;
-    DECLARE v_tempoDescansoTotal TIME DEFAULT NULL;
+--    DECLARE v_tempoDescansoTotal TIME DEFAULT NULL;
     DECLARE v_EOF TINYINT;
     DECLARE v_loop_count BIGINT(11);
+    DECLARE v_loop_exit TINYINT;
+	
     DECLARE v_list_LoopID VARCHAR(1000);
     
 	DECLARE record_not_found INT DEFAULT 0;
@@ -111,18 +113,19 @@ BEGIN
 
 		-- Reinicializa as variáveis de trabalho para a proxima jornada
         SET v_list_LoopID  = "";
+		SET v_loop_exit = 0;
 		SET v_macroNumber_last =  -1;
 		SET v_positionTime_last = '1900-01-01';
-        SET v_tempoDescanso = 0;
-        SET v_tempoDescansoTotal = 0;
+--        SET v_tempoDescanso = 0;
+--        SET v_tempoDescansoTotal = 0;
 		SET v_motorista_id = NULL;
 		SET v_motorista_matricula = NULL;
         SET v_inicioJornada = NULL;
         SET v_terminoJornada = NULL;
         SET v_tempoJornada = NULL;
-        SET v_inicioDirecao = NULL;
-        SET v_terminoDirecao = NULL;
-        SET v_tempoDirecao = NULL;
+--        SET v_inicioDirecao = NULL;
+--        SET v_terminoDirecao = NULL;
+--        SET v_tempoDirecao = NULL;
         SET v_inicioRefeicao1 = NULL;
         SET v_terminoRefeicao1 = NULL;
         SET v_tempoRefeicao1 = NULL;
@@ -186,7 +189,6 @@ BEGIN
               FROM motorista
 			 WHERE matricula = v_motorista_matricula;
 
-
 			-- Inicializa as variáveis para o Loop
 			SET v_mctaddress = MctAddress_loop;
 			SET v_positionTime = PositionTime_loop;
@@ -203,25 +205,32 @@ BEGIN
 
 			-- to_days(v_positionTime) = to_days(PositionTime_loop)
 			-- Faz o Loop enquanto estiver na mesma Jornada
-			WHILE v_EOF = 0 AND v_mctaddress = MctAddress_loop AND v_macroNumber_last <> 4 and v_loop_count < 500
+			WHILE v_EOF = 0 AND v_mctaddress = MctAddress_loop AND v_macroNumber_last <> 4 AND v_loop_exit = 0 AND v_loop_count < 500
 			DO
 				SET v_macroNumber = MacroNumber_loop;
 				SET v_positionTime = PositionTime_loop;
-                SET v_list_LoopID = CONCAT(v_list_LoopID, lpad(ID_loop, 7, "0"), ",");
+				SET v_list_LoopID = CONCAT(v_list_LoopID, lpad(ID_loop, 7, "0"), ",");
                 
 				-- Calcula os valores da Jornada
 				CALL sp_level_2_1(ID_loop, MctAddress_loop, MacroNumber_loop, Text_loop, PositionTime_loop, v_mctaddress, v_positionTime, v_macroNumber, 
 					v_jornadaId, v_statusJornada, v_mctaddress_last, v_macroNumber_last, v_positionTime_last, v_dataJornada, v_inicioJornada, v_terminoJornada, v_tempoJornada, 
-					v_inicioDirecao, v_terminoDirecao, v_tempoDirecao, v_inicioDescanso, v_terminoDescanso, v_tempoDescanso, v_inicioRefeicao1, v_terminoRefeicao1, v_tempoRefeicao1, 
+-- 					v_inicioDirecao, v_terminoDirecao, v_tempoDirecao, v_inicioDescanso, v_terminoDescanso, v_tempoDescanso, v_tempoDescansoTotal, 
+					v_inicioRefeicao1, v_terminoRefeicao1, v_tempoRefeicao1, 
 					v_inicioRefeicao2, v_terminoRefeicao2, v_tempoRefeicao2, v_inicioForaServico, v_terminoForaServico, v_tempoForaServico, v_inicioInterjornada, v_terminoInterjornada, v_tempoInterjornada, 
-					v_inicioCarregamento, v_terminoCarregamento, v_tempoCarregamento, v_inicioDescarregamento, v_terminoDescarregamento, v_tempoDescarregamento, v_tempoDescansoTotal );
-                
+					v_inicioCarregamento, v_terminoCarregamento, v_tempoCarregamento, v_inicioDescarregamento, v_terminoDescarregamento, v_tempoDescarregamento);
+
 				-- Le o proximo registro
 				FETCH cursor_id INTO ID_loop, MctAddress_loop, MacroNumber_loop, Text_loop, PositionTime_loop;
 
 				-- Verifica se atingiu o final do arquivo
                 IF record_not_found THEN 
 					SET v_EOF = 1;
+				END IF;
+
+				-- Se encontrou um início de jornada sem ter encerrado a atual
+                IF MacroNumber_loop = 1 THEN 
+					-- Força a saída do Loop
+					SET v_loop_exit = 1;        
 				END IF;
                 
                 SET v_loop_count = v_loop_count + 1;
@@ -247,14 +256,20 @@ BEGIN
 		-- select "###### CHEGOU AQUI ####" AS debug;
         
 		-- Se terminou uma jornada ou acabaram os registros ao final da última jornada
-        IF v_EOF = 0 OR v_macroNumber_last = 4 OR (v_EOF = 1 AND v_macroNumber_last = 16) THEN    
+        -- IF v_EOF = 0 OR v_macroNumber_last = 4 OR (v_EOF = 1 AND v_macroNumber_last = 16) THEN    
+        
+        -- Se a jornada atual teve um termino nrmal ou se começou outra jornada sem ter terminado a anterior
+		IF v_terminoJornada is not null or v_loop_exit = 1 THEN 
         
 			-- Faz validações e calculos finais para a jornada
 			CALL sp_level_2_2(ID_loop, MctAddress_loop, MacroNumber_loop, Text_loop, PositionTime_loop, v_mctaddress, v_positionTime, v_macroNumber, 
-				v_jornadaId, v_statusJornada, v_mctaddress_last, v_macroNumber_last, v_positionTime_last, v_dataJornada, v_inicioJornada, v_terminoJornada, v_tempoJornada, 
-				v_inicioDirecao, v_terminoDirecao, v_tempoDirecao, v_inicioDescanso, v_terminoDescanso, v_tempoDescanso, v_inicioRefeicao1, v_terminoRefeicao1, v_tempoRefeicao1, 
-				v_inicioRefeicao2, v_terminoRefeicao2, v_tempoRefeicao2, v_inicioForaServico, v_terminoForaServico, v_tempoForaServico, v_inicioInterjornada, v_terminoInterjornada, v_tempoInterjornada, 
-				v_inicioCarregamento, v_terminoCarregamento, v_tempoCarregamento, v_inicioDescarregamento, v_terminoDescarregamento, v_tempoDescarregamento, v_tempoDescansoTotal );
+				v_jornadaId, v_statusJornada, v_mctaddress_last, v_macroNumber_last, v_positionTime_last, v_dataJornada, v_inicioJornada, v_terminoJornada, 
+                v_tempoJornada, 
+-- 				v_inicioDirecao, v_terminoDirecao, v_tempoDirecao, v_inicioDescanso, v_terminoDescanso, v_tempoDescanso, v_tempoDescansoTotal, 
+				v_inicioRefeicao1, v_terminoRefeicao1, v_tempoRefeicao1, 
+				v_inicioRefeicao2, v_terminoRefeicao2, v_tempoRefeicao2, v_inicioForaServico, v_terminoForaServico, v_tempoForaServico, v_inicioInterjornada, 
+                v_terminoInterjornada, v_tempoInterjornada, v_inicioCarregamento, v_terminoCarregamento, v_tempoCarregamento, 
+                v_inicioDescarregamento, v_terminoDescarregamento, v_tempoDescarregamento);
             
             -- Atualiza a Jornada no banco de dados
 			UPDATE jornada SET 
@@ -265,7 +280,7 @@ BEGIN
                 inicio_jornada = v_inicioJornada, 
                 termino_jornada = v_terminoJornada, 
                 tempo_jornada = v_tempoJornada, 
-                tempo_descanso_total = v_tempoDescansoTotal, 
+--                tempo_descanso_total = v_tempoDescansoTotal, 
 				inicio_refeicao_1 = v_inicioRefeicao1, 
                 termino_refeicao_1 = v_terminoRefeicao1, 
                 tempo_refeicao_1 = v_tempoRefeicao1, 
@@ -274,9 +289,9 @@ BEGIN
                 tempo_refeicao_2 = v_tempoRefeicao2,
 				tempo_fora_servico = v_tempoForaServico, 
                 tempo_interjornada = v_tempoInterjornada, 
-                inicio_direcao = v_inicioDirecao, 
-                termino_direcao = v_terminoDirecao, 
-                tempo_direcao = v_tempoDirecao,
+--                inicio_direcao = v_inicioDirecao, 
+--                termino_direcao = v_terminoDirecao, 
+--                tempo_direcao = v_tempoDirecao,
                 inicio_carregamento = v_inicioCarregamento, 
                 termino_carregamento = v_terminoCarregamento, 
                 tempo_carregamento = v_tempoCarregamento, 
@@ -302,10 +317,12 @@ BEGIN
             
             -- Faz as críticas para as jornadas validadas ok
 			CALL sp_level_2_3(ID_loop, MctAddress_loop, MacroNumber_loop, Text_loop, PositionTime_loop, v_mctaddress, v_positionTime, v_macroNumber, 
-				v_jornadaId, v_statusJornada, v_mctaddress_last, v_macroNumber_last, v_positionTime_last, v_dataJornada, v_inicioJornada, v_terminoJornada, v_tempoJornada, 
-				v_inicioDirecao, v_terminoDirecao, v_tempoDirecao, v_inicioDescanso, v_terminoDescanso, v_tempoDescanso, v_inicioRefeicao1, v_terminoRefeicao1, v_tempoRefeicao1, 
-				v_inicioRefeicao2, v_terminoRefeicao2, v_tempoRefeicao2, v_inicioForaServico, v_terminoForaServico, v_tempoForaServico, v_inicioInterjornada, v_terminoInterjornada, v_tempoInterjornada, 
-				v_inicioCarregamento, v_terminoCarregamento, v_tempoCarregamento, v_inicioDescarregamento, v_terminoDescarregamento, v_tempoDescarregamento, v_tempoDescansoTotal );
+				v_jornadaId, v_statusJornada, v_mctaddress_last, v_macroNumber_last, v_positionTime_last, v_dataJornada, v_inicioJornada, v_terminoJornada, 
+                v_tempoJornada, 
+-- 				v_inicioDirecao, v_terminoDirecao, v_tempoDirecao, v_inicioDescanso, v_terminoDescanso, v_tempoDescanso, v_tempoDescansoTotal, 
+                v_inicioRefeicao1, v_terminoRefeicao1, v_tempoRefeicao1, v_inicioRefeicao2, v_terminoRefeicao2, v_tempoRefeicao2, 
+                v_inicioForaServico, v_terminoForaServico, v_tempoForaServico, v_inicioInterjornada, v_terminoInterjornada, v_tempoInterjornada, 
+				v_inicioCarregamento, v_terminoCarregamento, v_tempoCarregamento, v_inicioDescarregamento, v_terminoDescarregamento, v_tempoDescarregamento );
             
 /*
             -- Cria log de execução quando existe alguma validação realizada para a jornada
@@ -337,8 +354,6 @@ BEGIN
 				  AND TimePosition between v_inicioJornada and v_terminoJornada;
             END IF;
 */
-				
-            
             -- Cria o calendário para as jornadas recém inseridas
 			IF (not exists (select id from calendario where data_jornada = v_dataJornada)) THEN 
             
@@ -374,6 +389,9 @@ BEGIN
                 SET v_ult_jornada_positionTime_last = v_positionTime_last;
             END IF;
               
+        ELSE -- Senão, se a jornada atual não teve um fim
+			-- Deleta a jornada em questão
+			DELETE FROM jornada WHERE id = v_jornadaId;
         END IF;
 		
 	END LOOP all_id;

@@ -20,12 +20,13 @@ CREATE PROCEDURE sp_level_2_2(
 	INOUT v_inicioJornada DATETIME, 
 	INOUT v_terminoJornada DATETIME, 
 	INOUT v_tempoJornada VARCHAR(10), 
-	INOUT v_inicioDirecao DATETIME, 
-	INOUT v_terminoDirecao DATETIME, 
-	INOUT v_tempoDirecao TIME, 
-	INOUT v_inicioDescanso DATETIME, 
-	INOUT v_terminoDescanso DATETIME, 
-	INOUT v_tempoDescanso TIME, 
+-- 	INOUT v_inicioDirecao DATETIME, 
+-- 	INOUT v_terminoDirecao DATETIME, 
+-- 	INOUT v_tempoDirecao TIME, 
+-- 	INOUT v_inicioDescanso DATETIME, 
+-- 	INOUT v_terminoDescanso DATETIME, 
+-- 	INOUT v_tempoDescanso TIME, 
+-- 	INOUT v_tempoDescansoTotal TIME, 
 	INOUT v_inicioRefeicao1 DATETIME, 
 	INOUT v_terminoRefeicao1 DATETIME, 
 	INOUT v_tempoRefeicao1 TIME, 
@@ -43,8 +44,7 @@ CREATE PROCEDURE sp_level_2_2(
 	INOUT v_tempoCarregamento TIME, 
 	INOUT v_inicioDescarregamento DATETIME, 
 	INOUT v_terminoDescarregamento DATETIME, 
-	INOUT v_tempoDescarregamento TIME,
-    INOUT v_tempoDescansoTotal TIME
+	INOUT v_tempoDescarregamento TIME
 )
 BEGIN 
 	DECLARE v_log_subject VARCHAR(40);
@@ -55,6 +55,7 @@ BEGIN
 
 	SET v_statusJornada = 1;
 
+/*
 	-- Valida o Início da Direcao
 	IF v_inicioDirecao is null and v_terminoDirecao is not null THEN
 		SET v_statusJornada = 0;
@@ -71,29 +72,30 @@ BEGIN
 		SET v_log_message = "O Término de Direção foi criado usando o valor do Término de Jornada";
 		INSERT INTO execute_log (log_date, log_subject, log_message, jornada_id, returnmessage_id) VALUES (NOW(), v_log_subject, v_log_message, v_jornadaId, ID_loop);
 	END IF;
+*/
 
 	IF v_inicioRefeicao1 is not null and v_terminoRefeicao1 is null THEN
 		SET v_statusJornada = 0;
 		SET v_tempoRefeicao1 = null;
 		SET v_tempoRefeicao2 = null;
-		SET v_log_subject = "Refeição 1 sem Reinício";
-		SET v_log_message = "Parada para Refeição sem Reinício de Jornada";
+		SET v_log_subject = "Refeição 1 sem Reinício Jornada";
+		SET v_log_message = "Parada para refeição sem Reinício de Jornada";
 		INSERT INTO execute_log (log_date, log_subject, log_message, jornada_id, returnmessage_id) VALUES (NOW(), v_log_subject, v_log_message, v_jornadaId, ID_loop);
 	END IF;
 	
 	IF v_inicioRefeicao2 is not null and v_terminoRefeicao2 is null THEN
 		SET v_statusJornada = 0;
 		SET v_tempoRefeicao2 = null;
-		SET v_log_subject = "Refeição 2 sem Reinício";
-		SET v_log_message = "Segunda parada para Refeição sem Reinício de Jornada";
+		SET v_log_subject = "Refeição 2 sem Reinício Jornada";
+		SET v_log_message = "Segunda parada para refeição sem Reinício de Jornada";
 		INSERT INTO execute_log (log_date, log_subject, log_message, jornada_id, returnmessage_id) VALUES (NOW(), v_log_subject, v_log_message, v_jornadaId, ID_loop);
 	END IF;
 
 	-- Valida o Término da Jornada
 	IF v_terminoJornada is null THEN
 		SET v_statusJornada = 0;
-		SET v_log_subject = "Jornada sem Término";
-		SET v_log_message = "Jornada sem Término de Jornada";
+		SET v_log_subject = "Jornada sem encerramento";
+		SET v_log_message = "Esta jornada não teve uma macro Fim de Jornada";
 		INSERT INTO execute_log (log_date, log_subject, log_message, jornada_id, returnmessage_id) VALUES (NOW(), v_log_subject, v_log_message, v_jornadaId, ID_loop);
 	END IF;
 
@@ -153,6 +155,7 @@ BEGIN
         
     END IF;
 
+/*
 	-- Valida o Término da Direcao
 	IF v_inicioDirecao is not null and v_terminoDirecao is null THEN
 		SET v_statusJornada = 0;
@@ -185,6 +188,7 @@ BEGIN
 		END IF;
         
 	END IF;
+*/
 
 END $$ 
 

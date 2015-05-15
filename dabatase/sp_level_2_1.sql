@@ -20,12 +20,13 @@ CREATE PROCEDURE sp_level_2_1(
 	INOUT v_inicioJornada DATETIME, 
 	INOUT v_terminoJornada DATETIME, 
 	INOUT v_tempoJornada VARCHAR(10), 
-	INOUT v_inicioDirecao DATETIME, 
-	INOUT v_terminoDirecao DATETIME, 
-	INOUT v_tempoDirecao TIME, 
-	INOUT v_inicioDescanso DATETIME, 
-	INOUT v_terminoDescanso DATETIME, 
-	INOUT v_tempoDescanso TIME, 
+-- 	INOUT v_inicioDirecao DATETIME, 
+-- 	INOUT v_terminoDirecao DATETIME, 
+-- 	INOUT v_tempoDirecao TIME, 
+-- 	INOUT v_inicioDescanso DATETIME, 
+-- 	INOUT v_terminoDescanso DATETIME, 
+-- 	INOUT v_tempoDescanso TIME, 
+-- 	INOUT v_tempoDescansoTotal TIME
 	INOUT v_inicioRefeicao1 DATETIME, 
 	INOUT v_terminoRefeicao1 DATETIME, 
 	INOUT v_tempoRefeicao1 TIME, 
@@ -43,8 +44,7 @@ CREATE PROCEDURE sp_level_2_1(
 	INOUT v_tempoCarregamento TIME, 
 	INOUT v_inicioDescarregamento DATETIME, 
 	INOUT v_terminoDescarregamento DATETIME, 
-	INOUT v_tempoDescarregamento TIME,
-    INOUT v_tempoDescansoTotal TIME
+	INOUT v_tempoDescarregamento TIME    
 )
 BEGIN 
 	DECLARE v_log_subject VARCHAR(40);
@@ -55,6 +55,7 @@ BEGIN
 		SET v_inicioJornada = v_positionTime;
 	END IF;
 
+/*
 	-- Início de Direcao (também previne vários inícios de direção na mesma jornada. Considera somente o primeiro)
 	IF v_macroNumber = 15 and v_inicioDirecao is null THEN
 		SET v_inicioDirecao = v_positionTime;
@@ -70,6 +71,7 @@ BEGIN
 		
 	END IF;
 	
+*/
 	-- Intervalo para refeicao
 	IF v_macroNumber = 2 THEN 
 	
@@ -87,7 +89,7 @@ BEGIN
 		-- Se estava em intervalo para Refeicao
 		IF v_macroNumber_last = 2 THEN 
 			
-			IF v_inicioRefeicao2 is null AND v_terminoRefeicao1 is null THEN
+			IF v_inicioRefeicao1 is not null AND v_terminoRefeicao1 is null THEN
 				SET v_terminoRefeicao1 = v_positionTime;
 				SET v_tempoRefeicao1 = TIMEDIFF(v_terminoRefeicao1, v_inicioRefeicao1);
 			ELSEIF v_inicioRefeicao2 is not null AND v_terminoRefeicao2 is null THEN 
@@ -96,7 +98,8 @@ BEGIN
 			END IF;
 			
 		END IF;
-		
+
+/*		
 		-- Se estava em intervalo de Descanso
 		IF v_macroNumber_last = 11 and v_terminoDescanso is null THEN 
 			SET v_terminoDescanso = v_positionTime;
@@ -112,6 +115,7 @@ BEGIN
             SET v_terminoDescanso = NULL;
             SET v_tempoDescanso = NULL;
 		END IF;        
+*/
 		
 	END IF;
 	
@@ -128,16 +132,17 @@ BEGIN
 		-- Se estava em intervalo para Refeicao
 		IF v_macroNumber_last = 2 THEN 
 			
-			IF v_inicioRefeicao2 is null THEN
+			IF v_inicioRefeicao1 is not null AND v_terminoRefeicao1 is null THEN
 				SET v_terminoRefeicao1 = v_positionTime;
 				SET v_tempoRefeicao1 = TIMEDIFF(v_terminoRefeicao1, v_inicioRefeicao1);
-			ELSE
+			ELSEIF v_inicioRefeicao2 is not null AND v_terminoRefeicao2 is null THEN 
 				SET v_terminoRefeicao2 = v_positionTime;
 				SET v_tempoRefeicao2 = TIMEDIFF(v_terminoRefeicao2, v_inicioRefeicao2);
 			END IF;
 			
 		END IF;
 		
+/*        
 		-- Se estava em intervalo de Descanso
 		IF v_macroNumber_last = 11 and v_terminoDescanso is null THEN 
 			SET v_terminoDescanso = v_positionTime;
@@ -153,7 +158,7 @@ BEGIN
             SET v_terminoDescanso = NULL;
             SET v_tempoDescanso = NULL;
 		END IF;        
-        
+*/        
 	END IF;
 
 	-- Termino de Carregamento
@@ -169,16 +174,17 @@ BEGIN
 		-- Se estava em intervalo para Refeicao
 		IF v_macroNumber_last = 2 THEN 
 			
-			IF v_inicioRefeicao2 is null THEN
+			IF v_inicioRefeicao1 is not null AND v_terminoRefeicao1 is null THEN
 				SET v_terminoRefeicao1 = v_positionTime;
 				SET v_tempoRefeicao1 = TIMEDIFF(v_terminoRefeicao1, v_inicioRefeicao1);
-			ELSE
+			ELSEIF v_inicioRefeicao2 is not null AND v_terminoRefeicao2 is null THEN 
 				SET v_terminoRefeicao2 = v_positionTime;
 				SET v_tempoRefeicao2 = TIMEDIFF(v_terminoRefeicao2, v_inicioRefeicao2);
 			END IF;
 			
 		END IF;
 		
+/*        
 		-- Se estava em intervalo de Descanso
 		IF v_macroNumber_last = 11 and v_terminoDescanso is null THEN 
 			SET v_terminoDescanso = v_positionTime;
@@ -194,6 +200,7 @@ BEGIN
             SET v_terminoDescanso = NULL;
             SET v_tempoDescanso = NULL;
 		END IF;        
+*/
         
 	END IF;
 
@@ -203,10 +210,12 @@ BEGIN
 		SET v_tempoDescarregamento = TIMEDIFF(v_terminoDescarregamento, v_inicioDescarregamento);
 	END IF;
 
+/*
 	-- Descanso
 	IF v_macroNumber = 11 THEN
 		SET v_inicioDescanso = v_positionTime;
 	END IF;
+*/
 
 	SET v_macroNumber_last = v_macroNumber;
 	SET v_mctaddress_last = v_mctaddress;

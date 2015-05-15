@@ -20,12 +20,13 @@ CREATE PROCEDURE sp_level_2_3 (
 	IN v_inicioJornada DATETIME, 
 	IN v_terminoJornada DATETIME, 
 	IN v_tempoJornada VARCHAR(10), 
-	IN v_inicioDirecao DATETIME, 
-	IN v_terminoDirecao DATETIME, 
-	IN v_tempoDirecao TIME, 
-	IN v_inicioDescanso DATETIME, 
-	IN v_terminoDescanso DATETIME, 
-	IN v_tempoDescanso TIME, 
+-- 	IN v_inicioDirecao DATETIME, 
+-- 	IN v_terminoDirecao DATETIME, 
+-- 	IN v_tempoDirecao TIME, 
+-- 	IN v_inicioDescanso DATETIME, 
+-- 	IN v_terminoDescanso DATETIME, 
+-- 	IN v_tempoDescanso TIME, 
+-- 	IN v_tempoDescansoTotal TIME, 
 	IN v_inicioRefeicao1 DATETIME, 
 	IN v_terminoRefeicao1 DATETIME, 
 	IN v_tempoRefeicao1 TIME, 
@@ -43,8 +44,7 @@ CREATE PROCEDURE sp_level_2_3 (
 	IN v_tempoCarregamento TIME, 
 	IN v_inicioDescarregamento DATETIME, 
 	IN v_terminoDescarregamento DATETIME, 
-	IN v_tempoDescarregamento TIME,
-    IN v_tempoDescansoTotal TIME
+	IN v_tempoDescarregamento TIME
 )
 BEGIN 
 	DECLARE v_log_subject VARCHAR(40);

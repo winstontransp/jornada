@@ -9,7 +9,7 @@ truncate table execute_log;
 truncate table critica_jornada;
 truncate table calendario;
 truncate table jornada;
-truncate table jornada_descanso;
+-- truncate table jornada_descanso;
 
 drop procedure if exists sp_level_2;
 
