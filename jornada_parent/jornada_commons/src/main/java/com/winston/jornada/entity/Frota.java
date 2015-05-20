@@ -46,7 +46,7 @@ public class Frota extends AppBaseEntity {
 	private String placa;
 
 	@Digits(integer = 5, fraction = 0)
-	private Long mct;
+	private Long mctAddress;
 
 	public Frota() {
 	}
@@ -75,12 +75,12 @@ public class Frota extends AppBaseEntity {
 		this.placa = placa;
 	}
 
-	public Long getMct() {
-		return mct;
+	public Long getMctAddress() {
+		return mctAddress;
 	}
 
-	public void setMct(Long mct) {
-		this.mct = mct;
+	public void setMctAddress(Long mctAddress) {
+		this.mctAddress = mctAddress;
 	}
 
 	@Override
