@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:plcf="http://www.powerlogic.com.br/plcf" 
+	xmlns:tr="http://myfaces.apache.org/trinidad" 
+	xmlns:trh="http://myfaces.apache.org/trinidad/html">  
+	<ui:composition template="/fcls/template/PlcGeralTemplate.xhtml"> 
+		<ui:define name="plc-corpo-formulario"> 
+			<div id="plc-form-basico"> 
+				<div id="#{plcAliasPrefixoAction}Arg" class="plc-form-basico-topo"> 
+					<plcf:tabela tituloChave="jornadadetarg.titulo"> 
+						<plcf:linha> 
+							<plcf:celula> 
+								<plcf:titulo value="#{msg['label.id']}"/>  
+								<plcf:numerico id="id" value="#{jornadadet.id}" ajudaChave="ajuda.id" tamanho="5"/> 
+							</plcf:celula>  
+							<plcf:celula> 
+								<plcf:titulo value="#{msg['label.motorista']}"/>  
+								<plcf:vinculado id="motorista" value="#{jornadadet.motorista}" propSelPop="motorista" idExibe="S" idSomenteLeitura="N" autoRecuperacaoClasse="com.winston.jornada.entity.Motorista" actionSel="motoristasel" modal="S" ajudaChave="ajuda.motorista" onkeydown="selecionaPorTecla(event,this);"/> 
+							</plcf:celula>  
+							<plcf:celula> 
+								<plcf:titulo value="#{msg['label.data']}"/>  
+								<plcf:data id="data" value="#{jornadadet.data}" ajudaChave="ajuda.data"/> 
+							</plcf:celula>  
+							<plcf:celula> 
+								<plcf:titulo value="#{msg['label.status']}"/>  
+								<plcf:comboEstatico id="status" value="#{jornadadet.status}" dominio="StatusJornada" exibeBranco="S" ajudaChave="ajuda.status"/> 
+							</plcf:celula>  
+							<plcf:celula> 
+								<plcf:titulo value="#{msg['label.mctAddress']}"/>  
+								<plcf:numerico id="mctAddress" value="#{jornadadet.mctAddress}" ajudaChave="ajuda.mctAddress"/> 
+							</plcf:celula> 
+						</plcf:linha> 
+					</plcf:tabela> 
+				</div>
+				<div id="#{plcAliasPrefixoAction}Sel" class="plc-form-basico-sel"> 
+					<script type="text/javascript">//<![CDATA[
+	jQuery(function(){plc.criaSelecaoJqGrid('plc-grid','plc-grid-navegador',{
+		evento:'${param.evento}',
+			modoJanelaPlc:'${param.modoJanelaPlc}',
+			rowNum:'30',
+			nomeLogica:'jornadadet',
+			propAgregada:'jornadadet',
+			jqGrid:{caption:
+				'#{msg['jornadadet.titulo']}',
+				colNames:
+					['#{msg['label.id']}',
+					'#{msg['label.motorista']}',
+					'#{msg['label.data']}',
+					'#{msg['label.status']}',
+					'#{msg['label.mctAddress']}'],
+				colModel:[
+					{name:'id',index:'id'},
+					{name:'motorista',index:'motorista'},
+					{name:'data',index:'data'},
+					{name:'status',index:'status'},
+					{name:'mctAddress',index:'mctAddress'}]},
+			urlEdicao:'#{request.contextPath}/f/n/jornadadetmad'});});//]]> </script>  
+					<table id="plc-grid" width="100%" class="scroll" cellpadding="0" cellspacing="0"/>  
+					<div id="plc-grid-navegador" class="scroll" style="text-align:center;"/> 
+				</div> 
+			</div> 
+		</ui:define> 
+	</ui:composition> 
+</html>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:plcf="http://www.powerlogic.com.br/plcf" 
+	xmlns:plct="http://www.powerlogic.com.br/plct" 
+	xmlns:tr="http://myfaces.apache.org/trinidad" 
+	xmlns:trh="http://myfaces.apache.org/trinidad/html">  
+	<ui:composition> 
+		<fieldset class="plc-fieldset"> 
+			<legend class="plc-fieldset-legend">#{msg['jornadadet.titulo.detalhe']}</legend>  
+			<plcf:iteracao var="returnMessage" id="returnMessage" value="#{jornadadet.returnMessage}" columnClasses="celulaFormulario" headerClass="celulaFormulario"> 
+				<h:column> 
+					<h:outputText value="#{rowCounter.index}."/> 
+				</h:column>  
+				<h:column rendered="#{empty requestScope.visualizaDocumentoPlc}"> 
+					<f:facet name="header">
+						<plcf:tituloExclusao>Exc.</plcf:tituloExclusao>
+					</f:facet>  
+					<span class="celulaFormularioCaixaMarcacao">
+						<plcf:caixaExclusao id="indExcPlc" value="#{returnMessage.indExcPlc}"/>
+					</span> 
+				</h:column>  
+				<h:column> 
+					<f:facet name="header">
+						<plcf:titulo value="#{msg['label.id']}"/>
+					</f:facet>  
+					<plcf:oid id="id" value="#{returnMessage.id}" ajudaChave="ajuda.id"/> 
+				</h:column>
+				<!-- 
+				<h:column> 
+					<f:facet name="header">
+						<plcf:titulo value="#{msg['label.mctAddress']}"/>
+					</f:facet>  
+					<plcf:numerico id="mctAddress" value="#{returnMessage.mctAddress}" numCasas="0" ajudaChave="ajuda.mctAddress"/> 
+				</h:column>  
+				 -->  
+				<h:column> 
+					<f:facet name="header">
+						<plcf:titulo value="#{msg['label.macroNumber']}"/>
+					</f:facet>  
+					<plcf:numerico id="macroNumber" value="#{returnMessage.macroNumber}" numCasas="0" ajudaChave="ajuda.macroNumber"/> 
+				</h:column>  
+				<h:column> 
+					<f:facet name="header">
+						<plcf:titulo value="#{msg['label.latitude']}"/>
+					</f:facet>  
+					<plcf:numerico id="latitude" value="#{returnMessage.latitude}" tamanho="10" ajudaChave="ajuda.latitude"/> 
+				</h:column>  
+				<h:column> 
+					<f:facet name="header">
+						<plcf:titulo value="#{msg['label.longitude']}"/>
+					</f:facet>  
+					<plcf:numerico id="longitude" value="#{returnMessage.longitude}" tamanho="10" ajudaChave="ajuda.longitude"/> 
+				</h:column>  
+				<h:column> 
+					<f:facet name="header">
+						<plcf:titulo value="#{msg['label.positionTime']}"/>
+					</f:facet>  
+					<!--plcf:data id="positionTime" value="#{returnMessage.positionTime}" riaUsa="textmask(mask='dd/MM/yyyy HH:mm:ss')" ajudaChave="ajuda.positionTime"/> 
+					<plcf:data id="positionTime" value="#{returnMessage.positionTime}" ajudaChave="ajuda.positionTime"/--> 
+					<plcf:texto id="positionTime" value="#{returnMessage.positionTimeFormatado}" tamanho="18" ajudaChave="ajuda.positionTime"/> 
+				</h:column>  
+				<h:column> 
+					<f:facet name="header">
+						<plcf:titulo value="#{msg['label.macroText']}"/>
+					</f:facet>  
+					<plcf:texto id="macroText" value="#{returnMessage.macroText}" ajudaChave="ajuda.macroText"/> 
+				</h:column>  
+				<h:column> 
+					<f:facet name="header">
+						<plcf:titulo value="#{msg['label.landmark']}"/>
+					</f:facet>  
+					<plcf:texto id="landmark" value="#{returnMessage.landmark}" tamanho="30" ajudaChave="ajuda.landmark"/> 
+				</h:column>
+				<!--
+				<h:column> 
+					<f:facet name="header">
+						<plcf:titulo value="#{msg['label.proc']}"/>
+					</f:facet>  
+					<plcf:caixaMarcacao id="proc" obrigatorio="N" value="#{returnMessage.proc}" ajudaChave="ajuda.proc"/> 
+				</h:column>
+				--> 
+			</plcf:iteracao> 
+		</fieldset> 
+	</ui:composition> 
+</html>

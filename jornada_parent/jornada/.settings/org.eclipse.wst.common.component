@@ -7,6 +7,8 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resources"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/webapp/WEB-INF"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/config"/>
         <dependent-module archiveName="jcompany_service-6.1.9.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jcompany_service/jcompany_service">
             <dependency-type>uses</dependency-type>
         </dependent-module>

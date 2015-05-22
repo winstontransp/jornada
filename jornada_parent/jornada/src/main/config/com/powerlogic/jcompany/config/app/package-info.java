@@ -7,8 +7,14 @@
 
 @PlcConfigApplication(
 	definition=@PlcConfigApplicationDefinition(name="jornada",acronym="jornada",version=1,release=0),
-	classesDiscreteDomain={},
-	classesLookup={}
+
+	classesDiscreteDomain={com.winston.jornada.entity.StatusImportacao.class, 
+		com.winston.jornada.entity.StatusJornada.class, 
+		com.winston.jornada.entity.TipoEvento.class,
+		com.winston.jornada.entity.Turno.class},
+
+	classesLookup={com.winston.jornada.entity.Operacao.class, 
+		com.winston.jornada.entity.Macro.class}
 )
 
 
