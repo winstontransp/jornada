@@ -25,7 +25,8 @@ import javax.persistence.Transient;
 @Table(name = "MACRO")
 @SequenceGenerator(name = "SE_MACRO", sequenceName = "SE_MACRO")
 @Access(AccessType.FIELD)
-@NamedQueries({ @NamedQuery(name = "Macro.querySelLookup", query = "select id as id, nome as nome from Macro where id = ? order by id asc") })
+@NamedQueries({ 
+	@NamedQuery(name = "Macro.querySelLookup", query = "select id as id, nome as nome from Macro where id = ? order by id asc") })
 public class Macro extends AppBaseEntity {
 
 	@Id

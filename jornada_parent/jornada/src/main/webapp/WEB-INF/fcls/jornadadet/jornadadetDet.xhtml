@@ -40,10 +40,11 @@
 				 -->  
 				<h:column> 
 					<f:facet name="header">
-						<plcf:titulo value="#{msg['label.macroNumber']}"/>
+						<plcf:titulo value="#{msg['label.macro']}"/>
 					</f:facet>  
-					<plcf:numerico id="macroNumber" value="#{returnMessage.macroNumber}" numCasas="0" ajudaChave="ajuda.macroNumber"/> 
-				</h:column>  
+					<plcf:comboDinamico id="macro" dominio="Macro" value="#{returnMessage.macro}" exibeBranco="N" ajudaChave="ajuda.macro"/>
+				</h:column>
+				<!-- 
 				<h:column> 
 					<f:facet name="header">
 						<plcf:titulo value="#{msg['label.latitude']}"/>
@@ -58,25 +59,31 @@
 				</h:column>  
 				<h:column> 
 					<f:facet name="header">
+						<plcf:titulo value="#{msg['label.positionCoordinate']}"/>
+					</f:facet>  
+					<plcf:texto id="positionCoordinate" value="#{returnMessage.positionCoordinate}" tamanho="20" ajudaChave="ajuda.positionCoordinate"/> 
+				</h:column>  
+				 -->  
+				<h:column> 
+					<f:facet name="header">
 						<plcf:titulo value="#{msg['label.positionTime']}"/>
 					</f:facet>  
-					<!--plcf:data id="positionTime" value="#{returnMessage.positionTime}" riaUsa="textmask(mask='dd/MM/yyyy HH:mm:ss')" ajudaChave="ajuda.positionTime"/> 
-					<plcf:data id="positionTime" value="#{returnMessage.positionTime}" ajudaChave="ajuda.positionTime"/--> 
-					<plcf:texto id="positionTime" value="#{returnMessage.positionTimeFormatado}" tamanho="18" ajudaChave="ajuda.positionTime"/> 
+					<plcf:texto id="positionTimeFormatado" value="#{returnMessage.positionTimeFormatado}" riaUsa="textmask(mask='99/99/9999 99:99:99')" tamanho="18" ajudaChave="ajuda.positionTime"/> 
 				</h:column>  
 				<h:column> 
 					<f:facet name="header">
 						<plcf:titulo value="#{msg['label.macroText']}"/>
 					</f:facet>  
-					<plcf:texto id="macroText" value="#{returnMessage.macroText}" ajudaChave="ajuda.macroText"/> 
+					<plcf:texto id="macroText" value="#{returnMessage.macroText}" tamanho="15" ajudaChave="ajuda.macroText"/> 
 				</h:column>  
+					
+				<!--
 				<h:column> 
 					<f:facet name="header">
 						<plcf:titulo value="#{msg['label.landmark']}"/>
 					</f:facet>  
 					<plcf:texto id="landmark" value="#{returnMessage.landmark}" tamanho="30" ajudaChave="ajuda.landmark"/> 
 				</h:column>
-				<!--
 				<h:column> 
 					<f:facet name="header">
 						<plcf:titulo value="#{msg['label.proc']}"/>

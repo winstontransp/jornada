@@ -42,7 +42,7 @@ import com.powerlogic.jcompany.domain.validation.PlcValGroupEntityList;
 public class ReturnMessage extends AppBaseEntity {
 
 	@Transient
-	private transient DateFormat fmtHora = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");	
+	private transient DateFormat fmtHora = new SimpleDateFormat("ddMMyyyyHHmmss");	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "SE_RETURN_MESSAGE")
@@ -59,10 +59,10 @@ public class ReturnMessage extends AppBaseEntity {
 	@Digits(integer = 5, fraction = 0)
 	private Long mctAddress;
 
-	@NotNull(groups = PlcValGroupEntityList.class)
+	@ManyToOne(targetEntity = Macro.class, fetch = FetchType.LAZY)
+	@ForeignKey(name = "FK_RETURNMESSAGE_MACRO")
 	@RequiredIf(valueOf = "positionTime", is = RequiredIfType.not_empty)
-	@Digits(integer = 5, fraction = 0)
-	private Integer macroNumber;
+	private Macro macro;
 
 	@NotNull(groups = PlcValGroupEntityList.class)
 	@RequiredIf(valueOf = "landmark", is = RequiredIfType.not_empty)
@@ -107,12 +107,12 @@ public class ReturnMessage extends AppBaseEntity {
 		this.mctAddress = mctAddress;
 	}
 
-	public Integer getMacroNumber() {
-		return macroNumber;
+	public Macro getMacro() {
+		return macro;
 	}
 
-	public void setMacroNumber(Integer macroNumber) {
-		this.macroNumber = macroNumber;
+	public void setMacro(Macro macro) {
+		this.macro = macro;
 	}
 
 	public BigDecimal getLatitude() {
@@ -193,27 +193,41 @@ public class ReturnMessage extends AppBaseEntity {
 	}
 
 	@Transient
-	private String positionTimeFormatado;
+	private transient String positionTimeFormatado;
 	
 	public String getPositionTimeFormatado() {
-		return getTempo(getPositionTime());
+		
+		if (getPositionTime() != null) {
+			positionTimeFormatado = fmtHora.format(getPositionTime());
+			return positionTimeFormatado;
+		}
+		
+		return null;		
 	}
 	
 	public void setPositionTimeFormatado(String sData) {
 		try {
+			positionTimeFormatado = sData;
 			setPositionTime(fmtHora.parse(sData));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	private String getTempo(Date dataHora) {
+
+	@Transient
+	private transient String positionCoordinate;
+
+
+	public String getPositionCoordinate() {
 		
-		if (dataHora != null) {
-			return fmtHora.format(dataHora);
-		}
+		positionCoordinate = String.format("(%,8.6f, %,8.6f)", latitude, longitude);
 		
-		return null;
+		return positionCoordinate;
 	}
+
+	public void setPositionCoordinate(String positionCoordinate) {
+		this.positionCoordinate = positionCoordinate;
+	}
+	
 	
 }
