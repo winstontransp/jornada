@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsf/functions"
+	xmlns:plcf="http://www.powerlogic.com.br/plcf"
+	xmlns:plct="http://www.powerlogic.com.br/plct" 
+	xmlns:tr="http://myfaces.apache.org/trinidad"
+	xmlns:trh="http://myfaces.apache.org/trinidad/html">
+<head>
+    <link rel="StyleSheet" href="#{request.contextPath}/res-plc/css/jquery/ui/themes/ui.all.css" type="text/css" charset="UTF-8" />
+    <link rel="StyleSheet" href="#{request.contextPath}/res-plc/css/itunes/jquery/jquery-ui-1.7.custom.css" type="text/css" charset="UTF-8" />	
+    <link rel="StyleSheet" href="#{request.contextPath}/res-plc/css/plc.geral.css" type="text/css" charset="UTF-8" />
+</head>
+
+<body>
+	<ui:composition>
+	
+	<div id="nomeEmpresa" class="plc-topo-empresa">
+			<a href="#" onclick="funcaoHome()">
+			<img class="plc-imagem" src="#{request.contextPath}/res/midia/topo-logo-empresa.png" alt="#{metadados['nomeEmpresa']}" 
+			height="34" /></a>
+	</div>
+	<div id="tituloPagina" class="ui-widget-content ui-corner-all plc-topo-titulo">
+		<ui:insert name="plc-titulo"><label jsfc="plcf:titulo" tituloChave="#{plcAliasPrefixoAction}.titulo" ></label></ui:insert>
+	</div>
+
+	<div id="siglaAplicacao" class="plc-topo-aplicacao">Controle de Jornada</div>
+
+	<div id="plc-topo-menu" class="plc-topo-menu">
+		<div class="plc-topo-menu-item" >
+			<a href="#" onclick="funcaoHome()" id="plc-topo-menu-link2" title="#{msgPlc['jcompany.rodape.home']}" >
+				<img src="#{request.contextPath}/res/midia/buton_home.png" alt="Pagina Inicial" />
+			</a>
+		</div>
+		<div class="plc-topo-menu-item" >
+			<a href="#" onclick="funcaoDesconectar(); return false;" id="plc-topo-menu-link1" title="#{msgPlc['jcompany.evt.desconectar']}" >
+				<img src="#{request.contextPath}/res/midia/buton_logoff.png" alt="Desconectar" />
+			</a>
+		</div>
+	</div>
+<script type="text/javascript">
+//<![CDATA[
+function funcaoDesconectar() {
+	plc.jq('#corpo\\:formulario\\:plc-acao-desconecta-app, #plc-acao-desconecta1').get(0).click();
+}
+	//]]>
+	</script>
+</ui:composition>
+</body>
+</html>

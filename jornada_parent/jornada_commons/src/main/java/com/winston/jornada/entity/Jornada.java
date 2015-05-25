@@ -22,6 +22,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -85,6 +86,14 @@ public class Jornada extends AppBaseEntity {
 	@PlcValMultiplicity(referenceProperty="positionTime",  message="{jcompany.aplicacao.mestredetalhe.multiplicidade.ReturnMessage}")
 	@Valid
 	private List<ReturnMessage> returnMessage;
+	
+	@OneToMany (targetEntity = JornadaEvento.class, fetch = FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="jornada")
+	@ForeignKey(name="FK_JORNADAEVENTO_JORNADA")
+	@OrderBy("inicio")
+	@PlcValDuplicity(property="id")
+	@PlcValMultiplicity(referenceProperty="id", message="{jcompany.aplicacao.mestredetalhe.multiplicidade.Eventos}")
+	@Valid
+	private List<JornadaEvento> eventos;
 	
 	public Jornada() {
 	}
@@ -153,6 +162,15 @@ public class Jornada extends AppBaseEntity {
 		this.returnMessage = returnMessage;
 	}
 
+	public List<JornadaEvento> getEventos() {
+		return eventos;
+	}
+
+	public void setEventos(List<JornadaEvento> eventos) {
+		this.eventos = eventos;
+	}
+
+	
 	@Override
 	public String toString() {
 		

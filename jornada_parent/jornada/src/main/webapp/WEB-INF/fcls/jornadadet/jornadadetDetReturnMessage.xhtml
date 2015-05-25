@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:plcf="http://www.powerlogic.com.br/plcf" 
+	xmlns:plct="http://www.powerlogic.com.br/plct" 
+	xmlns:tr="http://myfaces.apache.org/trinidad" 
+	xmlns:trh="http://myfaces.apache.org/trinidad/html">  
+	<div id="jornada_det_return_message">
+		 
+		<fieldset class="plc-fieldset"> 
+			<legend class="plc-fieldset-legend">#{msg['jornadadet.titulo.detalhe']}</legend>  
+			<plcf:iteracao var="returnMessage" id="returnMessage" value="#{jornadadet.returnMessage}" columnClasses="celulaFormulario" headerClass="celulaFormulario"> 
+				<h:column> 
+					<h:outputText value="#{rowCounter.index}."/> 
+				</h:column>  
+				<h:column rendered="#{empty requestScope.visualizaDocumentoPlc}"> 
+					<f:facet name="header">
+						<plcf:tituloExclusao>Exc.</plcf:tituloExclusao>
+					</f:facet>  
+					<span class="celulaFormularioCaixaMarcacao">
+						<plcf:caixaExclusao id="indExcPlc" value="#{returnMessage.indExcPlc}"/>
+					</span> 
+				</h:column>  
+				<h:column> 
+					<f:facet name="header">
+						<plcf:titulo value="#{msg['label.id']}"/>
+					</f:facet>  
+					<plcf:oid id="id" value="#{returnMessage.id}" ajudaChave="ajuda.id"/> 
+				</h:column>
+				<h:column> 
+					<f:facet name="header">
+						<plcf:titulo value="#{msg['label.macro']}"/>
+					</f:facet>  
+					<plcf:comboDinamico id="macro" dominio="Macro" value="#{returnMessage.macro}" exibeBranco="N" ajudaChave="ajuda.macro"/>
+				</h:column>
+				<h:column> 
+					<f:facet name="header">
+						<plcf:titulo value="#{msg['label.positionTime']}"/>
+					</f:facet>  
+					<plcf:texto id="positionTimeFormatado" value="#{returnMessage.positionTimeFormatado}" riaUsa="textmask(mask='99/99/9999 99:99:99')" tamanho="18" ajudaChave="ajuda.positionTime"/> 
+				</h:column>  
+				<h:column> 
+					<f:facet name="header">
+						<plcf:titulo value="#{msg['label.macroText']}"/>
+					</f:facet>  
+					<plcf:texto id="macroText" value="#{returnMessage.macroText}" tamanho="15" ajudaChave="ajuda.macroText"/> 
+				</h:column>  
+			</plcf:iteracao> 
+		</fieldset>
+	</div> 
+</ui:composition> 

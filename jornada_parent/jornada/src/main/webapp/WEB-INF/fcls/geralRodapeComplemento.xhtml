@@ -7,23 +7,95 @@
       xmlns:tr="http://myfaces.apache.org/trinidad"
 	  xmlns:trh="http://myfaces.apache.org/trinidad/html"
 	  xmlns:plcf="http://www.powerlogic.com.br/plcf"
-	  xmlns:c="http://java.sun.com/jstl/core">
+	  xmlns:c="http://java.sun.com/jsp/jstl/core">
 <body>
-<div id="plc-rodape" class="ui-widget ui-widget-header plc-rodape">
+<div id="plc-rodape" class="ui-widget ui-widget-header plc-rodape" >
 	<ui:composition>		
-		<div id="plc-rodape-complemento" class="plc-rodape-complemento" >
-			<div class="plc-rodape-complemento-empresa">
-				#{metadados['nomeEmpresa']} - #{metadados['nomeAplicacao']} <br/> 
-				#{msgPlc['jcompany.rodape.copyright']}
-			</div>
-			<c:if test="#{initParam['modoExecucao']!='D'}">
-				<div class="plc-rodape-complemento-memoria" >
-					<div class="ico iDiagnostico"></div>
-					Total Mem.: #{plcComponenteVisual.totalMemory} Bytes <br />
-					Livre Mem.: #{plcComponenteVisual.freeMemory} Bytes
+				<div id="plc-rodape-complemento" class="plc-rodape-complemento"
+					align="center">
+					<table style="margin: 0 auto;">
+						<tr>
+							<td>
+								<span class="indicador-tempo-logado"></span>
+								<span style="height: 30px; line-height: 30px;font-size:12px;">Sessão/Login expira em: <em><span id="tempoLogin"></span></em></span>
+							</td>
+							<td width="50px">
+								<span>&nbsp;&nbsp;&nbsp;</span>
+							</td>
+							<td><span class="indicador-hora-acesso"></span> 
+							<span style="height: 30px; line-height: 30px;font-size:12px;">Hora	atual: <em><label id="horaAtual"></label></em></span>
+							</td>
+							<td width="50px">
+								<span>&nbsp;&nbsp;&nbsp;</span>
+							</td>
+							<td><span class="indicador-usuario"></span>
+								<span style="height: 30px; line-height: 30px;font-size:12px;"><div class="plc-rodape-bemvindo-t1">#{msgPlc['label.seja.bem.vindo']}</div>
+								<div class="plc-rodape-bemvindo-t2">#{sessionScope.USER_INFO['login']}</div></span></td>
+						</tr>
+						<tr>
+							<td colspan="5" align="center">
+								<div class="plc-rodape-complemento-empresa" align="center" style="font-size:12px;">
+									#{metadados['nomeEmpresa']} - #{metadados['nomeAplicacao']} |
+									#{msgPlc['jcompany.rodape.copyright']} | Versão - 0.0.0</div>
+							</td>
+						</tr>
+					</table>
 				</div>
-			</c:if>
-		</div>	
+				
+				<script type="text/javascript">//<![CDATA[
+				var endHorarioAtual;
+				var desconectou = false;
+				function calculaTempoLogin(){
+					var start = new Date();
+					
+					intervalo = 30;
+					
+					var diferenca = (endHorarioAtual.getTime() - start.getTime());
+					
+					var minuto = Math.floor(diferenca / 1000 / 60 );
+					plc.jq('#tempoLogin').text((minuto+1)+' Minutos');
+
+					if (minuto <= 0){
+						if (!desconectou){
+							desconectou = true;
+							funcaoDesconectar();
+							alert('Tempo de Login expirado !!!');
+						}
+					}
+
+				}
+
+				function getHoraAtual(){
+					var now = new Date();
+					var hours = now.getHours();
+					var minutes = now.getMinutes();
+					var segundos = now.getSeconds();
+					var timeValue = "" + (hours);
+					timeValue += ((minutes < 10) ? ":0" : ":") + minutes + ((segundos < 10) ? ":0" : ":")+segundos; 
+
+					document.getElementById('horaAtual').innerHTML = timeValue;
+				}
+
+			plc.jq( document ).ready(function() {
+				plc.jq('#plc-rodape-bemvindo').remove();
+				plc.jq('#plc-rodape-timeout').remove();
+				plc.jq('#plc-rodape-timeout2').remove();
+
+				endHorarioAtual = new Date();
+				endHorarioAtual.setHours(endHorarioAtual.getHours(),endHorarioAtual.getMinutes()+30);
+				
+				setInterval(function(){calculaTempoLogin()}, 1000);
+				setInterval(function(){getHoraAtual()}, 1000);
+
+				plc.jq(document).bind( "click", function() {
+					if (!desconectou){
+						endHorarioAtual = new Date();
+						endHorarioAtual.setHours(endHorarioAtual.getHours(),endHorarioAtual.getMinutes()+30);
+					}
+				});
+
+			});
+		//]]> </script>
 	</ui:composition>
 </div>	
 </body>	

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<head>
+<title>Autenticação</title>
+
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"></meta>
+
+<script type="text/javascript">
+			var contextPath = document.location.pathname.substring(0, document.location.pathname.indexOf('/', 1));
+			var css = contextPath+"/res-plc/css/itunes/jquery/jquery-ui-1.7.custom.css";
+			var css_app = contextPath+"/res-plc/css/itunes/pele.css";
+			var css_geral = contextPath+"/res-plc/css/plc.geral.css";
+			var app_css_geral = contextPath+"/res/css/app.geral.css";
+		</script>
+
+<script type="text/javascript">
+			document.write("<link rel='StyleSheet' href='"+css+"' type='text/css' charset='UTF-8'>"+"<"+"/link>");
+			document.write("<link rel='StyleSheet' href='"+css_geral+"' type='text/css' charset='UTF-8'>"+"<"+"/link>");
+			document.write("<link rel='StyleSheet' href='"+css_app+"' type='text/css' charset='UTF-8'>"+"<"+"/link>");
+			document.write("<link rel='StyleSheet' href='"+app_css_geral+"' type='text/css' charset='UTF-8'>"+"<"+"/link>");
+		</script>
+
+<script type="text/javascript">		
+			function redireciona(url){
+				var win;
+				win = window.open(url,"win","");
+				history.back();
+			}
+
+			function getDataAtual(){
+
+				var now = new Date();
+				var hours = now.getHours();
+				var minutes = now.getMinutes();
+				var segundos = now.getSeconds();
+				var timeValue = "" + (hours);
+				timeValue += ((minutes < 10) ? ":0" : ":") + minutes + ((segundos < 10) ? ":0" : ":")+segundos; 
+				timerRunning = true;
+
+				mydate = new Date();
+				myday = mydate.getDay();
+				mymonth = mydate.getMonth();
+				myweekday= mydate.getDate();
+				weekday= myweekday;
+				myyear= mydate.getFullYear();
+				year = myyear
+
+				if(myday == 0)
+				day = " Domingo, "
+
+				else if(myday == 1)
+				day = " Segunda, "
+
+				else if(myday == 2)
+				day = " Terça, "
+
+				else if(myday == 3)
+				day = " Quarta, "
+
+				else if(myday == 4)
+				day = " Quinta, "
+
+				else if(myday == 5)
+				day = " Sexta, "
+
+				else if(myday == 6)
+				day = " Sábado, "
+
+				if(mymonth == 0)
+				month = " de Janeiro de "
+
+				else if(mymonth ==1)
+				month = " de Fevereiro de "
+
+				else if(mymonth ==2)
+				month = " de Março de "
+
+				else if(mymonth ==3)
+				month = " de Abril de "
+
+				else if(mymonth ==4)
+				month = " de Maio de "
+
+				else if(mymonth ==5)
+				month = " de Junho de "
+
+				else if(mymonth ==6)
+				month = " de Julho de "
+
+				else if(mymonth ==7)
+				month = " de Agosto de "
+
+				else if(mymonth ==8)
+				month = " de Setembro de "
+
+				else if(mymonth ==9)
+				month = " de Outubro de "
+
+				else if(mymonth ==10)
+				month = " de Novembro de "
+
+				else if(mymonth ==11)
+				month = " de Dezembro de "
+
+				document.getElementById('dataHora').innerHTML =  day + myweekday + month + year + ' | ' +timeValue + ' Horas';
+
+			}
+
+		</script>
+
+</head>
+
+<body scroll="no">
+<style>
+
+button, .plc-botao {
+ background: #d33938;
+  border: 1px solid #AFAEAE !important;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-box-shadow: 0 1px 1px -1px #FFFFFF;
+  -webkit-box-shadow: 0 1px 1px -1px #FFFFFF;
+}
+
+</style>
+
+	<div class="app_topo_titulo">
+		<span style="color: #000; font-size: 18px"><b>Do lado da vida, perto de você.</b></span>
+	</div>
+	<div class="ui-widget ui-widget-content plc-corpo" style="max-width: 1024px;min-width : 420px; position: relative; margin : 0 auto; border-radius: 10px;margin-top: 5px;">
+		<div align="center" style="padding: 20px;">
+			<script>
+				document.write("<img src='"+contextPath+"/res/midia/wa_import0.jpg'>"+"<"+"/img>");
+			</script>
+		</div>
+		<div
+			style="text-align: center; color: #000; padding: 3px" class="app-login-div0" align="center">
+			<table align="center">
+				<tr>
+					<td><label id="dataHora"></label> <script
+							type="text/javascript">
+								setInterval(function(){getDataAtual()}, 1000);
+						</script></td>
+				</tr>
+
+			</table>
+		</div>
+		<div
+			style="text-align: center;color: #000; padding: 5px" class="app-login-div1">
+			<h1>Seja bem vindo(a) ao CUIDAR</h1>
+		</div>
+		<form method="post" action="j_security_check">
+			<div align="center" style="margin-top: 5px; margin-bottom: 50px">
+				<table>
+					<tr>
+						<td>
+							<div
+								class="ui-corner-all ui-state-error plc-msg-erro plc-login-mensagem">
+								<label>
+									Usuário e senha não conferem.Tente novamente.
+								</label>
+							</div>
+						</td>
+					</tr>
+				</table>
+				<table>
+					<tr>
+						<td>
+							<script>
+								document.write("<img src='"+contextPath+"/res/midia/icone-login.png'>"+"<"+"/img>");
+							</script>
+						</td>
+						<td><label for="j_username">Login:</label></td>
+						<td><input class="loginTexto" name="j_username" type="text"
+							id="id_j_username" /></td>
+					</tr>
+					<tr>
+						<td>
+							<script>
+								document.write("<img src='"+contextPath+"/res/midia/icone-senha.png'>"+"<"+"/img>");
+							</script>
+						</td>
+						<td><label for="j_username">Senha:</label></td>
+						<td><input class="loginTexto" type="password"
+							name="j_password" /></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td><input class="plc-botao" name="plc-login-botao" style="font-weight: bold; padding: 15px;width: 123px;margin-top: 5px; color: #fff; background:#000"
+							type="submit" value="Autenticar" title="Autenticar" /></td>
+					</tr>
+				</table>
+			</div>
+			<div style="margin: 0 auto; border-top: 2px; border-color: #59574b; border-top-style: solid; padding: 10px;text-align: center ">
+				Sistema de Gestão Clinica  - CUIDAR | Copyright 2015/2020 - Todos os direitos reservados
+			</div>
+	</div>
+	<!--------->
+	</form>
+	<script type="text/javascript">
+			document.getElementById('id_j_username').focus();
+			setInterval(function(){getDataAtual()}, 1000);
+	</script>
+</body>
+
+</html>

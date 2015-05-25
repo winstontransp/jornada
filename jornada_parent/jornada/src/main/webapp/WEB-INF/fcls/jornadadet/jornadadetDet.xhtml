@@ -9,89 +9,9 @@
 	xmlns:plct="http://www.powerlogic.com.br/plct" 
 	xmlns:tr="http://myfaces.apache.org/trinidad" 
 	xmlns:trh="http://myfaces.apache.org/trinidad/html">  
-	<ui:composition> 
-		<fieldset class="plc-fieldset"> 
-			<legend class="plc-fieldset-legend">#{msg['jornadadet.titulo.detalhe']}</legend>  
-			<plcf:iteracao var="returnMessage" id="returnMessage" value="#{jornadadet.returnMessage}" columnClasses="celulaFormulario" headerClass="celulaFormulario"> 
-				<h:column> 
-					<h:outputText value="#{rowCounter.index}."/> 
-				</h:column>  
-				<h:column rendered="#{empty requestScope.visualizaDocumentoPlc}"> 
-					<f:facet name="header">
-						<plcf:tituloExclusao>Exc.</plcf:tituloExclusao>
-					</f:facet>  
-					<span class="celulaFormularioCaixaMarcacao">
-						<plcf:caixaExclusao id="indExcPlc" value="#{returnMessage.indExcPlc}"/>
-					</span> 
-				</h:column>  
-				<h:column> 
-					<f:facet name="header">
-						<plcf:titulo value="#{msg['label.id']}"/>
-					</f:facet>  
-					<plcf:oid id="id" value="#{returnMessage.id}" ajudaChave="ajuda.id"/> 
-				</h:column>
-				<!-- 
-				<h:column> 
-					<f:facet name="header">
-						<plcf:titulo value="#{msg['label.mctAddress']}"/>
-					</f:facet>  
-					<plcf:numerico id="mctAddress" value="#{returnMessage.mctAddress}" numCasas="0" ajudaChave="ajuda.mctAddress"/> 
-				</h:column>  
-				 -->  
-				<h:column> 
-					<f:facet name="header">
-						<plcf:titulo value="#{msg['label.macro']}"/>
-					</f:facet>  
-					<plcf:comboDinamico id="macro" dominio="Macro" value="#{returnMessage.macro}" exibeBranco="N" ajudaChave="ajuda.macro"/>
-				</h:column>
-				<!-- 
-				<h:column> 
-					<f:facet name="header">
-						<plcf:titulo value="#{msg['label.latitude']}"/>
-					</f:facet>  
-					<plcf:numerico id="latitude" value="#{returnMessage.latitude}" tamanho="10" ajudaChave="ajuda.latitude"/> 
-				</h:column>  
-				<h:column> 
-					<f:facet name="header">
-						<plcf:titulo value="#{msg['label.longitude']}"/>
-					</f:facet>  
-					<plcf:numerico id="longitude" value="#{returnMessage.longitude}" tamanho="10" ajudaChave="ajuda.longitude"/> 
-				</h:column>  
-				<h:column> 
-					<f:facet name="header">
-						<plcf:titulo value="#{msg['label.positionCoordinate']}"/>
-					</f:facet>  
-					<plcf:texto id="positionCoordinate" value="#{returnMessage.positionCoordinate}" tamanho="20" ajudaChave="ajuda.positionCoordinate"/> 
-				</h:column>  
-				 -->  
-				<h:column> 
-					<f:facet name="header">
-						<plcf:titulo value="#{msg['label.positionTime']}"/>
-					</f:facet>  
-					<plcf:texto id="positionTimeFormatado" value="#{returnMessage.positionTimeFormatado}" riaUsa="textmask(mask='99/99/9999 99:99:99')" tamanho="18" ajudaChave="ajuda.positionTime"/> 
-				</h:column>  
-				<h:column> 
-					<f:facet name="header">
-						<plcf:titulo value="#{msg['label.macroText']}"/>
-					</f:facet>  
-					<plcf:texto id="macroText" value="#{returnMessage.macroText}" tamanho="15" ajudaChave="ajuda.macroText"/> 
-				</h:column>  
-					
-				<!--
-				<h:column> 
-					<f:facet name="header">
-						<plcf:titulo value="#{msg['label.landmark']}"/>
-					</f:facet>  
-					<plcf:texto id="landmark" value="#{returnMessage.landmark}" tamanho="30" ajudaChave="ajuda.landmark"/> 
-				</h:column>
-				<h:column> 
-					<f:facet name="header">
-						<plcf:titulo value="#{msg['label.proc']}"/>
-					</f:facet>  
-					<plcf:caixaMarcacao id="proc" obrigatorio="N" value="#{returnMessage.proc}" ajudaChave="ajuda.proc"/> 
-				</h:column>
-				--> 
-			</plcf:iteracao> 
-		</fieldset> 
+	<ui:composition>
+		<ui:include src="/WEB-INF/fcls/jornadadet/jornadadetDetReturnMessage.xhtml" />
+		<ui:include src="/WEB-INF/fcls/jornadadet/jornadadetDetEvents.xhtml" />
 	</ui:composition> 
+
 </html>

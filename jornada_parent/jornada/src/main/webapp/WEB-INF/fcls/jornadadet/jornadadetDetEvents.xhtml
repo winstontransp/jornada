@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:plcf="http://www.powerlogic.com.br/plcf" 
+	xmlns:plct="http://www.powerlogic.com.br/plct" 
+	xmlns:tr="http://myfaces.apache.org/trinidad" 
+	xmlns:trh="http://myfaces.apache.org/trinidad/html">
+	<div id="jornada_det_eventos">
+		
+		<fieldset class="plc-fieldset"> 
+			<legend class="plc-fieldset-legend">#{msg['jornadadet.titulo.detalhe2']}</legend>  
+			<plcf:iteracao var="eventos" id="eventos" value="#{jornadadet.eventos}" columnClasses="celulaFormulario" headerClass="celulaFormulario">
+				<h:column> 
+					<f:facet name="header">
+						<plcf:titulo value="#{msg['label.tipo']}"/>
+					</f:facet>  
+					<plcf:comboEstatico id="tipo" dominio="TipoEvento" value="#{eventos.tipo}" exibeBranco="N" ajudaChave="ajuda.tipo" somenteLeitura="S"/>
+				</h:column>
+				<h:column> 
+					<f:facet name="header">
+						<plcf:titulo value="#{msg['label.inicio']}"/>
+					</f:facet>  
+					<plcf:texto id="horaInicio" value="#{eventos.horaInicio}" somenteLeitura="S" ajudaChave="ajuda.inicio" /> 
+				</h:column>  
+				<h:column> 
+					<f:facet name="header">
+						<plcf:titulo value="#{msg['label.fim']}"/>
+					</f:facet>  
+					<plcf:texto id="horaFim" value="#{eventos.horaFim}" somenteLeitura="S" ajudaChave="ajuda.fim" /> 
+				</h:column>  
+				<h:column> 
+					<f:facet name="header">
+						<plcf:titulo value="#{msg['label.duracao']}"/>
+					</f:facet>  
+					<plcf:texto id="duracao" value="#{eventos.duracao}" somenteLeitura="S" ajudaChave="ajuda.duracao" /> 
+				</h:column>  
+			</plcf:iteracao> 
+		</fieldset>
+	</div> 
+</ui:composition> 
