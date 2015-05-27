@@ -57,7 +57,6 @@ public class Jornada extends AppBaseEntity {
 	private Long id;
 
 	@NotNull
-	@Digits(integer = 5, fraction = 0)
 	private Long mctAddress;
 
 	@ManyToOne(targetEntity = Motorista.class, fetch = FetchType.LAZY)
@@ -74,11 +73,9 @@ public class Jornada extends AppBaseEntity {
 	@Column(length = 1)
 	private StatusJornada status;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date tempoForaServico;
+	private String tempoForaServico;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date tempoInterjornada;
+	private String tempoInterjornada;
 	
 	@OneToMany (targetEntity = ReturnMessage.class, fetch = FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="jornada")
 	@ForeignKey(name="FK_RETURNMESSAGE_JORNADA")
@@ -138,19 +135,19 @@ public class Jornada extends AppBaseEntity {
 		this.status = status;
 	}
 
-	public Date getTempoForaServico() {
+	public String getTempoForaServico() {
 		return tempoForaServico;
 	}
 
-	public void setTempoForaServico(Date tempoForaServico) {
+	public void setTempoForaServico(String tempoForaServico) {
 		this.tempoForaServico = tempoForaServico;
 	}
 
-	public Date getTempoInterjornada() {
+	public String getTempoInterjornada() {
 		return tempoInterjornada;
 	}
 
-	public void setTempoInterjornada(Date tempoInterjornada) {
+	public void setTempoInterjornada(String tempoInterjornada) {
 		this.tempoInterjornada = tempoInterjornada;
 	}
 
@@ -192,22 +189,4 @@ public class Jornada extends AppBaseEntity {
 		return indExcPlc;
 	}
 
-	@Transient
-	public String getTempoInterjornadaFormatado() {
-		return getTempo(getTempoInterjornada());
-	}
-	
-	@Transient
-	public String getTempoForaServicoFormatado() {
-		return getTempo(getTempoForaServico());
-	}
-	
-	private String getTempo(Date dataHora) {
-		
-		if (dataHora != null) {
-			return fmtHora.format(dataHora);
-		}
-		
-		return null;
-	}
 }

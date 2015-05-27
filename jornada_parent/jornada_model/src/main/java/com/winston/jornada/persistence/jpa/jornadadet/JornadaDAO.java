@@ -51,4 +51,7 @@ public class JornadaDAO extends AppJpaDAO  {
 			@PlcQueryParameter(name="motorista", expression="obj1 = :motorista") Motorista motorista
 	);
 	
+	
+	
+	
 }

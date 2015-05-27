@@ -2,32 +2,35 @@ package com.winston.jornada.entity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import com.winston.jornada.entity.TipoEvento;
-import javax.persistence.ManyToOne;
+
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Column;
-import javax.validation.constraints.NotNull;
-import org.apache.myfaces.extensions.validator.crossval.annotation.RequiredIfType;
-import javax.persistence.Enumerated;
-import javax.persistence.TemporalType;
-import javax.persistence.Id;
-import javax.persistence.GenerationType;
-import org.hibernate.annotations.ForeignKey;
-import com.powerlogic.jcompany.domain.validation.PlcValGroupEntityList;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
-import org.apache.myfaces.extensions.validator.crossval.annotation.RequiredIf;
-import javax.persistence.Temporal;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Access;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.AccessType;
-import com.powerlogic.jcompany.commons.config.stereotypes.SPlcEntity;
-import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+
+import org.apache.myfaces.extensions.validator.crossval.annotation.RequiredIf;
+import org.apache.myfaces.extensions.validator.crossval.annotation.RequiredIfType;
+import org.hibernate.annotations.ForeignKey;
+
+import com.powerlogic.jcompany.commons.config.stereotypes.SPlcEntity;
+import com.powerlogic.jcompany.domain.validation.PlcValGroupEntityList;
 
 @SPlcEntity
 @Entity
@@ -61,8 +64,7 @@ public class JornadaEvento extends AppBaseEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fim;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date tempo;
+	private String duracao;
 
 	public JornadaEvento() {
 	}
@@ -99,14 +101,14 @@ public class JornadaEvento extends AppBaseEntity {
 		this.fim = fim;
 	}
 
-	public Date getTempo() {
-		return tempo;
+	public void setDuracao(String duracao) {
+		this.duracao = duracao;
 	}
-
-	public void setTempo(Date tempo) {
-		this.tempo = tempo;
+	
+	public String getDuracao() {
+		return duracao;
 	}
-
+	
 	public Jornada getJornada() {
 		return jornada;
 	}
@@ -153,18 +155,6 @@ public class JornadaEvento extends AppBaseEntity {
 
 	public void setHoraFim(String horaFim) {
 		this.horaFim = horaFim;
-	}
-	
-	@Transient
-	private String duracao;
-	
-	public void setDuracao(String duracao) {
-		this.duracao = duracao;
-	}
-
-	public String getDuracao() {
-		duracao = getHora(getFim());
-		return duracao;
 	}
 	
 	private String getHora(Date dataHora) {

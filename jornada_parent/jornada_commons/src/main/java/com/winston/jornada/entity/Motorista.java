@@ -28,7 +28,9 @@ import com.powerlogic.jcompany.commons.config.stereotypes.SPlcEntity;
 @Table(name = "MOTORISTA")
 @SequenceGenerator(name = "SE_MOTORISTA", sequenceName = "SE_MOTORISTA")
 @Access(AccessType.FIELD)
-@NamedQueries({ @NamedQuery(name = "Motorista.querySelLookup", query = "select id as id, nome as nome from Motorista where id = ? order by id asc") })
+@NamedQueries({
+	@NamedQuery(name = "Motorista.querySelLookup", query = "select id as id, nome as nome, matricula as matricula from Motorista where id = ? order by id asc"),
+	@NamedQuery(name = "Motorista.queryBuscaMotoristaPorMatricula", query = "from Motorista where matricula = :matricula")})
 public class Motorista extends AppBaseEntity {
 
 	@Id

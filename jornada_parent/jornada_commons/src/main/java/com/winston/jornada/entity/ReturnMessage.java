@@ -56,7 +56,7 @@ public class ReturnMessage extends AppBaseEntity {
 
 	@NotNull(groups = PlcValGroupEntityList.class)
 	@RequiredIf(valueOf = "positionTime", is = RequiredIfType.not_empty)
-	@Digits(integer = 5, fraction = 0)
+//	@Digits(integer = 5, fraction = 0)
 	private Long mctAddress;
 
 	@ManyToOne(targetEntity = Macro.class, fetch = FetchType.LAZY)
@@ -66,12 +66,12 @@ public class ReturnMessage extends AppBaseEntity {
 
 	@NotNull(groups = PlcValGroupEntityList.class)
 	@RequiredIf(valueOf = "landmark", is = RequiredIfType.not_empty)
-	@Digits(integer = 8, fraction = 6)
+//	@Digits(integer = 8, fraction = 6)
 	private BigDecimal latitude;
 
 	@NotNull(groups = PlcValGroupEntityList.class)
 	@RequiredIf(valueOf = "positionTime", is = RequiredIfType.not_empty)
-	@Digits(integer = 8, fraction = 6)
+//	@Digits(integer = 8, fraction = 6)
 	private BigDecimal longitude;
 
 	@NotNull(groups = PlcValGroupEntityList.class)
@@ -79,10 +79,10 @@ public class ReturnMessage extends AppBaseEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date positionTime;
 
-	@Size(max = 5)
+//	@Size(max = 5)
 	private String landmark;
 
-	@Size(max = 5)
+//	@Size(max = 5)
 	private String macroText;
 
 	private Boolean proc;

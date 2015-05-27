@@ -29,6 +29,11 @@
 	
 	<dependencies>
 		<dependency>
+		  <groupId>joda-time</groupId>
+		  <artifactId>joda-time</artifactId>
+		  <version>2.7</version>
+		</dependency>
+		<dependency>
 			<groupId>powerlogic.jaguar.app</groupId>
 			<artifactId>jornada_commons</artifactId>
 			<version>1.0</version>
