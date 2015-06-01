@@ -114,8 +114,16 @@
 <body scroll="no">
 <style>
 
+#app {
+	width : 600px;
+}
+body {
+	width : 600px;
+	margin-top: 30px;
+}
+
 button, .plc-botao {
- background: #d33938;
+  background: #d33938;
   border: 1px solid #AFAEAE !important;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
@@ -124,21 +132,19 @@ button, .plc-botao {
 }
 
 </style>
-
-	<div class="app_topo_titulo">
-		<span style="color: #000; font-size: 18px"><b>Do lado da vida, perto de você.</b></span>
-	</div>
-	<div class="ui-widget ui-widget-content plc-corpo" style="max-width: 1024px;min-width : 420px; position: relative; margin : 0 auto; border-radius: 10px;margin-top: 5px;">
+<body>
+	<div class="ui-widget ui-widget-content plc-corpo" style="width: 700px; height: 520px;max-width: 1024px;min-width : 420px; position: relative; margin : 0 auto; border-radius: 10px;margin-top: 5px;">
 		<div align="center" style="padding: 20px;">
 			<script>
-				document.write("<img src='"+contextPath+"/res/midia/wa_import0.jpg'>"+"<"+"/img>");
+				document.write("<img src='"+contextPath+"/res/midia/logo-winston2.jpg'>"+"<"+"/img>");
 			</script>
 		</div>
 		<div
-			style="text-align: center; color: #000; padding: 3px" class="app-login-div0" align="center">
+			style="text-align: center;color: #000; padding: 5px" class="app-login-div1">
+			<h1>Seja bem vindo(a) ao Jornada</h1>
 			<table align="center">
 				<tr>
-					<td><label id="dataHora"></label> <script
+					<td><label id="dataHora">&nbsp;</label> <script
 							type="text/javascript">
 								setInterval(function(){getDataAtual()}, 1000);
 						</script></td>
@@ -146,12 +152,8 @@ button, .plc-botao {
 
 			</table>
 		</div>
-		<div
-			style="text-align: center;color: #000; padding: 5px" class="app-login-div1">
-			<h1>Seja bem vindo(a) ao CUIDAR</h1>
-		</div>
 		<form method="post" action="j_security_check">
-			<div align="center" style="margin-top: 5px; margin-bottom: 50px">
+			<div align="center" style="margin-top: 20px; margin-bottom: 16px">
 				<table>
 					<tr>
 						<td>
@@ -193,12 +195,12 @@ button, .plc-botao {
 					</tr>
 				</table>
 			</div>
-			<div style="margin: 0 auto; border-top: 2px; border-color: #59574b; border-top-style: solid; padding: 10px;text-align: center ">
-				Sistema de Gestão Clinica  - CUIDAR | Copyright 2015/2020 - Todos os direitos reservados
-			</div>
+		</form>
+		<div style="margin: 0 auto; border-top: 2px; border-color: #59574b; border-top-style: solid; padding: 10px;text-align: center ">
+			Winston Transportes | Copyright 2015/2020 - Todos os direitos reservados
+		</div>
 	</div>
 	<!--------->
-	</form>
 	<script type="text/javascript">
 			document.getElementById('id_j_username').focus();
 			setInterval(function(){getDataAtual()}, 1000);
