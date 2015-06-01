@@ -24,6 +24,16 @@
 		<class>com.winston.jornada.entity.JornadaEvento</class>
 	
 		<class>com.winston.jornada.entity.ReturnMessage</class>
+	
+		<class>com.winston.jornada.entity.seguranca.SegUsuario</class>
+	
+		<class>com.winston.jornada.entity.seguranca.SegPerfil</class>
+	
+		<class>com.winston.jornada.entity.seguranca.SegUsuarioPerfil</class>
+	
+		<class>com.winston.jornada.entity.seguranca.SegUrl</class>
+	
+		<class>com.winston.jornada.entity.seguranca.SegPerfilUrl</class>
 	<properties>
 			<property name="hibernate.archive.autodetection" value="class, hbm"/>
 			<!-- property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/ -->
