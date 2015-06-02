@@ -6,7 +6,7 @@
 
 
 @PlcConfigApplication(
-	definition=@PlcConfigApplicationDefinition(name="jornada",acronym="jornada",version=1,release=0),
+	definition=@PlcConfigApplicationDefinition(name="Controle de Jornada",acronym="jornada",version=1,release=0),
 
 	classesDiscreteDomain={com.winston.jornada.entity.StatusImportacao.class, 
 		com.winston.jornada.entity.StatusJornada.class, 

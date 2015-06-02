@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:p="http://primefaces.prime.com.tr/ui" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:plcf="http://www.powerlogic.com.br/plcf" 
+	xmlns:tr="http://myfaces.apache.org/trinidad" 
+	xmlns:trh="http://myfaces.apache.org/trinidad/html">  
+	<ui:composition template="/fcls/template/PlcGeralTemplate.xhtml"> 
+		<ui:define name="plc-corpo-formulario"> 
+
+		<div id="plc-corpo-formulario" class="plc-corpo-formulario plc-form-tabular"> 
+				<fieldset class="plc-fieldset"> 
+					<legend class="plc-fieldset-legend">#{msg['segurl.titulo']}</legend>
+					  
+					<div align="center" class="plc-navegacao">
+			        	<ui:include src="/WEB-INF/fcls-plc/geralPaginacaoLogicaItens.xhtml" />
+			        </div>
+			        
+					<plcf:iteracao var="segurl" id="segurl" value="#{segurlLista.itensPlc}" columnClasses="celulaFormulario" headerClass="celulaFormulario"> 
+						<h:column> 
+							<h:outputText value="#{rowCounter.index}."/> 
+						</h:column>  
+						<h:column rendered="#{empty requestScope.visualizaDocumentoPlc}"> 
+							<f:facet name="header">
+								<plcf:tituloExclusao>Exc.</plcf:tituloExclusao>
+							</f:facet>  
+							<span class="celulaFormularioCaixaMarcacao">
+								<plcf:caixaExclusao id="indExcPlc" value="#{segurl.indExcPlc}"/>
+							</span> 
+						</h:column>  
+						<h:column> 
+							<f:facet name="header">
+								<plcf:titulo value="#{msg['label.id']}"/>
+							</f:facet>  
+							<plcf:oid id="id" value="#{segurl.id}" ajudaChave="ajuda.id"/> 
+						</h:column>  
+						<h:column> 
+							<f:facet name="header">
+								<plcf:titulo value="#{msg['label.casoUso']}"/>
+							</f:facet>  
+							<plcf:texto id="casoUso" value="#{segurl.casoUso}" ajudaChave="ajuda.casoUso" tamanho="40"/> 
+						</h:column>  
+						<h:column> 
+							<f:facet name="header">
+								<plcf:titulo value="#{msg['label.url']}"/>
+							</f:facet>  
+							<plcf:texto id="url" value="#{segurl.url}" ajudaChave="ajuda.url" tamanho="50"/> 
+						</h:column>  
+						<h:column> 
+							<f:facet name="header">
+								<plcf:titulo value="#{msg['label.bloqueado']}"/>
+							</f:facet>  
+							<plcf:caixaMarcacao id="bloqueado" obrigatorio="N" value="#{segurl.bloqueado}" ajudaChave="ajuda.bloqueado"/> 
+						</h:column> 
+					</plcf:iteracao> 
+				</fieldset> 
+			</div> 
+		</ui:define> 
+	</ui:composition> 
+</html>

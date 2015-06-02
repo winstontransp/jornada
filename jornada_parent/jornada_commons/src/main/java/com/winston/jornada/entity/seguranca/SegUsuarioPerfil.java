@@ -29,7 +29,14 @@ import com.winston.jornada.entity.AppBaseEntity;
 @SequenceGenerator(name = "SE_SEG_USUARIO_PERFIL", sequenceName = "SE_SEG_USUARIO_PERFIL")
 @Access(AccessType.FIELD)
 @NamedQueries({ @NamedQuery(name = "SegUsuarioPerfil.querySelLookup", query = "select id as id, segUsuario as segUsuario from SegUsuarioPerfil where id = ? order by id asc") })
+//@NamedQueries({ @NamedQuery(name = "SegUsuarioPerfil.querySelLookup", query = "select id as id, segUsuario as segUsuario, segPerfil as segPerfil from SegUsuarioPerfil where id = ? order by id asc") })
 public class SegUsuarioPerfil extends AppBaseEntity {
+
+	private static final long serialVersionUID = -141081347170280153L;
+
+	private transient String segUsuarioAuxLookup;
+
+	private transient String segPerfilAuxLookup;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "SE_SEG_USUARIO_PERFIL")
@@ -37,11 +44,14 @@ public class SegUsuarioPerfil extends AppBaseEntity {
 
 	@ManyToOne(targetEntity = SegUsuario.class, fetch = FetchType.LAZY)
 	@ForeignKey(name = "FK_USUARIOPERFIL_USUARIO")
-	@NotNull
+	@NotNull(groups = PlcValGroupEntityList.class)
+	@RequiredIf(valueOf = "id", is = RequiredIfType.not_empty)
 	private SegUsuario segUsuario;
 
 	@ManyToOne(targetEntity = SegPerfil.class, fetch = FetchType.LAZY)
 	@ForeignKey(name = "FK_USUARIOPERFIL_PERFIL")
+	@NotNull(groups = PlcValGroupEntityList.class)
+	@RequiredIf(valueOf = "id", is = RequiredIfType.not_empty)
 	private SegPerfil segPerfil;
 
 	public SegUsuarioPerfil() {
@@ -73,7 +83,7 @@ public class SegUsuarioPerfil extends AppBaseEntity {
 
 	@Override
 	public String toString() {
-		return getSegUsuario().toString() + " - " + getSegPerfil().toString();
+		return getSegUsuario().toString(); // + " - " + getSegPerfil().toString();
 	}
 
 	@Transient
@@ -85,6 +95,15 @@ public class SegUsuarioPerfil extends AppBaseEntity {
 
 	public String getIndExcPlc() {
 		return indExcPlc;
+	}
+
+	public void setSegPerfilAuxLookup(String segPerfilAuxLookup) {
+		this.segPerfilAuxLookup = segPerfilAuxLookup;
+	}
+
+
+	public void setSegUsuarioAuxLookup(String segUsuarioAuxLookup) {
+		this.segUsuarioAuxLookup=segUsuarioAuxLookup;
 	}
 
 }

@@ -2,6 +2,8 @@ package com.winston.jornada.persistence.jpa.motorista;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import com.powerlogic.jcompany.commons.PlcBaseContextVO;
 import com.powerlogic.jcompany.commons.annotation.PlcAggregationDAOIoC;
 import com.powerlogic.jcompany.commons.config.stereotypes.SPlcDataAccessObject;
@@ -50,7 +52,7 @@ public class MotoristaDAO extends AppJpaDAO {
 	public native Motorista findMotoristaPorMatricula(
 			PlcBaseContextVO context,
 			@PlcQueryParameter(name="matricula", expression="matricula = :matricula") Long matricula
-	);
+	) throws NoResultException;
 	
 	
 }

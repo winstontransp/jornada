@@ -2,11 +2,14 @@ package com.winston.jornada.model.jornadadet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 
 import com.powerlogic.jcompany.commons.PlcBaseContextVO;
+import com.powerlogic.jcompany.commons.PlcException;
 import com.powerlogic.jcompany.commons.annotation.PlcAggregationIoC;
 import com.powerlogic.jcompany.commons.config.stereotypes.SPlcRepository;
 import com.powerlogic.jcompany.model.bindingtype.PlcUpdateBefore;
@@ -30,24 +33,29 @@ public class JornadaRepository extends AppBaseRepository {
 
 	@Inject
 	private JornadaDAO dao;
-	
+
 	@Inject
 	private MotoristaDAO motDao;
 
-	
-	public void antesAtualizar (@Observes @PlcUpdateBefore PlcBaseContextVO context) {
-		List<JornadaEvento> eventos = null;
+	private Logger log = Logger.getLogger(JornadaRepository.class.getCanonicalName());
 
-		Jornada jornada = (Jornada) context.getEntityForExtension();
-
-		if (jornada != null) {
-			removerEventos(context, jornada);
-			eventos = criarEventos(context, jornada);
-			gravarEventos(context, jornada, eventos);
+	public void antesAtualizar (@Observes @PlcUpdateBefore PlcBaseContextVO context) throws PlcException {
+		
+		if (context.getUrl().contains("jornadadet")) {
+			
+			List<JornadaEvento> eventos = null;
+			
+			Jornada jornada = (Jornada) context.getEntityForExtension();
+			
+			if (jornada != null) {
+				removerEventos(context, jornada);
+				eventos = criarEventos(context, jornada);
+				gravarEventos(context, jornada, eventos);
+			}
 		}
 	}
 
-	private List<JornadaEvento> criarEventos(PlcBaseContextVO context, Jornada jornada) {
+	private List<JornadaEvento> criarEventos(PlcBaseContextVO context, Jornada jornada) throws PlcException {
 		List<ReturnMessage> rms = jornada.getReturnMessage();
 		List<JornadaEvento> eventos = new ArrayList<JornadaEvento>();
 	
@@ -147,7 +155,7 @@ public class JornadaRepository extends AppBaseRepository {
 	}
 
 	private void tratarMotorista(PlcBaseContextVO context, Jornada jornada, ReturnMessage returnMessage)
-			throws NumberFormatException {
+			throws NumberFormatException, PlcException {
 		String textoMatricula = returnMessage.getMacroText();
 		
 		if (textoMatricula != null) {
@@ -158,8 +166,15 @@ public class JornadaRepository extends AppBaseRepository {
 			// Verifica se alterou a a matricula
 			if (matriculaOriginal.compareTo(matriculaInformada) != 0) {
 				
-				// Caso tenha alterado deve-se recuperar o novo motorista
-				motorista = motDao.findMotoristaPorMatricula(context, matriculaInformada);
+				try {
+					// Caso tenha alterado deve-se recuperar o novo motorista
+					motorista = motDao.findMotoristaPorMatricula(context, matriculaInformada);
+				} catch (NoResultException nre) {
+					
+					log.severe("Matricula informada nao encontrada: " + matriculaInformada);
+					
+					throw new PlcException("JornadaRepository", "tratarMotorista", nre.getCause(), null, "");
+				}
 				
 				if (motorista != null) { 
 					jornada.setMotorista(motorista);

@@ -1,45 +1,50 @@
 package com.winston.jornada.entity.seguranca;
 
+import java.util.List;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.ForeignKey;
+
 import com.powerlogic.jcompany.commons.config.stereotypes.SPlcEntity;
 import com.powerlogic.jcompany.domain.type.PlcYesNo;
-import com.winston.jornada.entity.AppBaseEntity;
-import java.util.List;
 import com.powerlogic.jcompany.domain.validation.PlcValDuplicity;
-import javax.validation.Valid;
 import com.powerlogic.jcompany.domain.validation.PlcValMultiplicity;
-import javax.persistence.OneToMany;
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import org.hibernate.annotations.ForeignKey;
+import com.winston.jornada.entity.AppBaseEntity;
 
 @SPlcEntity
 @Entity
 @Table(name = "SEG_USUARIO")
 @SequenceGenerator(name = "SE_SEG_USUARIO", sequenceName = "SE_SEG_USUARIO")
 @Access(AccessType.FIELD)
-@NamedQueries({ @NamedQuery(name = "SegUsuario.querySelLookup", query = "select id as id, nome as nome from SegUsuario where id = ? order by id asc") })
+@NamedQueries({
+		@NamedQuery(name = "SegUsuario.queryMan", query = "from SegUsuario"),
+		@NamedQuery(name = "SegUsuario.querySel", query = "select id as id, nome as nome, bloqueado as bloqueado, login as login from SegUsuario order by nome asc"),
+		@NamedQuery(name = "SegUsuario.querySelLookup", query = "select id as id, nome as nome from SegUsuario where id = ? order by id asc") })
 public class SegUsuario extends AppBaseEntity {
 
 	@OneToMany(targetEntity = SegUsuarioPerfil.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "segUsuario")
 	@ForeignKey(name = "FK_USUARIOPERFIL_USUARIO")
-	@PlcValDuplicity(property = "segUsuario")
-	@PlcValMultiplicity(referenceProperty = "segUsuario", message = "{jcompany.aplicacao.mestredetalhe.multiplicidade.SegUsuarioPerfil}")
+	@PlcValDuplicity(property = "segPerfil")
+	@PlcValMultiplicity(referenceProperty = "segPerfil", message = "{jcompany.aplicacao.mestredetalhe.multiplicidade.SegUsuarioPerfil}")
 	@Valid
 	private List<SegUsuarioPerfil> segUsuarioPerfil;
 

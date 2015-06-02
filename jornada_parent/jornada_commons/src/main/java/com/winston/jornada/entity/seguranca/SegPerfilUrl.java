@@ -37,13 +37,14 @@ public class SegPerfilUrl extends AppBaseEntity {
 
 	@ManyToOne(targetEntity = SegPerfil.class, fetch = FetchType.LAZY)
 	@ForeignKey(name = "FK_SEGPERFILURL_SEGPERFIL")
-	@NotNull
+	@NotNull(groups = PlcValGroupEntityList.class)
+	@RequiredIf(valueOf = "id", is = RequiredIfType.not_empty)
 	private SegPerfil segPerfil;
 
 	@ManyToOne(targetEntity = SegUrl.class, fetch = FetchType.LAZY)
 	@ForeignKey(name = "FK_SEGPERFILURL_URL")
 	@NotNull(groups = PlcValGroupEntityList.class)
-	@RequiredIf(valueOf = "segPerfil", is = RequiredIfType.not_empty)
+	@RequiredIf(valueOf = "id", is = RequiredIfType.not_empty)
 	private SegUrl url;
 
 	public SegPerfilUrl() {

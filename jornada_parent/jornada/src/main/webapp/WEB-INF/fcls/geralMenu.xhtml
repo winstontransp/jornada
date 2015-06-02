@@ -15,6 +15,29 @@
 					</li>
 				</ul>
 			</li>
+			<li>
+				<a>
+					<span class="ico iLeiautepadrao"/>
+					<label jsfc="plcf:titulo" tituloChave="app.m.seguranca">Seguranca</label>
+				</a>
+				<ul class="ui-state-hover">
+					<li>
+						<a href="#{request.contextPath}/f/n/segusuariosel?fwPlc=segusuario&amp;evento=y">
+							<label jsfc="plcf:titulo" tituloChave="menu.segusuario.titulo">Usuário</label>
+						</a>
+					</li>
+					<li>
+						<a href="#{request.contextPath}/f/n/segperfilsel?fwPlc=segperfil&amp;evento=y">
+							<label jsfc="plcf:titulo" tituloChave="menu.segperfil.titulo">Perfil</label>
+						</a>
+					</li>
+					<li>
+						<a href="#{request.contextPath}/f/n/segurl">
+							<label jsfc="plcf:titulo" tituloChave="menu.segurl.titulo">URLs</label>
+						</a>
+					</li>
+				</ul>
+			</li>
 			<ui:include src="/WEB-INF/fcls-plc/geralMenuAjuda.xhtml"/>
 			<ui:include src="/WEB-INF/fcls-plc/geralMenuPrefLang.xhtml"/>
 			<ui:include src="/WEB-INF/fcls-plc/geralMenuAreaTecnica.xhtml"/>

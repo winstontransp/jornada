@@ -2,7 +2,7 @@
  ********************** Configurações default para toda a empresa *************************
  *******************************************************************************************/
 			
-@PlcConfigCompany(name = "Powerlogic SA", domain = "www.powerlogic.com.br", acronym = "PLC", 
+@PlcConfigCompany(name = "Winston Transportes Ltda", domain = "www.winstontransportes.com.br", acronym = "Winston", 
 			logo = "/recursos/midia/login-logo-empresa.png", address = "Av. Barão Homem de Melo, 4.554 / 2Âº andar. CEP:30.494-270, Estoril - Belo Horizonte/MG",
 			supportEmail = "suporte@powerlogic.com.br",supportPhone = "55 31 3555-0050")
 			

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:plcf="http://www.powerlogic.com.br/plcf" 
+	xmlns:plct="http://www.powerlogic.com.br/plct" 
+	xmlns:tr="http://myfaces.apache.org/trinidad" 
+	xmlns:trh="http://myfaces.apache.org/trinidad/html">  
+	<ui:composition> 
+		<plcf:iteracao var="segUsuarioPerfil" id="segUsuarioPerfil" value="#{segperfil.segUsuarioPerfil}" columnClasses="celulaFormulario" headerClass="celulaFormulario"> 
+			<h:column> 
+				<h:outputText value="#{rowCounter.index}."/> 
+			</h:column>  
+			<h:column rendered="#{empty requestScope.visualizaDocumentoPlc}"> 
+				<f:facet name="header">
+					<plcf:tituloExclusao>Exc.</plcf:tituloExclusao>
+				</f:facet>  
+				<span class="celulaFormularioCaixaMarcacao">
+					<plcf:caixaExclusao id="indExcPlc" value="#{segUsuarioPerfil.indExcPlc}"/>
+				</span> 
+			</h:column>  
+			<!--h:column> 
+				<f:facet name="header">
+					<plcf:titulo value="#{msg['label.id']}"/>
+				</f:facet>  
+				<plcf:oid id="id" value="#{segUsuarioPerfil.id}" ajudaChave="ajuda.id"/> 
+			</h:column-->  
+			<h:column> 
+				<f:facet name="header">
+					<plcf:titulo value="#{msg['label.segUsuario']}"/>
+				</f:facet>  
+				<plcf:vinculado id="segUsuario" 
+					value="#{segUsuarioPerfil.segUsuario}" propSelPop="segUsuario" 
+					idExibe="S" idSomenteLeitura="N" 
+					autoRecuperacaoClasse="com.winston.jornada.entity.seguranca.SegUsuario" 
+					actionSel="segusuariosel" modal="S" 
+					ajudaChave="ajuda.segUsuario"
+					larg="1024"
+					lookupTamanho="50"
+					multiSel="S"
+					riaUsa="autocomplete(url='/jornada/soa/service/autocomplete.segusuario?q=nome')" 
+					onkeydown="selecionaPorTecla(event,this);"/> 
+			</h:column> 
+		</plcf:iteracao> 
+	</ui:composition> 
+</html>
