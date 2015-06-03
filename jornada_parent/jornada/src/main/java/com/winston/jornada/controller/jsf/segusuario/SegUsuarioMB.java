@@ -1,27 +1,24 @@
 package com.winston.jornada.controller.jsf.segusuario;
 
-import java.util.List;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.powerlogic.jcompany.commons.PlcException;
 import com.powerlogic.jcompany.commons.annotation.PlcUriIoC;
-import com.powerlogic.jcompany.commons.config.qualifiers.QPlcSpecific;
 import com.powerlogic.jcompany.commons.config.stereotypes.SPlcMB;
 import com.powerlogic.jcompany.config.aggregation.PlcConfigAggregation;
 import com.powerlogic.jcompany.config.collaboration.FormPattern;
 import com.powerlogic.jcompany.config.collaboration.PlcConfigForm;
 import com.powerlogic.jcompany.config.collaboration.PlcConfigFormLayout;
-import com.powerlogic.jcompany.controller.bindingtype.PlcSaveBefore;
+import com.powerlogic.jcompany.controller.bindingtype.PlcGravaValidarAntes;
 import com.powerlogic.jcompany.controller.jsf.PlcBaseMB;
-import com.powerlogic.jcompany.controller.jsf.PlcBaseSaveMB;
 import com.powerlogic.jcompany.controller.jsf.annotations.PlcHandleException;
 import com.winston.jornada.controller.jsf.AppMB;
 import com.winston.jornada.entity.seguranca.SegUsuario;
-import com.winston.jornada.entity.seguranca.SegUsuarioPerfil;
 
 @PlcConfigAggregation(
 	entity = com.winston.jornada.entity.seguranca.SegUsuario.class, 
@@ -61,24 +58,56 @@ public class SegUsuarioMB extends AppMB  {
         return (SegUsuario)this.entityPlc;     	
 	}
 		
-//	public boolean antesGravar(@Observes @PlcSaveBefore PlcBaseMB action) throws PlcException {
+//	public boolean antesGravar(@Observes @PlcGravaValidarAntes PlcBaseMB action) throws PlcException {
 //
-//		System.out.println("Passou no antesGravar");
-//		
 //		if (action.getEntityPlc() instanceof SegUsuario) {
 //			SegUsuario usuario = (SegUsuario) action.getEntityPlc();
+//
+//			if (usuario.getSenhaAux() != null && usuario.getSegUsuarioPerfil() == null) {
+//				throw new PlcException("seguranca.usuario.informar.ambas.senhas");
+//			}
+//
+//			if (usuario.getSenhaAux() == null && usuario.getSegUsuarioPerfil() != null) {
+//				throw new PlcException("seguranca.usuario.informar.ambas.senhas");
+//			}
 //			
-//			List<SegUsuarioPerfil> perfis = usuario.getSegUsuarioPerfil();
 //			
-//			for (SegUsuarioPerfil perfil : perfis) {
+//			if (usuario.getSenhaAux() != null && usuario.getSegUsuarioPerfil() != null) {
 //				
-//				if (perfil.getSegPerfil() == null || perfil.getSegPerfil().getId() == null) {
-//					perfil.setIndExcPlc("S");
+//				if (usuario.getSenhaAux().equals(usuario.getSenhaAuxConfirmacao())) {
+//					throw new PlcException("seguranca.usuario.senhas.nao.conferem");
+//				} else {
+//				
+//					try {
+//						MessageDigest md = MessageDigest.getInstance("SHA1");
+//	
+//						md.update(usuario.getSenhaAux().getBytes());
+//						byte[] hash = md.digest();
+//	
+//						String senha = bytesToHex(hash);
+//	
+//						usuario.setSenha(senha);
+//					} catch (NoSuchAlgorithmException e) {
+//						e.printStackTrace();
+//					}
 //				}
 //			}
 //		}
 //		
 //		return true;
+//	}
+//	
+//	private static String bytesToHex(byte[] b) {
+//		char hexDigit[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+//				'A', 'B', 'C', 'D', 'E', 'F' };
+//		StringBuffer buf = new StringBuffer();
+//		
+//		for (int j = 0; j < b.length; j++) {
+//			buf.append(hexDigit[(b[j] >> 4) & 0x0f]);
+//			buf.append(hexDigit[b[j] & 0x0f]);
+//		}
+//		
+//		return buf.toString();
 //	}
 	
 }

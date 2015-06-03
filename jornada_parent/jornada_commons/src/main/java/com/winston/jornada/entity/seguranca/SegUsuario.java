@@ -18,6 +18,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -124,5 +125,27 @@ public class SegUsuario extends AppBaseEntity {
 	public void setSegUsuarioPerfil(List<SegUsuarioPerfil> segUsuarioPerfil) {
 		this.segUsuarioPerfil = segUsuarioPerfil;
 	}
+	
+	@Transient
+	private transient String senhaAux;
 
+	@Transient
+	private transient String senhaAuxConfirmacao;
+
+	public String getSenhaAux() {
+		return senhaAux;
+	}
+
+	public void setSenhaAux(String senhaAux) {
+		this.senhaAux = senhaAux;
+	}
+
+	public String getSenhaAuxConfirmacao() {
+		return senhaAuxConfirmacao;
+	}
+
+	public void setSenhaAuxConfirmacao(String senhaAuxConfirmacao) {
+		this.senhaAuxConfirmacao = senhaAuxConfirmacao;
+	}
+	
 }
