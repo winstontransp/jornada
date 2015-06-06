@@ -15,7 +15,6 @@ import com.powerlogic.jcompany.persistence.jpa.PlcQueryParameter;
 import com.powerlogic.jcompany.persistence.jpa.PlcQueryService;
 import com.winston.jornada.entity.Motorista;
 import com.winston.jornada.entity.Operacao;
-import com.winston.jornada.entity.Turno;
 import com.winston.jornada.persistence.jpa.AppJpaDAO;
 
 @PlcAggregationDAOIoC(Motorista.class)
@@ -33,7 +32,6 @@ public class MotoristaDAO extends AppJpaDAO {
 			@PlcQueryParameter(name="id", expression="obj.id = :id") Long id,
 			@PlcQueryParameter(name="nome", expression="obj.nome = :nome") String nome,
 			@PlcQueryParameter(name="matricula", expression="obj.matricula = :matricula") Long matricula,
-			@PlcQueryParameter(name="turno", expression="obj.turno = :turno") Turno turno,
 			@PlcQueryParameter(name="operacao", expression="obj1 = :operacao") Operacao operacao
 	);
 
@@ -44,14 +42,13 @@ public class MotoristaDAO extends AppJpaDAO {
 			@PlcQueryParameter(name="id", expression="obj.id = :id") Long id,
 			@PlcQueryParameter(name="nome", expression="obj.nome = :nome") String nome,
 			@PlcQueryParameter(name="matricula", expression="obj.matricula = :matricula") Long matricula,
-			@PlcQueryParameter(name="turno", expression="obj.turno = :turno") Turno turno,
 			@PlcQueryParameter(name="operacao", expression="obj1 = :operacao") Operacao operacao
 	);
 	
 	@PlcQuery("queryBuscaMotoristaPorMatricula")
 	public native Motorista findMotoristaPorMatricula(
 			PlcBaseContextVO context,
-			@PlcQueryParameter(name="matricula", expression="matricula = :matricula") Long matricula
+			@PlcQueryParameter(name="matricula", expression="matricula = :matricula") Long matricula //,
 	) throws NoResultException;
 	
 	

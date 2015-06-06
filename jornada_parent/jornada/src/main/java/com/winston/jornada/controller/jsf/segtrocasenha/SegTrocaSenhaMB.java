@@ -1,4 +1,4 @@
-package com.winston.jornada.controller.jsf.segusuario;
+package com.winston.jornada.controller.jsf.segtrocasenha;
 
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
@@ -9,21 +9,19 @@ import com.powerlogic.jcompany.config.aggregation.PlcConfigAggregation;
 import com.powerlogic.jcompany.config.collaboration.FormPattern;
 import com.powerlogic.jcompany.config.collaboration.PlcConfigForm;
 import com.powerlogic.jcompany.config.collaboration.PlcConfigFormLayout;
+import com.powerlogic.jcompany.config.collaboration.PlcConfigSelection;
 import com.powerlogic.jcompany.controller.jsf.annotations.PlcHandleException;
 import com.winston.jornada.controller.jsf.AppMB;
 import com.winston.jornada.entity.seguranca.SegUsuario;
 
 @PlcConfigAggregation(
-	entity = com.winston.jornada.entity.seguranca.SegUsuario.class, 
-	details = { @com.powerlogic.jcompany.config.aggregation.PlcConfigDetail(
-		clazz = com.winston.jornada.entity.seguranca.SegUsuarioPerfil.class,
-		collectionName = "segUsuarioPerfil", numNew = 4, onDemand = false)
-	}
+	entity = com.winston.jornada.entity.seguranca.SegUsuario.class
 )
 
 @PlcConfigForm (
-	formPattern=FormPattern.Mdt,
-	formLayout = @PlcConfigFormLayout(dirBase="/WEB-INF/fcls/segusuario")
+	selection = @PlcConfigSelection(apiQuerySel = "querySel2"),
+	formPattern=FormPattern.Usu,
+	formLayout = @PlcConfigFormLayout(dirBase="/WEB-INF/fcls/segtrocasenha")
 )
 
 /**
@@ -31,16 +29,16 @@ import com.winston.jornada.entity.seguranca.SegUsuario;
  */
  
 @SPlcMB
-@PlcUriIoC("segusuario")
+@PlcUriIoC("segtrocasenha")
 @PlcHandleException
-public class SegUsuarioMB extends AppMB  {
+public class SegTrocaSenhaMB extends AppMB {
 
 	private static final long serialVersionUID = 1L;
-     		
+	
 	/**
 	* Entidade da ação injetado pela CDI
 	*/
-	@Produces  @Named("segusuario")
+	@Produces  @Named("segtrocasenha")
 	public SegUsuario createEntityPlc() {
 
 		if (this.entityPlc==null) {
@@ -50,5 +48,5 @@ public class SegUsuarioMB extends AppMB  {
 		
         return (SegUsuario)this.entityPlc;     	
 	}
-	
+		
 }

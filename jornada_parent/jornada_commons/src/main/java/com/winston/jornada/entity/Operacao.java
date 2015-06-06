@@ -2,7 +2,10 @@ package com.winston.jornada.entity;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +29,8 @@ import com.powerlogic.jcompany.domain.validation.PlcValGroupEntityList;
 @Table(name = "OPERACAO")
 @SequenceGenerator(name = "SE_OPERACAO", sequenceName = "SE_OPERACAO")
 @Access(AccessType.FIELD)
-@NamedQueries({ @NamedQuery(name = "Operacao.querySelLookup", query = "select id as id, nome as nome from Operacao where id = ? order by id asc") })
+@NamedQueries({
+	@NamedQuery(name="Operacao.queryMan", query="from Operacao where sitHistoricoPlc='A'"), @NamedQuery(name = "Operacao.querySelLookup", query = "select id as id, nome as nome from Operacao where id = ? order by id asc") })
 public class Operacao extends AppBaseEntity {
 
 	@Id
@@ -38,6 +42,15 @@ public class Operacao extends AppBaseEntity {
 	@Size(max = 80)
 	@PlcReference(testDuplicity = true)
 	private String nome;
+
+	@Enumerated(EnumType.STRING)
+	@NotNull
+	@Column(length = 1)
+	private Turno turno;
+	
+	@NotNull
+	@Size(max = 1)
+	private String sitHistoricoPlc="A";
 
 	public Operacao() {
 	}
@@ -58,6 +71,14 @@ public class Operacao extends AppBaseEntity {
 		this.nome = nome;
 	}
 
+	public Turno getTurno() {
+		return turno;
+	}
+
+	public void setTurno(Turno turno) {
+		this.turno = turno;
+	}
+
 	@Override
 	public String toString() {
 		return getNome();
@@ -74,4 +95,12 @@ public class Operacao extends AppBaseEntity {
 		return indExcPlc;
 	}
 
+	public String getSitHistoricoPlc() {
+		return sitHistoricoPlc;
+	}
+
+	public void setSitHistoricoPlc(String sitHistoricoPlc) {
+		this.sitHistoricoPlc=sitHistoricoPlc;
+	}
+	
 }

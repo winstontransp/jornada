@@ -1,32 +1,35 @@
 package com.winston.jornada.entity;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import org.apache.myfaces.extensions.validator.crossval.annotation.RequiredIf;
-import javax.validation.constraints.NotNull;
-import org.apache.myfaces.extensions.validator.crossval.annotation.RequiredIfType;
-import javax.persistence.Id;
-import javax.validation.constraints.Size;
-import javax.persistence.GenerationType;
-import javax.validation.constraints.Digits;
-import com.powerlogic.jcompany.config.domain.PlcReference;
-import com.powerlogic.jcompany.domain.validation.PlcValGroupEntityList;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Access;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.AccessType;
-import com.powerlogic.jcompany.commons.config.stereotypes.SPlcEntity;
-import javax.persistence.Entity;
 import javax.persistence.Transient;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.apache.myfaces.extensions.validator.crossval.annotation.RequiredIf;
+import org.apache.myfaces.extensions.validator.crossval.annotation.RequiredIfType;
+
+import com.powerlogic.jcompany.commons.config.stereotypes.SPlcEntity;
+import com.powerlogic.jcompany.config.domain.PlcReference;
+import com.powerlogic.jcompany.domain.validation.PlcValGroupEntityList;
 
 @SPlcEntity
 @Entity
 @Table(name = "MACRO")
 @SequenceGenerator(name = "SE_MACRO", sequenceName = "SE_MACRO")
 @Access(AccessType.FIELD)
-@NamedQueries({ 
-	@NamedQuery(name = "Macro.querySelLookup", query = "select id as id, nome as nome from Macro where id = ? order by id asc") })
+@NamedQueries({
+		@NamedQuery(name = "Macro.queryMan", query = "from Macro"),
+		@NamedQuery(name = "Macro.querySelLookup", query = "select id as id, nome as nome from Macro where id = ? order by id asc") })
 public class Macro extends AppBaseEntity {
 
 	@Id

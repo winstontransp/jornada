@@ -40,7 +40,8 @@ import com.winston.jornada.entity.seguranca.SegUrl;
 @PlcConfigForm(formPattern = FormPattern.Tab, 
 	tabular = @PlcConfigTabular(numNew = 4), 
 	formLayout = @PlcConfigFormLayout(dirBase = "/WEB-INF/fcls/segurl"),
-	selection = @PlcConfigSelection(apiQuerySel="queryMan", pagination=@PlcConfigPagination(numberByPage=50))
+	selection = @PlcConfigSelection(apiQuerySel="queryMan", 
+	pagination=@PlcConfigPagination(numberByPage=50))
 )
 
 /**

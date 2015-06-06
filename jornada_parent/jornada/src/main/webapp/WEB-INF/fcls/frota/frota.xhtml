@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:p="http://primefaces.prime.com.tr/ui" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:plcf="http://www.powerlogic.com.br/plcf" 
+	xmlns:tr="http://myfaces.apache.org/trinidad" 
+	xmlns:trh="http://myfaces.apache.org/trinidad/html">  
+	<ui:composition template="/fcls/template/PlcGeralTemplate.xhtml"> 
+		<ui:define name="plc-corpo-formulario"> 
+			<div id="plc-corpo-formulario" class="plc-corpo-formulario plc-form-tabular"> 
+				<fieldset class="plc-fieldset"> 
+					<legend class="plc-fieldset-legend">#{msg['frota.titulo']}</legend>  
+
+					<div align="center" class="plc-navegacao">
+			        	<ui:include src="/WEB-INF/fcls-plc/geralPaginacaoLogicaItens.xhtml" />
+			        </div>
+			        
+					<plcf:iteracao var="frota" id="frota" value="#{frotaLista.itensPlc}" columnClasses="celulaFormulario" headerClass="celulaFormulario"> 
+						<h:column> 
+							<h:outputText value="#{rowCounter.index}."/> 
+						</h:column>  
+						<h:column rendered="#{empty requestScope.visualizaDocumentoPlc}"> 
+							<f:facet name="header">
+								<plcf:tituloExclusao>Exc.</plcf:tituloExclusao>
+							</f:facet>  
+							<span class="celulaFormularioCaixaMarcacao">
+								<plcf:caixaExclusao id="indExcPlc" value="#{frota.indExcPlc}"/>
+							</span> 
+						</h:column>  
+						<h:column> 
+							<f:facet name="header">
+								<plcf:titulo value="#{msg['label.id']}"/>
+							</f:facet>  
+							<plcf:oid id="id" value="#{frota.id}" ajudaChave="ajuda.id"/> 
+						</h:column>  
+						<h:column> 
+							<f:facet name="header">
+								<plcf:titulo value="#{msg['label.numero']}"/>
+							</f:facet>  
+							<plcf:texto id="numero" value="#{frota.numero}" ajudaChave="ajuda.numero" tamanho="6"/> 
+						</h:column>  
+						<h:column> 
+							<f:facet name="header">
+								<plcf:titulo value="#{msg['label.placa']}"/>
+							</f:facet>  
+							<plcf:texto id="placa" value="#{frota.placa}" ajudaChave="ajuda.placa"/> 
+						</h:column>  
+						<h:column> 
+							<f:facet name="header">
+								<plcf:titulo value="#{msg['label.mctAddress']}"/>
+							</f:facet>  
+							<plcf:texto id="mctAddress" value="#{frota.mctAddress}" ajudaChave="ajuda.mctAddress" tamanho="8"/> 
+						</h:column> 
+					</plcf:iteracao> 
+				</fieldset> 
+			</div> 
+		</ui:define> 
+	</ui:composition> 
+</html>

@@ -39,6 +39,7 @@ import com.winston.jornada.entity.AppBaseEntity;
 @NamedQueries({
 		@NamedQuery(name = "SegUsuario.queryMan", query = "from SegUsuario"),
 		@NamedQuery(name = "SegUsuario.querySel", query = "select id as id, nome as nome, bloqueado as bloqueado, login as login from SegUsuario order by nome asc"),
+		@NamedQuery(name = "SegUsuario.querySel2", query = "from SegUsuario where login = :login"),
 		@NamedQuery(name = "SegUsuario.querySelLookup", query = "select id as id, nome as nome from SegUsuario where id = ? order by id asc") })
 public class SegUsuario extends AppBaseEntity {
 
@@ -127,10 +128,10 @@ public class SegUsuario extends AppBaseEntity {
 	}
 	
 	@Transient
-	private transient String senhaAux;
+	private transient String senhaAux = "";
 
 	@Transient
-	private transient String senhaAuxConfirmacao;
+	private transient String senhaAuxConfirmacao = "";
 
 	public String getSenhaAux() {
 		return senhaAux;

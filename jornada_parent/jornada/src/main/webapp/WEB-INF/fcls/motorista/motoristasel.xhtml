@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:plcf="http://www.powerlogic.com.br/plcf" 
+	xmlns:tr="http://myfaces.apache.org/trinidad" 
+	xmlns:trh="http://myfaces.apache.org/trinidad/html">  
+	<ui:composition template="/fcls/template/PlcGeralTemplate.xhtml"> 
+		<ui:define name="plc-corpo-formulario"> 
+			<div id="plc-form-basico"> 
+				<div id="#{plcAliasPrefixoAction}Arg" class="plc-form-basico-topo"> 
+					<plcf:tabela tituloChave="motoristaarg.titulo"> 
+						<plcf:linha> 
+							<plcf:celula> 
+								<plcf:titulo value="#{msg['label.id']}"/>  
+								<plcf:numerico id="id" value="#{motorista.id}" ajudaChave="ajuda.id" tamanho="5"/> 
+							</plcf:celula>  
+							<plcf:celula> 
+								<plcf:titulo value="#{msg['label.matricula']}"/>  
+								<plcf:texto id="matricula" value="#{motorista.matricula}" ajudaChave="ajuda.matricula" tamanho="7"/> 
+							</plcf:celula>  
+							<plcf:celula> 
+								<plcf:titulo value="#{msg['label.nome']}"/>  
+								<plcf:texto id="nome" value="#{motorista.nome}" ajudaChave="ajuda.nome" tamanho="50"/> 
+							</plcf:celula>  
+							<plcf:celula> 
+								<plcf:titulo value="#{msg['label.operacao']}"/>  
+								<plcf:comboDinamico id="operacao" value="#{motorista.operacao}" dominio="Operacao" exibeBranco="S" ajudaChave="ajuda.operacao"/> 
+							</plcf:celula> 
+						</plcf:linha> 
+					</plcf:tabela> 
+				</div>
+				<div id="#{plcAliasPrefixoAction}Sel" class="plc-form-basico-sel"> 
+					<script type="text/javascript">//<![CDATA[
+	jQuery(function(){plc.criaSelecaoJqGrid('plc-grid','plc-grid-navegador',{
+		evento:'${param.evento}',
+			modoJanelaPlc:'${param.modoJanelaPlc}',
+			rowNum:'30',
+			nomeLogica:'motorista',
+			propAgregada:'motorista',
+			jqGrid:{caption:
+				'#{msg['motorista.titulo']}',
+				colNames:
+					['#{msg['label.id']}',
+					'#{msg['label.matricula']}',
+					'#{msg['label.nome']}',
+					'#{msg['label.operacao']}'],
+				colModel:[
+					{name:'id',index:'id'},
+					{name:'matricula',index:'matricula'},
+					{name:'nome',index:'nome'},
+					{name:'operacao',index:'operacao'}]},
+			urlEdicao:'#{request.contextPath}/f/n/motoristamdt'});});//]]> </script>  
+					<table id="plc-grid" width="100%" class="scroll" cellpadding="0" cellspacing="0"/>  
+					<div id="plc-grid-navegador" class="scroll" style="text-align:center;"/> 
+				</div> 
+			</div> 
+		</ui:define> 
+	</ui:composition> 
+</html>

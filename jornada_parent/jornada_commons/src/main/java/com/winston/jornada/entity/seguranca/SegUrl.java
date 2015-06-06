@@ -33,8 +33,8 @@ import com.winston.jornada.entity.AppBaseEntity;
 @Access(AccessType.FIELD)
 @NamedQueries({
 	@NamedQuery(name="SegUrl.querySel", query="select id as id, casoUso as casoUso, url as url, bloqueado as bloqueado from SegUrl order by casoUso asc"),
-		@NamedQuery(name = "SegUrl.queryMan", query = "from SegUrl"),
-		@NamedQuery(name = "SegUrl.querySelLookup", query = "select id as id, url as url from SegUrl where id = ? order by id asc") })
+	@NamedQuery(name = "SegUrl.queryMan", query = "from SegUrl"),
+	@NamedQuery(name = "SegUrl.querySelLookup", query = "select id as id, url as url from SegUrl where id = ? order by id asc") })
 public class SegUrl extends AppBaseEntity {
 
 	@Id

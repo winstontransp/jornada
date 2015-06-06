@@ -27,7 +27,9 @@ import com.powerlogic.jcompany.domain.validation.PlcValGroupEntityList;
 @Table(name = "FROTA")
 @SequenceGenerator(name = "SE_FROTA", sequenceName = "SE_FROTA")
 @Access(AccessType.FIELD)
-@NamedQueries({ @NamedQuery(name = "Frota.querySelLookup", query = "select id as id, placa as placa from Frota where id = ? order by id asc") })
+@NamedQueries({
+	@NamedQuery(name = "Frota.queryMan", query = "from Frota"),
+	@NamedQuery(name = "Frota.querySelLookup", query = "select id as id, placa as placa from Frota where id = ? order by id asc") })
 public class Frota extends AppBaseEntity {
 
 	@Id
