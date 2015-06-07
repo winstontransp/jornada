@@ -39,6 +39,10 @@
 					<plcf:titulo tituloChave="label.motorista"/>  
 					<plcf:exibe value="#{jornadadet.motorista}"/> 
 				</plcf:celula> 
+				<plcf:celula> 
+					<plcf:titulo value="#{msg['label.operacao']}"/>  
+					<plcf:comboDinamico id="operacao" value="#{jornadadet.operacao}" dominio="Operacao" somenteLeitura="N" ajudaChave="ajuda.operacao"/> 
+				</plcf:celula> 
 			</plcf:linha> 
 		</plcf:tabela>
 	</ui:composition> 

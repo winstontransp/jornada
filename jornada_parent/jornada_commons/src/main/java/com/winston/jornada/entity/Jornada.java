@@ -91,6 +91,11 @@ public class Jornada extends AppBaseEntity {
 	@PlcValMultiplicity(referenceProperty="id", message="{jcompany.aplicacao.mestredetalhe.multiplicidade.Eventos}")
 	@Valid
 	private List<JornadaEvento> eventos;
+
+	@ManyToOne(targetEntity = Operacao.class, fetch = FetchType.LAZY)
+	@ForeignKey(name = "FK_JORNADA_OPERACAO")
+	@NotNull
+	private Operacao operacao;
 	
 	public Jornada() {
 	}
@@ -178,6 +183,14 @@ public class Jornada extends AppBaseEntity {
 		return " ";
 	}
 	
+	public Operacao getOperacao() {
+		return operacao;
+	}
+
+	public void setOperacao(Operacao operacao) {
+		this.operacao = operacao;
+	}
+
 	@Transient
 	private String indExcPlc = "N";
 
