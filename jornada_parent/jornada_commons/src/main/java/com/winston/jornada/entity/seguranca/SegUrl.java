@@ -33,8 +33,9 @@ import com.winston.jornada.entity.AppBaseEntity;
 @Access(AccessType.FIELD)
 @NamedQueries({
 	@NamedQuery(name="SegUrl.querySel", query="select id as id, casoUso as casoUso, url as url, bloqueado as bloqueado from SegUrl order by casoUso asc"),
-	@NamedQuery(name = "SegUrl.queryMan", query = "from SegUrl"),
-	@NamedQuery(name = "SegUrl.querySelLookup", query = "select id as id, url as url from SegUrl where id = ? order by id asc") })
+//	@NamedQuery(name="SegUrl.recuperarUrlsPorLogin", query="select perfilUrl.url from SegPerfilUrl perfilUrl inner join perfilUrl.segPerfil perfil inner join perfil.segUsuarioPerfil usuarioPerfil inner join usuarioPerfil.segUsuario usuario"),
+	@NamedQuery(name="SegUrl.queryMan", query = "from SegUrl"),
+	@NamedQuery(name="SegUrl.querySelLookup", query = "select id as id, url as url from SegUrl where id = ? order by id asc") })
 public class SegUrl extends AppBaseEntity {
 
 	@Id
@@ -107,6 +108,5 @@ public class SegUrl extends AppBaseEntity {
 	public String getIndExcPlc() {
 		return indExcPlc;
 	}
-
 	
 }

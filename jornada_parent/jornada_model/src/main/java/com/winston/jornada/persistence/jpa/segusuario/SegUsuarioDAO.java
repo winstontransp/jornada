@@ -1,6 +1,7 @@
 package com.winston.jornada.persistence.jpa.segusuario;
 
 import com.winston.jornada.persistence.jpa.AppJpaDAO;
+import com.winston.jornada.entity.seguranca.SegUrl;
 import com.winston.jornada.entity.seguranca.SegUsuario;
 import com.powerlogic.jcompany.persistence.jpa.PlcQueryParameter;
 import com.powerlogic.jcompany.domain.type.PlcYesNo;
@@ -44,6 +45,13 @@ public class SegUsuarioDAO extends AppJpaDAO  {
 			@PlcQueryParameter(name="id", expression="id = :id") Long id,
 			@PlcQueryParameter(name="nome", expression="nome like :nome || '%' ") String nome,
 			@PlcQueryParameter(name="bloqueado", expression="bloqueado = :bloqueado") PlcYesNo bloqueado,
+			@PlcQueryParameter(name="login", expression="login like :login || '%' ") String login
+	);
+	
+	@PlcQuery("obterUsuarioPorLogin")
+	public native SegUsuario obterUsuarioPorLogin(
+			PlcBaseContextVO context,
+
 			@PlcQueryParameter(name="login", expression="login like :login || '%' ") String login
 	);
 	

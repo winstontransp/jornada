@@ -49,4 +49,12 @@ public class SegUrlDAO extends AppJpaDAO  {
 			@PlcQueryParameter(name="bloqueado", expression="bloqueado = :bloqueado") PlcYesNo bloqueado
 	);
 		
+	@PlcQuery("recuperarUrlsPorLogin")
+	public native List<SegUrl> recuperarUrlsPorLogin(
+			PlcBaseContextVO context,
+			@PlcQueryFirstLine Integer primeiraLinhaPlc, 
+			@PlcQueryLineAmount Integer numeroLinhasPlc,		   
+			@PlcQueryParameter(name="login", expression="usuario.login = :login") String login
+	);
+
 }

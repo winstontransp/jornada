@@ -20,6 +20,10 @@
 		Startup</description> <param-name>verificaEsquema</param-name>
 		<param-value>S</param-value> </context-param>
 	-->
+  <context-param>
+   <param-name>jSecurityUsa</param-name>
+   <param-value>S</param-value>
+ </context-param>
  <context-param>
   <param-name>com.sun.faces.expressionFactory</param-name>
   <param-value>org.apache.el.ExpressionFactoryImpl</param-value>

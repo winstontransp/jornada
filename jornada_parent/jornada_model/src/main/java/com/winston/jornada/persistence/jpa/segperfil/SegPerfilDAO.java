@@ -2,6 +2,7 @@ package com.winston.jornada.persistence.jpa.segperfil;
 
 import com.winston.jornada.persistence.jpa.AppJpaDAO;
 import com.winston.jornada.entity.seguranca.SegPerfil;
+import com.winston.jornada.entity.seguranca.SegUsuario;
 import com.powerlogic.jcompany.persistence.jpa.PlcQueryParameter;
 
 import java.util.List;
@@ -41,5 +42,5 @@ public class SegPerfilDAO extends AppJpaDAO  {
 			@PlcQueryParameter(name="id", expression="id = :id") Long id,
 			@PlcQueryParameter(name="nome", expression="nome like :nome || '%' ") String nome
 	);
-	
+
 }

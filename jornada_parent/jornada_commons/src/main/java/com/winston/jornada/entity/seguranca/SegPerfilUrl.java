@@ -28,7 +28,9 @@ import com.winston.jornada.entity.AppBaseEntity;
 @Table(name = "SEG_PERFIL_URL")
 @SequenceGenerator(name = "SE_SEG_PERFIL_URL", sequenceName = "SE_SEG_PERFIL_URL")
 @Access(AccessType.FIELD)
-@NamedQueries({ @NamedQuery(name = "SegPerfilUrl.querySelLookup", query = "select id as id, segPerfil as segPerfil from SegPerfilUrl where id = ? order by id asc") })
+@NamedQueries({ 
+	@NamedQuery(name = "SegPerfilUrl.obterPerfilUrlPorPerfil", query = "from SegPerfilUrl where segPerfil = :perfil"),
+	@NamedQuery(name = "SegPerfilUrl.querySelLookup", query = "select id as id, segPerfil as segPerfil from SegPerfilUrl where id = ? order by id asc") })
 public class SegPerfilUrl extends AppBaseEntity {
 
 	@Id

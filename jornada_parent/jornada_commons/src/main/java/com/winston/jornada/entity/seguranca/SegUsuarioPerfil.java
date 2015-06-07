@@ -28,8 +28,9 @@ import com.winston.jornada.entity.AppBaseEntity;
 @Table(name = "SEG_USUARIO_PERFIL")
 @SequenceGenerator(name = "SE_SEG_USUARIO_PERFIL", sequenceName = "SE_SEG_USUARIO_PERFIL")
 @Access(AccessType.FIELD)
-@NamedQueries({ @NamedQuery(name = "SegUsuarioPerfil.querySelLookup", query = "select id as id, segUsuario as segUsuario from SegUsuarioPerfil where id = ? order by id asc") })
-//@NamedQueries({ @NamedQuery(name = "SegUsuarioPerfil.querySelLookup", query = "select id as id, segUsuario as segUsuario, segPerfil as segPerfil from SegUsuarioPerfil where id = ? order by id asc") })
+@NamedQueries({ 
+	@NamedQuery(name = "SegUsuarioPerfil.obterPerfilUsuarioPorUsuario", query = "from SegUsuarioPerfil where segUsuario = :usuario"),
+	@NamedQuery(name = "SegUsuarioPerfil.querySelLookup", query = "select id as id, segUsuario as segUsuario from SegUsuarioPerfil where id = ? order by id asc") })
 public class SegUsuarioPerfil extends AppBaseEntity {
 
 	private static final long serialVersionUID = -141081347170280153L;

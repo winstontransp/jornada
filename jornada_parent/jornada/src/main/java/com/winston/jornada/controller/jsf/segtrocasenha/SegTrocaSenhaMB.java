@@ -19,7 +19,7 @@ import com.winston.jornada.entity.seguranca.SegUsuario;
 )
 
 @PlcConfigForm (
-	selection = @PlcConfigSelection(apiQuerySel = "querySel2"),
+	selection = @PlcConfigSelection(apiQuerySel = "obterUsuarioPorLogin"),
 	formPattern=FormPattern.Usu,
 	formLayout = @PlcConfigFormLayout(dirBase="/WEB-INF/fcls/segtrocasenha")
 )
