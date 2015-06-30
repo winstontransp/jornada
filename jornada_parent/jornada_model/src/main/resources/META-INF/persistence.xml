@@ -7,6 +7,8 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<non-jta-data-source>java:/comp/env/jdbc/jornada</non-jta-data-source>
 
+		<class>com.winston.jornada.entity.Critica</class>
+		<class>com.winston.jornada.entity.CriticaParam</class>
 		<class>com.winston.jornada.entity.Operacao</class>
 		<class>com.winston.jornada.entity.Frota</class>
 		<class>com.winston.jornada.entity.Macro</class>
@@ -15,6 +17,7 @@
 		<class>com.winston.jornada.entity.Motorista</class>
 		<class>com.winston.jornada.entity.Importacao</class>
 		<class>com.winston.jornada.entity.JornadaEvento</class>
+		<class>com.winston.jornada.entity.JornadaCritica</class>
 		<class>com.winston.jornada.entity.ReturnMessage</class>
 		<class>com.winston.jornada.entity.seguranca.SegUsuario</class>
 		<class>com.winston.jornada.entity.seguranca.SegPerfil</class>

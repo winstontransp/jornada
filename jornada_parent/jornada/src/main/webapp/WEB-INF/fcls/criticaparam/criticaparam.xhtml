@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:plcf="http://www.powerlogic.com.br/plcf" 
+	xmlns:tr="http://myfaces.apache.org/trinidad" 
+	xmlns:trh="http://myfaces.apache.org/trinidad/html">  
+	<ui:composition template="/fcls/template/PlcGeralTemplate.xhtml"> 
+		<ui:define name="plc-corpo-formulario"> 
+			<div id="plc-corpo-formulario" class="plc-corpo-formulario plc-form-simples"> 
+				<plcf:tabela tituloChave="criticaparam.titulo"> 
+					<plcf:linha> 
+						<plcf:celula> 
+							<plcf:titulo value="#{msg['label.horarioMinimoInicioJornada']}"/>  
+							<plcf:texto id="horarioMinimoInicioJornada" value="#{criticaparam.horarioMinimoInicioJornada}" ajudaChave="ajuda.horarioMinimoInicioJornada"/> 
+						</plcf:celula>  
+						<plcf:celula> 
+							<plcf:titulo value="#{msg['label.horarioMaximoFimJornada']}"/>  
+							<plcf:texto id="horarioMaximoFimJornada" value="#{criticaparam.horarioMaximoFimJornada}" ajudaChave="ajuda.horarioMaximoFimJornada"/> 
+						</plcf:celula>  
+					</plcf:linha>  
+					<plcf:linha> 
+						<plcf:celula> 
+							<plcf:titulo value="#{msg['label.intervaloMinimoRefeicao']}"/>  
+							<plcf:texto id="intervaloMinimoRefeicao" value="#{criticaparam.intervaloMinimoRefeicao}" ajudaChave="ajuda.intervaloMinimoRefeicao"/> 
+						</plcf:celula> 
+						<plcf:celula> 
+							<plcf:titulo value="#{msg['label.intervaloMinimoInterjornada']}"/>  
+							<plcf:texto id="intervaloMinimoInterjornada" value="#{criticaparam.intervaloMinimoInterjornada}" ajudaChave="ajuda.intervaloMinimoInterjornada"/> 
+						</plcf:celula>  
+					</plcf:linha> 
+					<plcf:linha>
+						<plcf:celula columnSpan="3"> 
+							<plcf:titulo value="#{msg['label.duracaoMaximaJornada']}"/>  
+							<plcf:texto id="duracaoMaximaJornada" value="#{criticaparam.duracaoMaximaJornada}" ajudaChave="ajuda.duracaoMaximaJornada"/> 
+						</plcf:celula> 
+					</plcf:linha>
+				</plcf:tabela> 
+			</div> 
+		</ui:define> 
+	</ui:composition> 
+</html>

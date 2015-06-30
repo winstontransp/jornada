@@ -33,12 +33,21 @@ import org.hibernate.annotations.ForeignKey;
 import com.powerlogic.jcompany.commons.config.stereotypes.SPlcEntity;
 import com.powerlogic.jcompany.domain.validation.PlcValGroupEntityList;
 
+//SELECT max(rm.position_time) into v_inicioInterjornada
+// FROM return_message rm
+// INNER JOIN macro m ON (rm.macro = m.id)
+//WHERE m.codigo = 4
+// AND rm.mct_address = v_mctAddressLast
+// AND rm.position_time < v_inicioJornada;
+
 @SPlcEntity
 @Entity
 @Table(name = "RETURN_MESSAGE")
 @SequenceGenerator(name = "SE_RETURN_MESSAGE", sequenceName = "SE_RETURN_MESSAGE")
 @Access(AccessType.FIELD)
-@NamedQueries({ @NamedQuery(name = "ReturnMessage.querySelLookup", query = "select id as id, positionTime as positionTime from ReturnMessage where id = ? order by id asc") })
+@NamedQueries({ 
+	@NamedQuery(name="ReturnMessage.obterInicioInterjornada", query="select max(rm.positionTime) from ReturnMessage rm inner join rm.macro m where m.codigo = 4 and rm.mctAddress = :mctAddress and rm.positionTime < :fimInterjornada"),
+	@NamedQuery(name="ReturnMessage.querySelLookup", query="select id as id, positionTime as positionTime from ReturnMessage where id = ? order by id asc")})
 public class ReturnMessage extends AppBaseEntity {
 
 	@Transient

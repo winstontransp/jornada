@@ -26,6 +26,7 @@ import com.winston.jornada.facade.IAppFacade;
 @SPlcUtil
 @QPlcDefault
 public class AppUserProfileUtil extends PlcBaseUserProfileUtil {
+
 	@Inject
 	@QPlcDefault
 	private IAppFacade facade;

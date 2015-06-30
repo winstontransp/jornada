@@ -84,8 +84,6 @@ public class SegUrlMB extends AppMB {
 	
 	public void recuperarUrlsAplicacao(){
 
-		System.out.println("Acionou o metodo 'recuperarUrlsAplicacao'");
-		
 		try {
 			PlcAppInfoUtil appInfoUtil =  PlcCDIUtil.getInstance().getInstanceByType(PlcAppInfoUtil.class, QPlcDefaultLiteral.INSTANCE);
 			appInfoUtil.config(contextUtil.getApplicationContext());

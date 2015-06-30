@@ -1,11 +1,8 @@
-package com.winston.jornada.entity.seguranca;
+package com.winston.jornada.entity;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,42 +19,40 @@ import org.apache.myfaces.extensions.validator.crossval.annotation.RequiredIfTyp
 
 import com.powerlogic.jcompany.commons.config.stereotypes.SPlcEntity;
 import com.powerlogic.jcompany.config.domain.PlcReference;
-import com.powerlogic.jcompany.domain.type.PlcYesNo;
 import com.powerlogic.jcompany.domain.validation.PlcValGroupEntityList;
-import com.winston.jornada.entity.AppBaseEntity;
 
 @SPlcEntity
 @Entity
-@Table(name = "SEG_URL")
-@SequenceGenerator(name = "SE_SEG_URL", sequenceName = "SE_SEG_URL")
+@Table(name = "CRITICA")
+@SequenceGenerator(name = "SE_CRITICA", sequenceName = "SE_CRITICA")
 @Access(AccessType.FIELD)
 @NamedQueries({
-	@NamedQuery(name="SegUrl.querySel", query="select id as id, casoUso as casoUso, url as url, bloqueado as bloqueado from SegUrl order by casoUso asc"),
-	@NamedQuery(name="SegUrl.queryMan", query = "from SegUrl"),
-	@NamedQuery(name="SegUrl.querySelLookup", query = "select id as id, url as url from SegUrl where id = ? order by id asc") })
-public class SegUrl extends AppBaseEntity {
+	@NamedQuery(name="Critica.queryMan", query="from Critica"), 
+	@NamedQuery(name="Critica.obterCriticaPorParam", query="from Critica where campoCriticaParam = :param"), 
+	@NamedQuery(name="Critica.querySelLookup", query="select id as id, nome as nome from Critica where id = ? order by id asc") })
+public class Critica extends AppBaseEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "SE_SEG_URL")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "SE_CRITICA")
 	private Long id;
 
 	@NotNull(groups = PlcValGroupEntityList.class)
 	@RequiredIf(valueOf = "id", is = RequiredIfType.not_empty)
+	@Size(max = 100)
 	@PlcReference(testDuplicity = true)
-	@Size(max = 1000)
-	private String url;
+	private String nome;
 
 	@NotNull(groups = PlcValGroupEntityList.class)
-	@RequiredIf(valueOf = "url", is = RequiredIfType.not_empty)
-	@Size(max = 100)
-	private String casoUso;
+	@RequiredIf(valueOf = "nome", is = RequiredIfType.not_empty)
+	@Size(max = 255)
+	private String descricao;
 
-	@Enumerated(EnumType.STRING)
-	@NotNull
-	@Column(length = 1)
-	private PlcYesNo bloqueado;
+	@NotNull(groups = PlcValGroupEntityList.class)
+	@RequiredIf(valueOf = "nome", is = RequiredIfType.not_empty)
+	@Size(max = 80)
+	private String campoCriticaParam;
 
-	public SegUrl() {
+	public Critica() {
 	}
 
 	public Long getId() {
@@ -68,33 +63,33 @@ public class SegUrl extends AppBaseEntity {
 		this.id = id;
 	}
 
-	public String getUrl() {
-		return url;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
-	public String getCasoUso() {
-		return casoUso;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setCasoUso(String casoUso) {
-		this.casoUso = casoUso;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
-	public PlcYesNo getBloqueado() {
-		return bloqueado;
+	public String getCampoCriticaParam() {
+		return campoCriticaParam;
 	}
 
-	public void setBloqueado(PlcYesNo bloqueado) {
-		this.bloqueado = bloqueado;
+	public void setCampoCriticaParam(String campoCriticaParam) {
+		this.campoCriticaParam = campoCriticaParam;
 	}
 
 	@Override
 	public String toString() {
-		return getUrl();
+		return getNome();
 	}
 
 	@Transient
@@ -107,5 +102,5 @@ public class SegUrl extends AppBaseEntity {
 	public String getIndExcPlc() {
 		return indExcPlc;
 	}
-	
+
 }

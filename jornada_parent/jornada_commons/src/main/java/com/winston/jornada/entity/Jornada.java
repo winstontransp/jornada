@@ -77,6 +77,11 @@ public class Jornada extends AppBaseEntity {
 
 	private String tempoInterjornada;
 	
+	@ManyToOne(targetEntity = Operacao.class, fetch = FetchType.LAZY)
+	@ForeignKey(name = "FK_JORNADA_OPERACAO")
+	@NotNull
+	private Operacao operacao;
+	
 	@OneToMany (targetEntity = ReturnMessage.class, fetch = FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="jornada")
 	@ForeignKey(name="FK_RETURNMESSAGE_JORNADA")
 	@PlcValDuplicity(property="positionTime")
@@ -92,10 +97,12 @@ public class Jornada extends AppBaseEntity {
 	@Valid
 	private List<JornadaEvento> eventos;
 
-	@ManyToOne(targetEntity = Operacao.class, fetch = FetchType.LAZY)
-	@ForeignKey(name = "FK_JORNADA_OPERACAO")
-	@NotNull
-	private Operacao operacao;
+	@OneToMany (targetEntity = JornadaCritica.class, fetch = FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="jornada")
+	@ForeignKey(name="FK_JORNADACRITICA_JORNADA")
+	@PlcValDuplicity(property="mensagem")
+	@PlcValMultiplicity(referenceProperty="mensagem", message="{jcompany.aplicacao.mestredetalhe.multiplicidade.JornadaCritica}")
+	@Valid
+	private List<JornadaCritica> criticas;
 	
 	public Jornada() {
 	}
@@ -156,6 +163,14 @@ public class Jornada extends AppBaseEntity {
 		this.tempoInterjornada = tempoInterjornada;
 	}
 
+	public Operacao getOperacao() {
+		return operacao;
+	}
+	
+	public void setOperacao(Operacao operacao) {
+		this.operacao = operacao;
+	}
+	
 	public List<ReturnMessage> getReturnMessage() {
 		return returnMessage;
 	}
@@ -173,6 +188,14 @@ public class Jornada extends AppBaseEntity {
 	}
 
 	
+	public List<JornadaCritica> getCriticas() {
+		return criticas;
+	}
+
+	public void setCriticas(List<JornadaCritica> criticas) {
+		this.criticas = criticas;
+	}
+
 	@Override
 	public String toString() {
 		
@@ -183,14 +206,6 @@ public class Jornada extends AppBaseEntity {
 		return " ";
 	}
 	
-	public Operacao getOperacao() {
-		return operacao;
-	}
-
-	public void setOperacao(Operacao operacao) {
-		this.operacao = operacao;
-	}
-
 	@Transient
 	private String indExcPlc = "N";
 
