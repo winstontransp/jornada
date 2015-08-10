@@ -30,8 +30,8 @@ public class MotoristaDAO extends AppJpaDAO {
 			@PlcQueryLineAmount Integer numeroLinhasPlc,		   
 			
 			@PlcQueryParameter(name="id", expression="obj.id = :id") Long id,
-			@PlcQueryParameter(name="nome", expression="obj.nome = :nome") String nome,
-			@PlcQueryParameter(name="matricula", expression="obj.matricula = :matricula") Long matricula,
+			@PlcQueryParameter(name="nome", expression="obj.nome like '%' || :nome || '%' ") String nome,
+			@PlcQueryParameter(name="matricula", expression="obj.matricula like :matricula || '%' ") Long matricula,
 			@PlcQueryParameter(name="operacao", expression="obj1 = :operacao") Operacao operacao
 	);
 
@@ -40,15 +40,15 @@ public class MotoristaDAO extends AppJpaDAO {
 			PlcBaseContextVO context,
 			
 			@PlcQueryParameter(name="id", expression="obj.id = :id") Long id,
-			@PlcQueryParameter(name="nome", expression="obj.nome = :nome") String nome,
-			@PlcQueryParameter(name="matricula", expression="obj.matricula = :matricula") Long matricula,
+			@PlcQueryParameter(name="nome", expression="obj.nome like '%' || :nome || '%' ") String nome,
+			@PlcQueryParameter(name="matricula", expression="obj.matricula like :matricula || '%' ") Long matricula,
 			@PlcQueryParameter(name="operacao", expression="obj1 = :operacao") Operacao operacao
 	);
 	
 	@PlcQuery("queryBuscaMotoristaPorMatricula")
 	public native Motorista findMotoristaPorMatricula(
 			PlcBaseContextVO context,
-			@PlcQueryParameter(name="matricula", expression="matricula = :matricula") Long matricula //,
+			@PlcQueryParameter(name="matricula", expression="matricula = :matricula") Long matricula
 	) throws NoResultException;
 	
 	

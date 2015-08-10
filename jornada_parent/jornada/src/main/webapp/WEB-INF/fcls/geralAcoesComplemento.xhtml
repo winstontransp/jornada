@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -7,23 +7,41 @@
 	xmlns:plcf="http://www.powerlogic.com.br/plcf"
 	xmlns:tr="http://myfaces.apache.org/trinidad"
 	xmlns:trh="http://myfaces.apache.org/trinidad/html">
-	<body>
-		<ui:composition>
-			<div id='plc-corpo-acao-personalisado' class='plc-corpo-acao-generico'>
-				<!--PONTO_INSERCAO-->
+<body>
+	<ui:composition>
+		<div id='plc-corpo-acao-personalisado' class='plc-corpo-acao-generico'>
+			<!--PONTO_INSERCAO-->
 
-				<ui:insert name="acao_buscarUrls">	 
-					<plcf:botaoAcao id="botaoAcaoBuscarUrls" urlIcone="ico iEspecifico" acao="recuperarUrlsAplicacao" 
-						limpaForm="false"  partialSubmit="#{!partialSubmit}" label="evt.segururl.exibeBotaoRecuperarUrls" 
-						botaoArrayID="SEG_EXIBE_BT_RECUPERAR_URLS" validaForm="false" immediate="false" blocking="true" 
-						rendered="#{requestScope.evt_segururl_exibeBotaoRecuperarUrls=='S'}" onclick="beforeSubmit();">
-						<f:ajax event="action" execute="@form" render="@form" imediate="true" onerror="plc.manipulaErroAjax"/>
-						<f:param name="skipValidation" value="true"/>
-					</plcf:botaoAcao>
-				</ui:insert>
-			
-			
-			</div>			 
-		</ui:composition>
-	</body>
+			<ui:insert name="acao_buscarUrls">
+				<plcf:botaoAcao id="botaoAcaoBuscarUrls" urlIcone="ico iEspecifico"
+					acao="recuperarUrlsAplicacao" limpaForm="false"
+					partialSubmit="#{!partialSubmit}"
+					label="evt.segururl.exibeBotaoRecuperarUrls"
+					botaoArrayID="SEG_EXIBE_BT_RECUPERAR_URLS" validaForm="false"
+					immediate="false" blocking="true"
+					rendered="#{requestScope.evt_segururl_exibeBotaoRecuperarUrls=='S'}"
+					onclick="beforeSubmit();">
+					<f:ajax event="action" execute="@form" render="@form"
+						imediate="true" onerror="plc.manipulaErroAjax" />
+					<f:param name="skipValidation" value="true" />
+				</plcf:botaoAcao>
+			</ui:insert>
+
+			<ui:insert name="plc-acao-pesquisar">
+				<plcf:botaoAcao id="botaoAcaoPesquisarMapa" urlIcone="ico iPesquisar"
+					acao="pesquisarMapa"
+					validaForm="#{plcControleConversacao.pesquisarValida}"
+					partialSubmit="#{!partialSubmit}" label="jcompany.evt.pesquisar"
+					botaoArrayID="PESQUISAR"
+					rendered="#{requestScope.exibePesquisarMapa=='S'}"
+					blocking="true">
+					<f:ajax event="action" execute="@form" render="@form"
+						immediate="true" onerror="plc.manipulaErroAjax" />
+					<f:param name="skipValidation" value="true" />
+				</plcf:botaoAcao>
+			</ui:insert>
+
+		</div>
+	</ui:composition>
+</body>
 </html>

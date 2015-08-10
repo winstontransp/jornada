@@ -8,14 +8,14 @@ import com.powerlogic.jcompany.commons.config.stereotypes.SPlcDataAccessObject;
 import com.powerlogic.jcompany.persistence.jpa.PlcQuery;
 import com.powerlogic.jcompany.persistence.jpa.PlcQueryParameter;
 import com.powerlogic.jcompany.persistence.jpa.PlcQueryService;
-import com.winston.jornada.entity.Macro;
+import com.winston.jornada.entity.ReturnMessage;
 import com.winston.jornada.persistence.jpa.AppJpaDAO;
 
 /**
  * Classe de Persistência gerada pelo assistente
  */
 
-@PlcAggregationDAOIoC(Macro.class)
+@PlcAggregationDAOIoC(ReturnMessage.class)
 @SPlcDataAccessObject
 @PlcQueryService
 public class ReturnMessageDAO extends AppJpaDAO {

@@ -35,50 +35,68 @@
 					</li>
 					<!-- 
 					<li>
-						<a href="#{request.contextPath}/f/n/critica">
-							<label jsfc="plcf:titulo" tituloChave="menu.critica.titulo">Críticas</label>
-						</a>
-					</li>
+					<a href="#{request.contextPath}/f/n/critica">
+						<label jsfc="plcf:titulo" tituloChave="menu.critica.titulo">Críticas</label>
+					</a>
+				</li>
 					 -->
-					<li>
-						<a href="#{request.contextPath}/f/n/criticaparam">
-							<label jsfc="plcf:titulo" tituloChave="menu.criticaparam.titulo">Parâmetros Críticas</label>
-						</a>
-					</li>
-				</ul>
-			</li>
-			<li>
-				<a>
-					<span class="ico iLeiautepadrao"/>
-					<label jsfc="plcf:titulo" tituloChave="app.m.seguranca">Seguranca</label>
-				</a>
-				<ul class="ui-state-hover">
-					<li>
-						<a href="#{request.contextPath}/f/n/segtrocasenha">
-							<label jsfc="plcf:titulo" tituloChave="menu.segtrocasenha.titulo">Troca Senha</label>
-						</a>
-					</li>
-					<li>
-						<a href="#{request.contextPath}/f/n/segusuariosel?fwPlc=segusuario&amp;evento=y">
-							<label jsfc="plcf:titulo" tituloChave="menu.segusuario.titulo">Usuário</label>
-						</a>
-					</li>
-					<li>
-						<a href="#{request.contextPath}/f/n/segperfilsel?fwPlc=segperfil&amp;evento=y">
-							<label jsfc="plcf:titulo" tituloChave="menu.segperfil.titulo">Perfil</label>
-						</a>
-					</li>
-					<li>
-						<a href="#{request.contextPath}/f/n/segurl">
-							<label jsfc="plcf:titulo" tituloChave="menu.segurl.titulo">URLs</label>
-						</a>
-					</li>
-				</ul>
-			</li>
-			<ui:include src="/WEB-INF/fcls-plc/geralMenuAjuda.xhtml"/>
-			<ui:include src="/WEB-INF/fcls-plc/geralMenuPrefLang.xhtml"/>
-			<ui:include src="/WEB-INF/fcls-plc/geralMenuAreaTecnica.xhtml"/>
-			<ui:include src="/WEB-INF/fcls-plc/geralMenuDinamico.xhtml"/>
-			<ui:include src="/WEB-INF/fcls-plc/geralMenuThemeSwitcher.xhtml"/>
-		</ul>
-	</ui:composition>
+				<li>
+					<a href="#{request.contextPath}/f/n/criticaparam">
+						<label jsfc="plcf:titulo" tituloChave="menu.criticaparam.titulo">Parâmetros Críticas</label>
+					</a>
+				</li>
+				<li>
+					<a href="#{request.contextPath}/f/n/mapa">
+						<label jsfc="plcf:titulo" tituloChave="menu.mapa.titulo">Mapa</label>
+					</a>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<a>
+				<span class="ico iLeiautepadrao"/>
+				<label jsfc="plcf:titulo" tituloChave="app.m.importacao">Importação</label>
+			</a>
+			<ul class="ui-state-hover">
+				<li>
+					<a href="#{request.contextPath}/f/n/excecaoimportctrljornada">
+						<label jsfc="plcf:titulo" tituloChave="menu.importacao.controle.jornada.titulo">Controle Jornada</label>
+					</a>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<a>
+				<span class="ico iLeiautepadrao"/>
+				<label jsfc="plcf:titulo" tituloChave="app.m.seguranca">Seguranca</label>
+			</a>
+			<ul class="ui-state-hover">
+				<li>
+					<a href="#{request.contextPath}/f/n/segtrocasenha">
+						<label jsfc="plcf:titulo" tituloChave="menu.segtrocasenha.titulo">Troca Senha</label>
+					</a>
+				</li>
+				<li>
+					<a href="#{request.contextPath}/f/n/segusuariosel?fwPlc=segusuario&amp;evento=y">
+						<label jsfc="plcf:titulo" tituloChave="menu.segusuario.titulo">Usuário</label>
+					</a>
+				</li>
+				<li>
+					<a href="#{request.contextPath}/f/n/segperfilsel?fwPlc=segperfil&amp;evento=y">
+						<label jsfc="plcf:titulo" tituloChave="menu.segperfil.titulo">Perfil</label>
+					</a>
+				</li>
+				<li>
+					<a href="#{request.contextPath}/f/n/segurl">
+						<label jsfc="plcf:titulo" tituloChave="menu.segurl.titulo">URLs</label>
+					</a>
+				</li>
+			</ul>
+		</li>
+		<ui:include src="/WEB-INF/fcls-plc/geralMenuAjuda.xhtml"/>
+		<ui:include src="/WEB-INF/fcls-plc/geralMenuPrefLang.xhtml"/>
+		<ui:include src="/WEB-INF/fcls-plc/geralMenuAreaTecnica.xhtml"/>
+		<ui:include src="/WEB-INF/fcls-plc/geralMenuDinamico.xhtml"/>
+		<ui:include src="/WEB-INF/fcls-plc/geralMenuThemeSwitcher.xhtml"/>
+	</ul>
+</ui:composition>

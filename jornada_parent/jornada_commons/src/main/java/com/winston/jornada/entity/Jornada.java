@@ -45,7 +45,8 @@ import com.powerlogic.jcompany.domain.validation.PlcValMultiplicity;
 @Access(AccessType.FIELD)
 @NamedQueries({
 	@NamedQuery(name="Jornada.queryMan", query="from Jornada"),
-	@NamedQuery(name="Jornada.querySel", query="select obj.id as id, obj.mctAddress as mctAddress, obj.status as status, obj.data as data, obj1.id as motorista_id , obj1.nome as motorista_nome from Jornada obj left outer join obj.motorista as obj1 order by obj.mctAddress asc"), 
+	@NamedQuery(name="Jornada.querySel", query="select obj.id as id, obj.mctAddress as mctAddress, obj.status as status, obj.data as data, obj1.id as motorista_id , obj1.nome as motorista_nome from Jornada obj left outer join obj.motorista as obj1 order by obj.mctAddress asc"),
+	@NamedQuery(name="Jornada.querySel2", query="select j.id as id, j.mctAddress as mctAddress, j.status as status, j.data as data, m.id as motorista_id, m.nome as motorista_nome, o.id as operacao_id, o.nome as operacao_nome, o.turno as operacao_turno from Jornada j left outer join j.operacao as o left outer join j.motorista as m order by m.nome, j.data asc"), 	
 	@NamedQuery(name="Jornada.querySelLookup", query = "select id as id, mctAddress as mctAddress from Jornada where id = ? order by id asc") })
 public class Jornada extends AppBaseEntity {
 

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:plcf="http://www.powerlogic.com.br/plcf" 
+	xmlns:tr="http://myfaces.apache.org/trinidad" 
+	xmlns:trh="http://myfaces.apache.org/trinidad/html">  
+	<ui:composition> 
+		<plcf:tabela tituloChave="excecaoimportctrljornada.mestre.titulo.comp"> 
+			<plcf:linha> 
+				<plcf:celula> 
+					<plcf:titulo value="#{msg['label.id']}"/>  
+					<plcf:oid id="id" value="#{excecao.id}" ajudaChave="ajuda.id"/> 
+				</plcf:celula>  
+			</plcf:linha>  
+			<plcf:linha> 
+				<plcf:celula> 
+					<plcf:titulo value="#{msg['label.dataImportacao']}"/>  
+					<plcf:data id="dataImportacao" value="#{excecao.dataImportacao}" ajudaChave="ajuda.dataImportacao"/>
+				</plcf:celula> 
+			</plcf:linha>  
+			<plcf:linha> 
+				<plcf:celula> 
+					<plcf:titulo value="#{msg['label.nomeArquivo']}"/>  
+					<plcf:texto id="nomeArquivo" value="#{excecao.nomeArquivo}" ajudaChave="ajuda.nomeArquivo" tamanho="50"/> 
+				</plcf:celula>  
+			</plcf:linha>  
+			<plcf:linha> 
+				<plcf:celula> 
+					<plcf:titulo value="#{msg['label.jornadasAtualizadas']}"/>  
+					<plcf:numerico id="jornadasAtualizadas" value="#{excecao.jornadasAtualizadas}" numCasas="0"  ajudaChave="ajuda.jornadasAtualizadas"/> 
+				</plcf:celula> 
+			</plcf:linha>  
+			<plcf:linha> 
+				<plcf:celula> 
+					<plcf:titulo value="#{msg['label.statusImportacao']}"/>  
+					<plcf:comboEstatico id="statusImportacao" value="#{excecao.statusImportacao}" dominio="StatusImportacao" exibeBranco="S" ajudaChave="ajuda.statusImportacao"/> 
+				</plcf:celula> 
+			</plcf:linha> 
+		</plcf:tabela> 
+	</ui:composition> 
+</html>

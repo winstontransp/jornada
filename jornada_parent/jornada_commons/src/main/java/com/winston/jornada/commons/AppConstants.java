@@ -12,6 +12,7 @@ public interface AppConstants extends PlcConstants {
     
 	interface ACAO {
 		String EXIBE_BT_RECUPERAR_URLS = "evt_segururl_exibeBotaoRecuperarUrls";
+		String EXIBE_BT_PESQUISAR_MAPA = "exibePesquisarMapa";
 	}
     
 }
