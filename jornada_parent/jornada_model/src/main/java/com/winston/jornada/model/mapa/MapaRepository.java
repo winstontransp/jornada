@@ -178,11 +178,15 @@ public class MapaRepository extends PlcBaseRepository {
 				cal.setTime(data);
 				int i = cal.get(Calendar.DAY_OF_MONTH);
 				
+				// Percorre todo o período de férias (até o fim do período do mapa, no máximo)
 				while (data.before(fimFerias) && data.after(mapa.getDataInicio()) && data.before(mapaFim)) {
-					DiaMapa diaMapa = new DiaMapa(i, StatusDiaMapa.F);
+					DiaMapa diaMapa = mapa.getDiaMapa(i);
 					
-					diaMapa.setData(data);
-					mapa.setDiaMapa(i, diaMapa);
+					// So registra férias se não houver outro evento no dia
+					if (StatusDiaMapa.I.equals(diaMapa.getStatusDia())) {
+						diaMapa.setStatusDia(StatusDiaMapa.F);
+						diaMapa.setData(data);
+					}
 
 					i++;
 					cal.set(Calendar.DAY_OF_MONTH, i);

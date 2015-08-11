@@ -64,7 +64,7 @@ span.cellWithoutBackground
 					<script type="text/javascript">//<![CDATA[
 					function colorFormatter (cellvalue, options, rowObject) {
 
-						if (cellvalue.statusDia == 'T') {
+						if (cellvalue.statusDia == 'T' || cellvalue.statusDia == 'E' ) {
 							url = "#{request.contextPath}/f/n/jornadadet?id=" + cellvalue.jornadaId;
 							aCelula = '<a style="color:'+ cellvalue.cor + ';" href="'+ url+ '">' + cellvalue.descricaoStatus + '</a>';
 						} else {

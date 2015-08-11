@@ -62,7 +62,7 @@ public class DiaMapa {
 		if (StatusDiaMapa.T.equals(status)) {
 			this.cor ="#034803";
 		} else if (StatusDiaMapa.E.equals(status)) {
-			this.cor = "yellow";
+			this.cor = "#CCCC0F";
 		} else if (StatusDiaMapa.D.equals(status)) {
 			this.cor = "grey";
 		} else if (StatusDiaMapa.F.equals(status)) {
@@ -83,7 +83,7 @@ public class DiaMapa {
 		if (StatusDiaMapa.T.equals(statusDia)) {
 			descricao = "Jornada=" + jornadaId;
 		} else if (StatusDiaMapa.E.equals(statusDia)) {
-			descricao = "Excesso-Jornada=" + jornadaId;
+			descricao = "Excesso=" + jornadaId;
 		} else if (StatusDiaMapa.D.equals(statusDia)) {
 			descricao = "Descanso";
 		} else if (StatusDiaMapa.F.equals(statusDia)) {
