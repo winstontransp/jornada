@@ -6,6 +6,7 @@ package com.winston.jornada.entity.mapa;
 public enum StatusDiaMapa {
     
 	T("{statusDiaMapa.T}"),
+	E("{statusDiaMapa.E}"),
 	D("{statusDiaMapa.D}"),
 	F("{statusDiaMapa.F}"),
 	A("{statusDiaMapa.A}"),

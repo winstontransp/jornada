@@ -15,6 +15,8 @@ import com.powerlogic.jcompany.commons.config.stereotypes.SPlcRepository;
 import com.powerlogic.jcompany.model.PlcBaseRepository;
 import com.winston.jornada.entity.Jornada;
 import com.winston.jornada.entity.Motorista;
+import com.winston.jornada.entity.MotoristaFerias;
+import com.winston.jornada.entity.mapa.DiaMapa;
 import com.winston.jornada.entity.mapa.Mapa;
 import com.winston.jornada.entity.mapa.StatusDiaMapa;
 import com.winston.jornada.persistence.jpa.jornadadet.JornadaDAO;
@@ -69,6 +71,10 @@ public class MapaRepository extends PlcBaseRepository {
 		List<Mapa> mapas = new ArrayList<Mapa>();
 		Mapa mapa = null;
 		
+		//Carrega as férias dos motoristas que possuem férias na faixa do período informado
+		List<MotoristaFerias> motoristaFerias = null;
+		motoristaFerias = (List<MotoristaFerias>)jornadaDAO.findByFields(context, MotoristaFerias.class, "querySelByFaixa", new String[]{"inicio", "termino"}, new Object[]{arg.getDataInicio(), arg.getDataFim()});
+		
 		int indice = 0;
 		int contaMotorista = 0;
 		
@@ -92,6 +98,8 @@ public class MapaRepository extends PlcBaseRepository {
 			int ini = 1;
 			int j = 0;
 			
+			int contaDiaTrabalhado = 0;
+			
 			// Enquanto for o mesmo motorista
 			while (i < jornadas.size() && motorista.getId().compareTo(motoristaAnt.getId()) == 0 && contaMotorista <= total) {
 				
@@ -100,17 +108,32 @@ public class MapaRepository extends PlcBaseRepository {
 					int dia = calendar.get(Calendar.DAY_OF_MONTH);
 	
 					for (j=ini; j<=dia; j++) {
-	
+						calendar.set(Calendar.DAY_OF_MONTH, j);
+
+						DiaMapa diaMapa = mapa.getDiaMapa(j);
+						diaMapa.setData(calendar.getTime());
+						diaMapa.setJornadaId(jornada.getId());
+						
 						if (dia == j) {
-							//trabalhou
-							mapa.setStatusDia(j, StatusDiaMapa.T);
+							contaDiaTrabalhado++;
+							
+							if (contaDiaTrabalhado < 6) {
+								diaMapa.setStatusDia(StatusDiaMapa.T);
+							} else {
+								diaMapa.setStatusDia(StatusDiaMapa.E);
+							}
+							
 						} else {
+							contaDiaTrabalhado = 0;
+
 							// se esta de férias
-								//ferias
-							// senão 
-								// descanso
-							mapa.setStatusDia(j, StatusDiaMapa.D);
+							if (verificarFeriasMotoristaNoDia(motorista, jornada.getData(), diaMapa.getData(), motoristaFerias)) {
+								diaMapa.setStatusDia(StatusDiaMapa.F);
+							} else {
+								diaMapa.setStatusDia(StatusDiaMapa.D);
+							}
 						}
+						
 					}
 				}
 				
@@ -124,6 +147,8 @@ public class MapaRepository extends PlcBaseRepository {
 			}
 			
 			if (indice >= inicio && contaMotorista <= total) {
+				completaMapaFeriasMotorista(mapa, motoristaFerias);
+				
 				mapas.add(mapa);
 				contaMotorista++;
 			}
@@ -132,6 +157,60 @@ public class MapaRepository extends PlcBaseRepository {
 		}
 		
 		return mapas;
+	}
+
+	
+	private void completaMapaFeriasMotorista(Mapa mapa, List<MotoristaFerias> motoristaFerias) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(mapa.getDataFim());
+		cal.add(Calendar.HOUR_OF_DAY, 1);
+		Date mapaFim = cal.getTime();
+		
+		for (MotoristaFerias feriasMotorista : motoristaFerias) {
+			// Se é o motorista em questão
+			if (feriasMotorista.getMotorista().getId().compareTo(mapa.getMotorista().getId()) == 0) {
+				cal.setTime(feriasMotorista.getTermino());
+				cal.add(Calendar.HOUR_OF_DAY, 1);
+				Date fimFerias = cal.getTime();
+				
+				Date data = feriasMotorista.getInicio();
+				
+				cal.setTime(data);
+				int i = cal.get(Calendar.DAY_OF_MONTH);
+				
+				while (data.before(fimFerias) && data.after(mapa.getDataInicio()) && data.before(mapaFim)) {
+					DiaMapa diaMapa = new DiaMapa(i, StatusDiaMapa.F);
+					
+					diaMapa.setData(data);
+					mapa.setDiaMapa(i, diaMapa);
+
+					i++;
+					cal.set(Calendar.DAY_OF_MONTH, i);
+					data = cal.getTime();
+				}
+				
+				break;
+			}
+		}
+		
+	}
+
+	private boolean verificarFeriasMotoristaNoDia(Motorista motorista, Date data, Date diaMapa, List<MotoristaFerias> motoristaFerias) {
+		
+		for (MotoristaFerias feriasMotorista : motoristaFerias) {
+			
+			// Se é o motorista em questão
+			if (feriasMotorista.getMotorista().getId().compareTo(motorista.getId()) == 0) {
+				
+				if (diaMapa.after(feriasMotorista.getInicio()) && diaMapa.before(feriasMotorista.getTermino())) {
+					return true;
+				}
+				
+				break;
+			}
+		}
+		
+		return false;
 	}
 
 	private void validarDatas(Mapa arg, Calendar calendar) throws PlcException {

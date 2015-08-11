@@ -63,39 +63,15 @@ span.cellWithoutBackground
 				<div id="#{plcAliasPrefixoAction}Sel" class="plc-form-basico-sel"> 
 					<script type="text/javascript">//<![CDATA[
 					function colorFormatter (cellvalue, options, rowObject) {
-						bgColor = "";
-						fgColor = "";
 
-						//alert(cellvalue);
-						
-						if (cellvalue=="Trabalho") {
-							bgColor = "#034803";
-							fgColor = "#034803";
-						} else if (cellvalue=="Descanso") {
-					        bgColor = "grey";
-							fgColor = "grey";
-						} else if (cellvalue=="Férias") {
-						     bgColor = "yellow";
-							 fgColor = "yellow";
-						} else if (cellvalue=="Afastamento") {
-						     bgColor = "black";
-							 fgColor = "black";
-						} else if (cellvalue=="Indefinido") {
-						     bgColor = "lightgrey";
-							 fgColor = "lightgrey";
+						if (cellvalue.statusDia == 'T') {
+							url = "#{request.contextPath}/f/n/jornadadet?id=" + cellvalue.jornadaId;
+							aCelula = '<a style="color:'+ cellvalue.cor + ';" href="'+ url+ '">' + cellvalue.descricaoStatus + '</a>';
 						} else {
-						     bgColor = "red";
-							 fgColor = "red";
-						} 		
-
-						vlCell = "";
+							aCelula = cellvalue.descricaoStatus;
+						}
 						
-						// vlCell = cellvalue.substr(0,1);
-						vlCell = cellvalue;
-
-						//alert(vlCell);
-						
-						return '<span class="cellWithoutBackground" style="color:'+fgColor+';background-color:'+bgColor+';">&nbsp;'+ vlCell +'&nbsp;</span>';
+						return '<span class="cellWithoutBackground" style="color:'+ cellvalue.cor +';background-color:'+ cellvalue.cor +';">&nbsp;'+ aCelula +'&nbsp;</span>';
 					}
 	jQuery(function(){plc.criaSelecaoJqGrid('plc-grid','plc-grid-navegador',{
 		evento:'${param.evento}'
@@ -108,38 +84,38 @@ span.cellWithoutBackground
 						colNames:
 					['#{msg['label.motorista']}',
 						'01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31'],
-				colModel:[{name:'motorista',index:'motorista',width:'18%'},
-				          {name:'statusDia01',index:'statusDia03',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false,sortable:false},
-				          {name:'statusDia02',index:'statusDia03',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false,sortable:false},
-				          {name:'statusDia03',index:'statusDia03',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false,sortable:false},
-				          {name:'statusDia04',index:'statusDia04',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false,sortable:false},
-				          {name:'statusDia05',index:'statusDia05',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false,sortable:false},
-				          {name:'statusDia06',index:'statusDia06',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia07',index:'statusDia07',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia08',index:'statusDia08',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia09',index:'statusDia09',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia10',index:'statusDia10',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia11',index:'statusDia11',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia12',index:'statusDia12',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia13',index:'statusDia13',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia14',index:'statusDia14',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia15',index:'statusDia15',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia16',index:'statusDia16',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia17',index:'statusDia17',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia18',index:'statusDia18',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia19',index:'statusDia19',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia20',index:'statusDia20',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia21',index:'statusDia21',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia22',index:'statusDia22',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia23',index:'statusDia23',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia24',index:'statusDia24',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia25',index:'statusDia25',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia26',index:'statusDia26',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia27',index:'statusDia27',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia28',index:'statusDia28',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia29',index:'statusDia29',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia30',index:'statusDia30',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
-				          {name:'statusDia31',index:'statusDia31',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false}]},
+				colModel:[{name:'motorista',index:'motorista',width:'18%',sortable:false},
+				          {name:'diaMapa01',index:'diaMapa01',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa02',index:'diaMapa02',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa03',index:'diaMapa03',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa04',index:'diaMapa04',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa05',index:'diaMapa05',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa06',index:'diaMapa06',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa07',index:'diaMapa07',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa08',index:'diaMapa08',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa09',index:'diaMapa09',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa10',index:'diaMapa10',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa11',index:'diaMapa11',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa12',index:'diaMapa12',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa13',index:'diaMapa13',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa14',index:'diaMapa14',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa15',index:'diaMapa15',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa16',index:'diaMapa16',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa17',index:'diaMapa17',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa18',index:'diaMapa18',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa19',index:'diaMapa19',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa20',index:'diaMapa20',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa21',index:'diaMapa21',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa22',index:'diaMapa22',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa23',index:'diaMapa23',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa24',index:'diaMapa24',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa25',index:'diaMapa25',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa26',index:'diaMapa26',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa27',index:'diaMapa27',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa28',index:'diaMapa28',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa29',index:'diaMapa29',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa30',index:'diaMapa30',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false},
+				          {name:'diaMapa31',index:'diaMapa31',width:'2%',align:"center",formatter:colorFormatter,title:true,resizable:false}]},
 			aoSelecionar:function(id){}});});//]]> </script>  
 					<table id="plc-grid" width="100%" class="scroll" cellpadding="0" cellspacing="0"/>  
 					<div id="plc-grid-navegador" class="scroll" style="text-align:center;"/> 

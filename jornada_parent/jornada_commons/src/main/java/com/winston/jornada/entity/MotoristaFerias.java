@@ -32,7 +32,13 @@ import com.powerlogic.jcompany.domain.validation.PlcValGroupEntityList;
 @Table(name = "MOTORISTA_FERIAS")
 @SequenceGenerator(name = "SE_MOTORISTA_FERIAS", sequenceName = "SE_MOTORISTA_FERIAS")
 @Access(AccessType.FIELD)
-@NamedQueries({ @NamedQuery(name = "MotoristaFerias.querySelLookup", query = "select id as id, inicio as inicio from MotoristaFerias where id = ? order by id asc") })
+@NamedQueries({ 
+	@NamedQuery(name="MotoristaFerias.querySelLookup", query="select id as id, inicio as inicio from MotoristaFerias where id = ? order by id asc"),
+	@NamedQuery(name="MotoristaFerias.querySelByFaixa", query="select f.id as id, f.inicio as inicio, f.termino as termino, f.motorista as motorista from MotoristaFerias f where f.sitHistoricoPlc = 'A' and (" + 
+			"(:inicio <= inicio and termino <= :termino) or " +
+			"(:inicio >= inicio and termino <= :termino) or " +
+			"(:inicio <= inicio and termino >= :termino) or " +
+			"(:inicio >= inicio and termino >= :termino)) ")})
 public class MotoristaFerias extends AppBaseEntity {
 
 	@Id

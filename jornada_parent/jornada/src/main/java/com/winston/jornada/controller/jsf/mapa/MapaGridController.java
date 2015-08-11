@@ -120,35 +120,13 @@ public class MapaGridController<E, I> extends PlcBaseGridController<E, I> {
 			Object instancia = getEntityType().newInstance();
 			
 			if (instancia instanceof Mapa) {
-				PlcConfigSelection configSelecao = getConfigCollaboration().selection();
-
-				String querySel = null;
-				if (configSelecao != null) {
-					querySel = configSelecao.apiQuerySel();
-				}
-
-				PlcBaseContextVO context = getContext();
-				
-				context.setApiQuerySel(StringUtils.isNotBlank(querySel) ? querySel : null);
-
-//				String orderByDinamico = null;
-//				if (StringUtils.isNotEmpty(orderBy)) {
-//					orderByDinamico = orderBy + " " + StringUtils.defaultIfEmpty(order, "asc");
-//				}
-
 				Mapa mapa = (Mapa) instancia;
-
 				this.beanPopulateUtil.transferMapToBean(request.getParameterMap(), mapa);
-				
 				this.retrieveCollectionBefore();
-				
 				this.setTotal(iocControleFacadeUtil.getFacade(IAppFacade.class).recuperarContagemMapa(getContext(), mapa));
-
 				List<E> lista = (List<E>) iocControleFacadeUtil.getFacade(IAppFacade.class).recuperarMapa(getContext(), mapa, ((page - 1) * rows), (rows));
-				
 				this.setEntityCollection(lista);
 				this.retrieveCollectionAfter();
-
 			} else {
 				PlcConfigSelection configSelecao = getConfigCollaboration().selection();
 
