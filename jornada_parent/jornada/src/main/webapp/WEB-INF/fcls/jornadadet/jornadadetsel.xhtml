@@ -16,12 +16,20 @@
 						<plcf:linha> 
 							<plcf:celula> 
 								<plcf:titulo value="#{msg['label.id']}"/>  
-								<plcf:texto id="id" value="#{jornadadet.id}" ajudaChave="ajuda.id" tamanho="5"  /> 
+								<plcf:texto id="id" value="#{jornadadet.id}" formato="numerico" ajudaChave="ajuda.id" tamanho="6"  /> 
 							</plcf:celula>  
 							<plcf:celula> 
 								<plcf:titulo value="#{msg['label.motorista']}"/>  
 								<plcf:vinculado id="motorista" value="#{jornadadet.motorista}" propSelPop="motorista" idExibe="S" idSomenteLeitura="N" autoRecuperacaoClasse="com.winston.jornada.entity.Motorista" actionSel="motoristasel" modal="S" ajudaChave="ajuda.motorista" onkeydown="selecionaPorTecla(event,this);"/> 
 							</plcf:celula>  
+							<plcf:celula> 
+								<plcf:titulo value="#{msg['label.frota']}"/>  
+								<plcf:texto id="frota" value="#{jornadadet.frota}" formato="numerico" tamanho="7" ajudaChave="ajuda.frota"/> 
+							</plcf:celula> 
+							<plcf:celula> 
+								<plcf:titulo value="#{msg['label.placa']}"/>  
+								<plcf:texto id="placa" value="#{jornadadet.placa}" formato="alfanumerico" tamanho="8" ajudaChave="ajuda.placa"/> 
+							</plcf:celula> 
 							<plcf:celula> 
 								<plcf:titulo value="#{msg['label.data']}"/>  
 								<plcf:data id="data" value="#{jornadadet.data}" ajudaChave="ajuda.data"/> 
@@ -32,7 +40,7 @@
 							</plcf:celula>  
 							<plcf:celula> 
 								<plcf:titulo value="#{msg['label.mctAddress']}"/>  
-								<plcf:numerico id="mctAddress" value="#{jornadadet.mctAddress}" ajudaChave="ajuda.mctAddress"/> 
+								<plcf:texto id="mctAddress" value="#{jornadadet.mctAddress}" formato="numerico" tamanho="10" ajudaChave="ajuda.mctAddress"/> 
 							</plcf:celula> 
 						</plcf:linha> 
 					</plcf:tabela> 
@@ -50,15 +58,19 @@
 				colNames:
 					['#{msg['label.id']}',
 					'#{msg['label.motorista']}',
+					'#{msg['label.frota']}',
+					'#{msg['label.placa']}',
 					'#{msg['label.data']}',
 					'#{msg['label.status']}',
 					'#{msg['label.mctAddress']}'],
 				colModel:[
-					{name:'id',index:'id'},
-					{name:'motorista',index:'motorista'},
-					{name:'data',index:'data'},
-					{name:'status',index:'status'},
-					{name:'mctAddress',index:'mctAddress'}]},
+					{name:'id',index:'id',width:'6',align:'center'},
+					{name:'motorista',index:'motorista',width:'40%'},
+					{name:'frota',index:'frota',width:'10',align:'center'},
+					{name:'placa',index:'placa',width:'10',align:'center'},
+					{name:'data',index:'data',width:'10',align:'center'},
+					{name:'status',index:'status',width:'7',align:'center'},
+					{name:'mctAddress',index:'mctAddress',width:'7',align:'center'}]},
 			urlEdicao:'#{request.contextPath}/f/n/jornadadetmad'});});//]]> </script>  
 					<table id="plc-grid" width="100%" class="scroll" cellpadding="0" cellspacing="0"/>  
 					<div id="plc-grid-navegador" class="scroll" style="text-align:center;"/> 

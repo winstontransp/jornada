@@ -4,7 +4,10 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,20 +32,20 @@ import com.powerlogic.jcompany.domain.validation.PlcValGroupEntityList;
 
 @SPlcEntity
 @Entity
-@Table(name = "MOTORISTA_FERIAS")
-@SequenceGenerator(name = "SE_MOTORISTA_FERIAS", sequenceName = "SE_MOTORISTA_FERIAS")
+@Table(name = "MOTORISTA_AFASTAMENTO")
+@SequenceGenerator(name = "SE_MOTORISTA_AFASTAMENTO", sequenceName = "SE_MOTORISTA_AFASTAMENTO")
 @Access(AccessType.FIELD)
 @NamedQueries({ 
-	@NamedQuery(name="MotoristaFerias.querySelLookup", query="select id as id, inicio as inicio from MotoristaFerias where id = ? order by id asc"),
-	@NamedQuery(name="MotoristaFerias.querySelByFaixa", query="select f.id as id, f.inicio as inicio, f.termino as termino, f.motorista as motorista from MotoristaFerias f where f.sitHistoricoPlc = 'A' and (" + 
+	@NamedQuery(name="MotoristaAfastamento.querySelLookup", query="select id as id, inicio as inicio from MotoristaAfastamento where id = ? order by id asc"),
+	@NamedQuery(name="MotoristaAfastamento.querySelByFaixa", query="select f.id as id, f.inicio as inicio, f.termino as termino, f.motorista as motorista, f.motivo as motivo from MotoristaAfastamento f where f.sitHistoricoPlc = 'A' and (" + 
 			"(:inicio <= inicio and termino <= :termino) or " +
 			"(:inicio >= inicio and termino <= :termino) or " +
 			"(:inicio <= inicio and termino >= :termino) or " +
 			"(:inicio >= inicio and termino >= :termino)) ")})
-public class MotoristaFerias extends AppBaseEntity {
+public class MotoristaAfastamento extends AppBaseEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "SE_MOTORISTA_FERIAS")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "SE_MOTORISTA_AFASTAMENTO")
 	private Long id;
 
 	@ManyToOne(targetEntity = Motorista.class, fetch = FetchType.LAZY)
@@ -59,11 +62,16 @@ public class MotoristaFerias extends AppBaseEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date termino;
 
+	@Enumerated(EnumType.STRING)
+	@NotNull
+	@Column(length = 1)
+	private MotivoAfastamento motivo;
+	
 	@NotNull
 	@Size(max = 1)
 	private String sitHistoricoPlc = "A";
 
-	public MotoristaFerias() {
+	public MotoristaAfastamento() {
 	}
 
 	public Long getId() {
@@ -96,6 +104,14 @@ public class MotoristaFerias extends AppBaseEntity {
 
 	public void setMotorista(Motorista motorista) {
 		this.motorista = motorista;
+	}
+
+	public MotivoAfastamento getMotivo() {
+		return motivo;
+	}
+
+	public void setMotivo(MotivoAfastamento motivo) {
+		this.motivo = motivo;
 	}
 
 	@Override

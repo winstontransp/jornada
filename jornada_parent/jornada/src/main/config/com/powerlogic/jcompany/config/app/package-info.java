@@ -11,6 +11,7 @@
 	classesDiscreteDomain={com.winston.jornada.entity.StatusImportacao.class, 
 		com.winston.jornada.entity.StatusJornada.class, 
 		com.winston.jornada.entity.TipoEvento.class,
+		com.winston.jornada.entity.MotivoAfastamento.class,
 		com.winston.jornada.entity.Turno.class},
 
 	classesLookup={com.winston.jornada.entity.Operacao.class, 

@@ -27,6 +27,10 @@
 					<plcf:titulo value="#{msg['label.operacao']}"/>  
 					<plcf:comboDinamico id="operacao" value="#{motorista.operacao}" dominio="Operacao" exibeBranco="S" ajudaChave="ajuda.operacao"/> 
 				</plcf:celula> 
+				<plcf:celula> 
+					<plcf:titulo value="#{msg['label.dataDesligamento']}"/>  
+					<plcf:data id="dataDesligamento" value="#{motorista.dataDesligamento}" ajudaChave="ajuda.dataDesligamento" tamanho="10"/> 
+				</plcf:celula>  
 			</plcf:linha> 
 		</plcf:tabela> 
 	</ui:composition> 

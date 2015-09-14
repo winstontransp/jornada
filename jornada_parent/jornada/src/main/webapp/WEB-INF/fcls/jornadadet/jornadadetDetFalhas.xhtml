@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:plcf="http://www.powerlogic.com.br/plcf" 
+	xmlns:plct="http://www.powerlogic.com.br/plct" 
+	xmlns:tr="http://myfaces.apache.org/trinidad" 
+	xmlns:trh="http://myfaces.apache.org/trinidad/html">
+	<div id="jornada_det_falhas">
+		
+		<fieldset class="plc-fieldset"> 
+			<legend class="plc-fieldset-legend">#{msg['jornadadet.titulo.detalhe4']}</legend>  
+			<plcf:iteracao var="falhas" id="falhas" value="#{jornadadet.falhas}" columnClasses="celulaFormulario" headerClass="celulaFormulario">
+				<h:column> 
+					<f:facet name="header">
+						<plcf:titulo value="#{msg['label.assunto']}"/>
+					</f:facet>  
+					<plcf:exibe value="#{falhas.assunto}" /> 
+				</h:column>  
+				<h:column> 
+					<f:facet name="header">
+						<plcf:titulo value="#{msg['label.mensagem']}"/>
+					</f:facet>  
+					<plcf:exibe value="#{falhas.mensagem}" /> 
+				</h:column>  
+			</plcf:iteracao> 
+		</fieldset>
+	</div> 
+</ui:composition> 

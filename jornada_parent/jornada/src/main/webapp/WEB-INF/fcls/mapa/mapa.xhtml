@@ -64,9 +64,27 @@ span.cellWithoutBackground
 					<script type="text/javascript">//<![CDATA[
 					function colorFormatter (cellvalue, options, rowObject) {
 
-						if (cellvalue.statusDia == 'T' || cellvalue.statusDia == 'E' ) {
+						if ("TE".contains(cellvalue.statusDia)) {
 							url = "#{request.contextPath}/f/n/jornadadet?id=" + cellvalue.jornadaId;
-							aCelula = '<a style="color:'+ cellvalue.cor + ';" href="'+ url+ '">' + cellvalue.descricaoStatus + '</a>';
+
+							if ("CF".contains(cellvalue.statusJornada)) {
+								if ("C".contains(cellvalue.statusJornada)) {
+									corFonte = '#FFF';
+								} else {
+									corFonte = '#8CFFDF';
+								}
+
+								aCelula = '<a style="color:' + corFonte + ';" href="'+ url+ '"><b>&nbsp;&nbsp;' + cellvalue.statusJornada + '&nbsp;&nbsp;&nbsp;</b></a>';
+							} else {
+								aCelula = '<a style="color:'+ cellvalue.cor + ';" href="'+ url+ '">' + cellvalue.descricaoStatus + '</a>';
+//								&lt;a href='#' onclick='janela("url_janela","alvo"); return false;'&gt;
+//								aCelula = '<a href="#" onclick="janelaModal('"/jornada/f/n/jornadadet?id=46556"');/>"';
+//								aCelula = '<a href="#" onclick="janelaModal('"/jornada/f/n/jornadadet?id=46556');"/>';
+//								return aCelula;
+							}
+						} else if ("FALS".contains(cellvalue.statusDia)) {
+								url = "#{request.contextPath}/f/n/motorista?id=" + cellvalue.motoristaId;
+								aCelula = '<a style="color:'+ cellvalue.cor + ';" href="'+ url+ '">' + cellvalue.descricaoStatus + '</a>';
 						} else {
 							aCelula = cellvalue.descricaoStatus;
 						}

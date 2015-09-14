@@ -19,8 +19,8 @@ import com.powerlogic.jcompany.config.aggregation.PlcConfigAggregation;
 
 @PlcConfigAggregation(entity = com.winston.jornada.entity.Motorista.class, 
 	details = { @com.powerlogic.jcompany.config.aggregation.PlcConfigDetail(
-		clazz = com.winston.jornada.entity.MotoristaFerias.class, 
-			collectionName = "motoristaFerias", numNew = 4, onDemand = false, exclusionMode = ExclusionMode.LOGICAL)
+		clazz = com.winston.jornada.entity.MotoristaAfastamento.class, 
+			collectionName = "motoristaAfastamento", numNew = 4, onDemand = false, exclusionMode = ExclusionMode.LOGICAL)
 })
 
 @PlcConfigForm(formPattern = FormPattern.Mdt, 

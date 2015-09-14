@@ -1,12 +1,9 @@
 package com.winston.jornada.controller.jsf.mapa;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.enterprise.inject.Specializes;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.QueryParam;
@@ -14,15 +11,9 @@ import javax.ws.rs.QueryParam;
 import org.apache.commons.lang.StringUtils;
 
 import com.powerlogic.jcompany.commons.PlcBaseContextVO;
-import com.powerlogic.jcompany.commons.PlcConstants;
-import com.powerlogic.jcompany.commons.PlcException;
 import com.powerlogic.jcompany.commons.config.qualifiers.QPlcDefault;
 import com.powerlogic.jcompany.config.collaboration.PlcConfigSelection;
-import com.powerlogic.jcompany.controller.jsf.action.util.PlcConversationControl;
-import com.powerlogic.jcompany.controller.jsf.util.PlcContextUtil;
-import com.powerlogic.jcompany.controller.jsf.util.PlcCreateContextUtil;
 import com.powerlogic.jcompany.controller.rest.controllers.PlcBaseGridController;
-import com.powerlogic.jcompany.controller.util.PlcBeanPopulateUtil;
 import com.powerlogic.jcompany.controller.util.PlcIocControllerFacadeUtil;
 import com.winston.jornada.entity.mapa.Mapa;
 import com.winston.jornada.facade.IAppFacade;

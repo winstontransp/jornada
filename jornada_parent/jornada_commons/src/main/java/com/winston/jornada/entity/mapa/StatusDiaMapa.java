@@ -5,14 +5,15 @@ package com.winston.jornada.entity.mapa;
  */
 public enum StatusDiaMapa {
     
-	T("{statusDiaMapa.T}"),
-	E("{statusDiaMapa.E}"),
-	D("{statusDiaMapa.D}"),
-	F("{statusDiaMapa.F}"),
-	A("{statusDiaMapa.A}"),
-	I("{statusDiaMapa.I}");
+	T("{statusDiaMapa.T}"), // Trabalho
+	E("{statusDiaMapa.E}"), // Excesso
+	D("{statusDiaMapa.D}"), // Descanso
+	F("{statusDiaMapa.F}"), // Férias
+	A("{statusDiaMapa.A}"), // Atestado
+	L("{statusDiaMapa.L}"), // Licença
+	S("{statusDiaMapa.S}"), // Suspensão
+	I("{statusDiaMapa.I}"); // Indefinido
 
-	
     /**
      * @return Retorna o codigo.
      */

@@ -10,7 +10,7 @@
 	xmlns:tr="http://myfaces.apache.org/trinidad" 
 	xmlns:trh="http://myfaces.apache.org/trinidad/html">  
 	<ui:composition> 
-		<plcf:iteracao var="motoristaFerias" id="motoristaFerias" value="#{motorista.motoristaFerias}" columnClasses="celulaFormulario" headerClass="celulaFormulario"> 
+		<plcf:iteracao var="motoristaAfastamento" id="motoristaAfastamento" value="#{motorista.motoristaAfastamento}" columnClasses="celulaFormulario" headerClass="celulaFormulario"> 
 			<h:column> 
 				<h:outputText value="#{rowCounter.index}."/> 
 			</h:column>  
@@ -19,26 +19,35 @@
 					<plcf:tituloExclusao>Exc.</plcf:tituloExclusao>
 				</f:facet>  
 				<span class="celulaFormularioCaixaMarcacao">
-					<plcf:caixaExclusao id="indExcPlc" value="#{motoristaFerias.indExcPlc}"/>
+					<plcf:caixaExclusao id="indExcPlc" value="#{motoristaAfastamento.indExcPlc}"/>
 				</span> 
-			</h:column>  
+			</h:column>
+			<!-- 
 			<h:column> 
 				<f:facet name="header">
 					<plcf:titulo value="#{msg['label.id']}"/>
 				</f:facet>  
-				<plcf:oid id="id" value="#{motoristaFerias.id}" ajudaChave="ajuda.id"/> 
+				<plcf:oid id="id" value="#{motoristaAfastamento.id}" ajudaChave="ajuda.id"/> 
 			</h:column>  
+			 -->
+			<!--  -->  
 			<h:column> 
 				<f:facet name="header">
 					<plcf:titulo value="#{msg['label.inicio']}"/>
 				</f:facet>  
-				<plcf:data id="inicio" value="#{motoristaFerias.inicio}" ajudaChave="ajuda.inicio"/> 
+				<plcf:data id="inicio" value="#{motoristaAfastamento.inicio}" ajudaChave="ajuda.inicio"/> 
 			</h:column>  
 			<h:column> 
 				<f:facet name="header">
 					<plcf:titulo value="#{msg['label.termino']}"/>
 				</f:facet>  
-				<plcf:data id="termino" value="#{motoristaFerias.termino}" ajudaChave="ajuda.termino"/> 
+				<plcf:data id="termino" value="#{motoristaAfastamento.termino}" ajudaChave="ajuda.termino"/> 
+			</h:column> 
+			<h:column> 
+				<f:facet name="header">
+					<plcf:titulo value="#{msg['label.motivoAfastamento']}"/>
+				</f:facet>  
+				<plcf:comboEstatico id="motivo" value="#{motoristaAfastamento.motivo}" dominio="MotivoAfastamento" ajudaChave="ajuda.motivoAfastamento"/> 
 			</h:column> 
 		</plcf:iteracao> 
 	</ui:composition> 

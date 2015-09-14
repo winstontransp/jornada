@@ -3,12 +3,13 @@ package com.winston.jornada.entity;
 /**
  * Enum de domínio discreto gerada automaticamente pelo assistente do jCompany.
  */
-public enum StatusJornada {
+public enum MotivoAfastamento {
     
-	I("{statusJornada.I}"), // Incompleta
-	F("{statusJornada.F}"), // Falha
-	C("{statusJornada.C}"), // Criticas
-	O("{statusJornada.O}"); // Ok
+	F("{motivoAfastamento.F}"),  // Férias
+	L("{motivoAfastamento.L}"),  // Licença
+	A("{motivoAfastamento.A}"),  // Afastamento
+	S("{motivoAfastamento.S}");  // Suspensão 
+
 	
     /**
      * @return Retorna o codigo.
@@ -16,7 +17,7 @@ public enum StatusJornada {
      
 	private String label;
     
-    private StatusJornada(String label) {
+    private MotivoAfastamento(String label) {
     	this.label = label;
     }
      

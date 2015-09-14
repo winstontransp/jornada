@@ -36,8 +36,10 @@ public class JornadaDAO extends AppJpaDAO  {
 		
 		@PlcQueryParameter(name="id", expression="obj.id = :id") Long id,
 		@PlcQueryParameter(name="mctAddress", expression="obj.mctAddress = :mctAddress") Long mctAddress,
+		@PlcQueryParameter(name="frota", expression="obj.frota = :frota") Integer frota,
+		@PlcQueryParameter(name="placa", expression="obj.placa like '%' || :placa  || '%'") String placa,
 		@PlcQueryParameter(name="status", expression="obj.status = :status") StatusJornada status,
-		@PlcQueryParameter(name="data", expression="obj.data >= :data") Date data,
+		@PlcQueryParameter(name="data", expression="obj.data = :data") Date data,
 		@PlcQueryParameter(name="motorista", expression="obj1 = :motorista") Motorista motorista
 	);
 
@@ -47,8 +49,10 @@ public class JornadaDAO extends AppJpaDAO  {
 		
 		@PlcQueryParameter(name="id", expression="obj.id = :id") Long id,
 		@PlcQueryParameter(name="mctAddress", expression="obj.mctAddress = :mctAddress") Long mctAddress,
+		@PlcQueryParameter(name="frota", expression="obj.frota = :frota") Integer frota,
+		@PlcQueryParameter(name="placa", expression="obj.placa like '%' || :placa  || '%'") String placa,
 		@PlcQueryParameter(name="status", expression="obj.status = :status") StatusJornada status,
-		@PlcQueryParameter(name="data", expression="obj.data >= :data") Date data,
+		@PlcQueryParameter(name="data", expression="obj.data = :data") Date data,
 		@PlcQueryParameter(name="motorista", expression="obj1 = :motorista") Motorista motorista
 	);
 	

@@ -2,11 +2,15 @@ package com.winston.jornada.entity.mapa;
 
 import java.util.Date;
 
+import com.winston.jornada.entity.StatusJornada;
+
 public class DiaMapa {
 
 	private int dia;
 	private StatusDiaMapa statusDia = StatusDiaMapa.I;
+	private StatusJornada statusJornada = StatusJornada.C;
 	private Long jornadaId;
+	private Long motoristaId;
 	private Date data;
 	private String cor;
 	
@@ -37,12 +41,28 @@ public class DiaMapa {
 		setCorPorStatus(statusDia);
 	}
 
+	public StatusJornada getStatusJornada() {
+		return statusJornada;
+	}
+
+	public void setStatusJornada(StatusJornada statusJornada) {
+		this.statusJornada = statusJornada;
+	}
+
 	public Long getJornadaId() {
 		return jornadaId;
 	}
 
 	public void setJornadaId(Long jornadaId) {
 		this.jornadaId = jornadaId;
+	}
+
+	public Long getMotoristaId() {
+		return motoristaId;
+	}
+
+	public void setMotoristaId(Long motoristaId) {
+		this.motoristaId = motoristaId;
 	}
 
 	public Date getData() {
@@ -59,6 +79,15 @@ public class DiaMapa {
 
 	private void setCorPorStatus(StatusDiaMapa status) {
 		
+//		T("{statusDiaMapa.T}"), // Trabalho
+//		E("{statusDiaMapa.E}"), // Excesso
+//		D("{statusDiaMapa.D}"), // Descanso
+//		F("{statusDiaMapa.F}"), // Férias
+//		A("{statusDiaMapa.A}"), // Atestado
+//		L("{statusDiaMapa.L}"), // Licença
+//		S("{statusDiaMapa.S}"), // Suspensão
+//		I("{statusDiaMapa.I}"); // Indefinido
+		
 		if (StatusDiaMapa.T.equals(status)) {
 			this.cor ="#034803";
 		} else if (StatusDiaMapa.E.equals(status)) {
@@ -66,9 +95,13 @@ public class DiaMapa {
 		} else if (StatusDiaMapa.D.equals(status)) {
 			this.cor = "grey";
 		} else if (StatusDiaMapa.F.equals(status)) {
-			this.cor = "brown";
+			this.cor = "#4DBC4D";
 		} else if (StatusDiaMapa.A.equals(status)) {
-			this.cor = "black";
+			this.cor = "blue";
+		} else if (StatusDiaMapa.L.equals(status)) {
+			this.cor = "#AA6FBC";
+		} else if (StatusDiaMapa.S.equals(status)) {
+			this.cor = "brown";
 		} else if (StatusDiaMapa.I.equals(status)) {
 			this.cor = "lightgrey";
 		} else {
@@ -89,7 +122,11 @@ public class DiaMapa {
 		} else if (StatusDiaMapa.F.equals(statusDia)) {
 			descricao = "Férias";
 		} else if (StatusDiaMapa.A.equals(statusDia)) {
-			descricao = "Afastamento";
+			descricao = "Atestado";
+		} else if (StatusDiaMapa.L.equals(statusDia)) {
+			descricao = "Licença";
+		} else if (StatusDiaMapa.S.equals(statusDia)) {
+			descricao = "Suspensão";
 		} else if (StatusDiaMapa.I.equals(statusDia)) {
 			descricao = "Indefinido";
 		} else {

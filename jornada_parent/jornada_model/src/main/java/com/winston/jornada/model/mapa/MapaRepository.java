@@ -15,7 +15,7 @@ import com.powerlogic.jcompany.commons.config.stereotypes.SPlcRepository;
 import com.powerlogic.jcompany.model.PlcBaseRepository;
 import com.winston.jornada.entity.Jornada;
 import com.winston.jornada.entity.Motorista;
-import com.winston.jornada.entity.MotoristaFerias;
+import com.winston.jornada.entity.MotoristaAfastamento;
 import com.winston.jornada.entity.mapa.DiaMapa;
 import com.winston.jornada.entity.mapa.Mapa;
 import com.winston.jornada.entity.mapa.StatusDiaMapa;
@@ -72,8 +72,18 @@ public class MapaRepository extends PlcBaseRepository {
 		Mapa mapa = null;
 		
 		//Carrega as férias dos motoristas que possuem férias na faixa do período informado
-		List<MotoristaFerias> motoristaFerias = null;
-		motoristaFerias = (List<MotoristaFerias>)jornadaDAO.findByFields(context, MotoristaFerias.class, "querySelByFaixa", new String[]{"inicio", "termino"}, new Object[]{arg.getDataInicio(), arg.getDataFim()});
+		List<MotoristaAfastamento> listaAfastamentos = null;
+		listaAfastamentos = (List<MotoristaAfastamento>)jornadaDAO.findByFields(context, MotoristaAfastamento.class, "querySelByFaixa", new String[]{"inicio", "termino"}, new Object[]{arg.getDataInicio(), arg.getDataFim()});
+		
+		// Adiciona 2 minutos na hora de termino do afatamento para possiblitar a comparação com Date.before() e Date.after() 
+		for (MotoristaAfastamento afastamento : listaAfastamentos) {
+			
+			if (afastamento != null) {
+				calendar.setTime(afastamento.getTermino());
+				calendar.add(Calendar.MINUTE, 2);
+				afastamento.setTermino(calendar.getTime());
+			}
+		}
 		
 		int indice = 0;
 		int contaMotorista = 0;
@@ -105,6 +115,7 @@ public class MapaRepository extends PlcBaseRepository {
 				
 				if (indice >= inicio) { 
 					calendar.setTime(jornada.getData());
+					calendar.add(Calendar.MINUTE, 1);
 					int dia = calendar.get(Calendar.DAY_OF_MONTH);
 	
 					for (j=ini; j<=dia; j++) {
@@ -113,11 +124,13 @@ public class MapaRepository extends PlcBaseRepository {
 						DiaMapa diaMapa = mapa.getDiaMapa(j);
 						diaMapa.setData(calendar.getTime());
 						diaMapa.setJornadaId(jornada.getId());
+						diaMapa.setStatusJornada(jornada.getStatus());
+						diaMapa.setMotoristaId(motorista.getId());
 						
 						if (dia == j) {
 							contaDiaTrabalhado++;
 							
-							if (contaDiaTrabalhado < 6) {
+							if (contaDiaTrabalhado < 7) {
 								diaMapa.setStatusDia(StatusDiaMapa.T);
 							} else {
 								diaMapa.setStatusDia(StatusDiaMapa.E);
@@ -126,14 +139,13 @@ public class MapaRepository extends PlcBaseRepository {
 						} else {
 							contaDiaTrabalhado = 0;
 
-							// se esta de férias
-							if (verificarFeriasMotoristaNoDia(motorista, jornada.getData(), diaMapa.getData(), motoristaFerias)) {
-								diaMapa.setStatusDia(StatusDiaMapa.F);
+							// Se esta com algum afastamento no dia informado
+							if (verificarAfastamentoMotoristaNoDia(motorista, diaMapa.getData(), listaAfastamentos)) {
+								diaMapa.setStatusDia(obterMotivoAtastamentoDia(motorista, diaMapa.getData(), listaAfastamentos));
 							} else {
 								diaMapa.setStatusDia(StatusDiaMapa.D);
 							}
 						}
-						
 					}
 				}
 				
@@ -147,7 +159,7 @@ public class MapaRepository extends PlcBaseRepository {
 			}
 			
 			if (indice >= inicio && contaMotorista <= total) {
-				completaMapaFeriasMotorista(mapa, motoristaFerias);
+				completaMapaAfastamentoMotorista(mapa, listaAfastamentos);
 				
 				mapas.add(mapa);
 				contaMotorista++;
@@ -160,31 +172,31 @@ public class MapaRepository extends PlcBaseRepository {
 	}
 
 	
-	private void completaMapaFeriasMotorista(Mapa mapa, List<MotoristaFerias> motoristaFerias) {
+	private void completaMapaAfastamentoMotorista(Mapa mapa, List<MotoristaAfastamento> motoristaAfastamento) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(mapa.getDataFim());
 		cal.add(Calendar.HOUR_OF_DAY, 1);
 		Date mapaFim = cal.getTime();
 		
-		for (MotoristaFerias feriasMotorista : motoristaFerias) {
+		for (MotoristaAfastamento afastamentoMotorista : motoristaAfastamento) {
 			// Se é o motorista em questão
-			if (feriasMotorista.getMotorista().getId().compareTo(mapa.getMotorista().getId()) == 0) {
-				cal.setTime(feriasMotorista.getTermino());
+			if (afastamentoMotorista.getMotorista().getId().compareTo(mapa.getMotorista().getId()) == 0) {
+				cal.setTime(afastamentoMotorista.getTermino());
 				cal.add(Calendar.HOUR_OF_DAY, 1);
-				Date fimFerias = cal.getTime();
+				Date fimAfastamento = cal.getTime();
 				
-				Date data = feriasMotorista.getInicio();
+				Date data = afastamentoMotorista.getInicio();
 				
 				cal.setTime(data);
 				int i = cal.get(Calendar.DAY_OF_MONTH);
 				
-				// Percorre todo o período de férias (até o fim do período do mapa, no máximo)
-				while (data.before(fimFerias) && data.after(mapa.getDataInicio()) && data.before(mapaFim)) {
+				// Percorre todo o período de afastamento (até o fim do período do mapa, no máximo)
+				while (data.before(fimAfastamento) && data.after(mapa.getDataInicio()) && data.before(mapaFim)) {
 					DiaMapa diaMapa = mapa.getDiaMapa(i);
 					
-					// So registra férias se não houver outro evento no dia
+					// So registra afastamento se não houver outro evento no dia
 					if (StatusDiaMapa.I.equals(diaMapa.getStatusDia())) {
-						diaMapa.setStatusDia(StatusDiaMapa.F);
+						diaMapa.setStatusDia(StatusDiaMapa.I);
 						diaMapa.setData(data);
 					}
 
@@ -196,25 +208,43 @@ public class MapaRepository extends PlcBaseRepository {
 				break;
 			}
 		}
-		
 	}
 
-	private boolean verificarFeriasMotoristaNoDia(Motorista motorista, Date data, Date diaMapa, List<MotoristaFerias> motoristaFerias) {
+	private StatusDiaMapa obterMotivoAtastamentoDia(Motorista motorista, Date diaMapa, List<MotoristaAfastamento> listaAfastamentos) {
+		StatusDiaMapa motivoAfastamento = StatusDiaMapa.I; 
 		
-		for (MotoristaFerias feriasMotorista : motoristaFerias) {
+		for (MotoristaAfastamento afastamento : listaAfastamentos) {
 			
 			// Se é o motorista em questão
-			if (feriasMotorista.getMotorista().getId().compareTo(motorista.getId()) == 0) {
+			if (afastamento != null && afastamento.getMotorista().getId().compareTo(motorista.getId()) == 0) {
 				
-				if (diaMapa.after(feriasMotorista.getInicio()) && diaMapa.before(feriasMotorista.getTermino())) {
-					return true;
+				if (diaMapa.after(afastamento.getInicio()) && diaMapa.before(afastamento.getTermino())) {
+					motivoAfastamento = StatusDiaMapa.valueOf(afastamento.getMotivo().name());
+					break;
 				}
-				
-				break;
 			}
 		}
 		
-		return false;
+		return motivoAfastamento;
+	}
+
+	
+	private boolean verificarAfastamentoMotoristaNoDia(Motorista motorista, Date diaMapa, List<MotoristaAfastamento> listaAfastamentos) {
+		boolean ret = false;
+		
+		for (MotoristaAfastamento afastamentoMotorista : listaAfastamentos) {
+			
+			// Se é o motorista em questão
+			if (afastamentoMotorista.getMotorista().getId().compareTo(motorista.getId()) == 0) {
+				
+				if (diaMapa.after(afastamentoMotorista.getInicio()) && diaMapa.before(afastamentoMotorista.getTermino())) {
+					ret = true;
+					break;
+				}
+			}
+		}
+		
+		return ret;
 	}
 
 	private void validarDatas(Mapa arg, Calendar calendar) throws PlcException {

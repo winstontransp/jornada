@@ -23,7 +23,10 @@ import com.winston.jornada.entity.Jornada;
 					collectionName = "eventos", numNew = 0, onDemand = false),
 				@com.powerlogic.jcompany.config.aggregation.PlcConfigDetail(
 					clazz = com.winston.jornada.entity.JornadaCritica.class, 
-					collectionName = "criticas", numNew = 0, onDemand = false)			
+					collectionName = "criticas", numNew = 0, onDemand = false),			
+				@com.powerlogic.jcompany.config.aggregation.PlcConfigDetail(
+					clazz = com.winston.jornada.entity.JornadaFalha.class, 
+					collectionName = "falhas", numNew = 0, onDemand = false)			
 })
 
 @PlcConfigForm(

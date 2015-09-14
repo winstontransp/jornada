@@ -50,10 +50,18 @@ public class MapaMB extends AppMB {
 			Date dataAtual = new Date();
 			calendar.setTime(dataAtual);
 			calendar.set(Calendar.DAY_OF_MONTH, 1);
+
+			//TODO Remover depois esta linha
+//			calendar.set(Calendar.MONTH, Calendar.MARCH);
+
 			mapa.setDataInicio(calendar.getTime());
 		
 			calendar.setTime(mapa.getDataInicio());
 			calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+
+			//TODO Remover depois esta linha
+//			calendar.set(Calendar.MONTH, Calendar.MARCH);
+
 			mapa.setDataFim(calendar.getTime());
 		}
 		

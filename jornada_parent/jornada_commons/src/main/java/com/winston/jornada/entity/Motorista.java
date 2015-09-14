@@ -1,5 +1,6 @@
 package com.winston.jornada.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Access;
@@ -34,17 +35,17 @@ import com.powerlogic.jcompany.domain.validation.PlcValMultiplicity;
 @Access(AccessType.FIELD)
 @NamedQueries({
 	@NamedQuery(name = "Motorista.queryMan", query = "from Motorista where sitHistoricoPlc='A'"),
-	@NamedQuery(name = "Motorista.querySel", query = "select obj.id as id, obj.matricula as matricula, obj.nome as nome, obj1.id as operacao_id, obj1.nome as operacao_nome from Motorista obj left outer join obj.operacao as obj1 where obj.sitHistoricoPlc='A' order by obj.nome asc"),
+	@NamedQuery(name = "Motorista.querySel", query = "select obj.id as id, obj.matricula as matricula, obj.nome as nome, obj.dataDesligamento as dataDesligamento, obj1.id as operacao_id, obj1.nome as operacao_nome from Motorista obj left outer join obj.operacao as obj1 where obj.sitHistoricoPlc='A' order by obj.nome asc"),
 	@NamedQuery(name = "Motorista.querySelLookup", query = "select id as id, nome as nome, matricula as matricula from Motorista where id = ? and sitHistoricoPlc='A' order by id asc"),
 	@NamedQuery(name = "Motorista.queryBuscaMotoristaPorMatricula", query = "from Motorista where matricula = :matricula and sitHistoricoPlc='A'") })
 public class Motorista extends AppBaseEntity {
 
-	@OneToMany(targetEntity = MotoristaFerias.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "motorista")
-	@ForeignKey(name = "FK_MOTORISTAFERIAS_MOTORISTA")
+	@OneToMany(targetEntity = MotoristaAfastamento.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "motorista")
+	@ForeignKey(name = "FK_MOTORISTAAFASTAMENTO_MOTORISTA")
 	@PlcValDuplicity(property = "inicio")
-	@PlcValMultiplicity(referenceProperty = "inicio", message = "{jcompany.aplicacao.mestredetalhe.multiplicidade.MotoristaFerias}")
+	@PlcValMultiplicity(referenceProperty = "inicio", message = "{jcompany.aplicacao.mestredetalhe.multiplicidade.MotoristaAfastamento}")
 	@Valid
-	private List<MotoristaFerias> motoristaFerias;
+	private List<MotoristaAfastamento> motoristaAfastamento;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "SE_MOTORISTA")
@@ -63,6 +64,8 @@ public class Motorista extends AppBaseEntity {
 	@NotNull
 	private Operacao operacao;
 
+	private Date dataDesligamento;
+	
 	@NotNull
 	@Size(max = 1)
 	private String sitHistoricoPlc = "A";
@@ -101,6 +104,23 @@ public class Motorista extends AppBaseEntity {
 	public void setOperacao(Operacao operacao) {
 		this.operacao = operacao;
 	}
+	
+	public Date getDataDesligamento() {
+		return dataDesligamento;
+	}
+	
+	public void setDataDesligamento(Date dataDesligamento) {
+		this.dataDesligamento = dataDesligamento;
+	}
+	
+	public List<MotoristaAfastamento> getMotoristaAfastamento() {
+		return motoristaAfastamento;
+	}
+
+	public void setMotoristaAfastamento(
+			List<MotoristaAfastamento> motoristaAfastamento) {
+		this.motoristaAfastamento = motoristaAfastamento;
+	}
 
 	@Override
 	public String toString() {
@@ -113,14 +133,6 @@ public class Motorista extends AppBaseEntity {
 
 	public void setSitHistoricoPlc(String sitHistoricoPlc) {
 		this.sitHistoricoPlc = sitHistoricoPlc;
-	}
-
-	public List<MotoristaFerias> getMotoristaFerias() {
-		return motoristaFerias;
-	}
-
-	public void setMotoristaFerias(List<MotoristaFerias> motoristaFerias) {
-		this.motoristaFerias = motoristaFerias;
 	}
 
 }
